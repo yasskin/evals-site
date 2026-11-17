@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Methods and limits · GDPval Paired Evaluation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">GDPval Paired Evaluation<small>Methods, coverage and limitations</small></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="index.html">Overview</a>
+      <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
+      <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="methods.html" aria-current="page">Methods &amp; limits</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Methods and limits</h1>
+
+  <h2>What ran</h2>
+  <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><th>Dataset</th><td>All 220 public GDPval gold tasks, 44 occupations, five tasks each</td></tr>
+        <tr><th>OpenAI model</th><td><code>gpt-6-astra</code>, low reasoning, OpenAI API</td></tr>
+        <tr><th>Anthropic model</th><td><code>databricks-claude-opus-5-5</code>, endpoint defaults, Databricks model serving</td></tr>
+        <tr><th>Attempts</th><td>One fresh attempt per task per model (440 total); GPT pass first, then Claude</td></tr>
+        <tr><th>Tools</th><td>Shared local Python, web and image tools; same reference files and instructions</td></tr>
+        <tr><th>Limits</th><td>14 turns, 24 tool calls, 10k tokens per response, 50k generated tokens per conversation</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>How it was graded</h2>
+  <ul class="tight">
+    <li>Each model separately judged both generators' outputs using the original weighted task rubrics, including penalties.</li>
+    <li>Generator labels were hidden; writing style or filenames may still reveal identity.</li>
+    <li>Judges returned pass, fail or unverified for each criterion; scores were computed in code.</li>
+    <li>Unverified criteria produce score bounds. Paired tasks with overlapping bounds are unresolved.</li>
+    <li>Judges are never averaged; infrastructure failures are not scored as zero.</li>
+  </ul>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Judge assignment status</th><th class="n">Count</th></tr></thead>
+      <tbody>
+        <tr><td>Valid assessment</td><td class="n">857</td></tr>
+        <tr><td>Invalid grade (schema/criterion validation)</td><td class="n">9</td></tr>
+        <tr><td>Judge-stage failure</td><td class="n">4</td></tr>
+        <tr><td>Unavailable (primary infrastructure error)</td><td class="n">10</td></tr>
+        <tr><td><strong>Total</strong></td><td class="n"><strong>880</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Task-weighted rubric score bounds</h2>
+  <p>Ranges reflect unverified evidence, not statistical confidence intervals. Completed-with-artifact subsets contain different tasks and are not a matched comparison.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Judge</th><th class="n">GPT, all 220</th><th class="n">Claude, all 220</th><th class="n">GPT, delivered (211)</th><th class="n">Claude, delivered (144)</th></tr></thead>
+      <tbody>
+        <tr><td>OpenAI</td><td class="n">62.3–86.5%</td><td class="n">44.9–84.0%</td><td class="n">65.2–86.0%</td><td class="n">71.8–89.7%</td></tr>
+        <tr><td>Claude</td><td class="n">67.4–86.2%</td><td class="n">51.3–86.6%</td><td class="n">69.9–86.1%</td><td class="n">78.1–91.3%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Limitations</h2>
+  <ul class="tight">
+    <li><strong>Not compute-matched:</strong> GPT at low reasoning effort, Claude at endpoint defaults.</li>
+    <li><strong>Single attempts:</strong> no measure of run-to-run variability.</li>
+    <li><strong>Sequential passes:</strong> GPT ran before Claude, a timing confound for live web research.</li>
+    <li><strong>Grading:</strong> automated and uncalibrated against professional review; 24.3% of criterion decisions unverified.</li>
+    <li><strong>Inspection gaps:</strong> no full Office rendering or recalculation, live citation checks, audio listening or video/CAD execution.</li>
+    <li><strong>Sample size:</strong> five tasks per occupation do not support occupation-level claims.</li>
+    <li><strong>Cost:</strong> primary generation used 68.6M metered tokens; grading, retries and pilots are additional. Dollar cost is unreconciled.</li>
+    <li><strong>Security:</strong> local execution used best-effort restrictions, not a hardened sandbox.</li>
+  </ul>
+</main>
+
+<footer class="site"><div class="wrap">Provisional results from a take-home evaluation.</div></footer>
+</body>
+</html>

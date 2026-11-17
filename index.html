@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GDPval Full Run: GPT-6 Astra vs. Claude Opus 5.5</title>
+  <meta name="description" content="Paired evaluation of two model configurations on all 220 public GDPval gold tasks.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">GDPval Paired Evaluation<small>220 professional tasks · 44 occupations · November 2026</small></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="index.html" aria-current="page">Overview</a>
+      <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
+      <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="methods.html">Methods &amp; limits</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>GPT delivered far more files. Quality remains unresolved.</h1>
+  <p class="lede">We ran every public GDPval gold task once with each model configuration. GPT completed with an artifact on 211/220 tasks; Claude on 144/220. Judge outcomes depend on which model is grading, and most task pairs remain unresolved.</p>
+
+  <div class="callout"><strong>Read this as:</strong> a delivery proxy and provisional automated grades for two exact configurations, not an overall provider ranking. No expert adjudication has occurred.</div>
+
+  <h2>Delivery: completed with at least one artifact</h2>
+  <div class="card">
+    <div class="bars" role="img" aria-label="GPT 211 of 220 (95.9%); Claude 144 of 220 (65.5%)">
+      <div class="bar-row"><span>GPT</span><div class="bar-track"><div class="bar-fill gpt" style="width:95.9%"></div></div><span>211/220 · 95.9%</span></div>
+      <div class="bar-row"><span>Claude</span><div class="bar-track"><div class="bar-fill claude" style="width:65.5%"></div></div><span>144/220 · 65.5%</span></div>
+    </div>
+    <p style="margin:10px 0 0;color:var(--muted);font-size:.9rem">An artifact's presence does not prove the deliverable is complete or correct.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Primary outcome</th><th class="n">GPT</th><th class="n">Claude</th></tr></thead>
+      <tbody>
+        <tr><td>Conversation completed</td><td class="n">212/220</td><td class="n">158/220</td></tr>
+        <tr><td>Completed with any artifact</td><td class="n">211/220</td><td class="n">144/220</td></tr>
+        <tr><td>Incomplete conversation (limit reached)</td><td class="n">3</td><td class="n">62</td></tr>
+        <tr><td>Completed without artifacts</td><td class="n">1</td><td class="n">14</td></tr>
+        <tr><td>Provider or harness error</td><td class="n">5</td><td class="n">0</td></tr>
+        <tr><td>Median elapsed time per attempt</td><td class="n">129 s</td><td class="n">245 s</td></tr>
+        <tr><td>Metered generation tokens</td><td class="n">19.7M</td><td class="n">48.9M</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Quality: paired outcomes depend on the judge</h2>
+  <p>Each model graded both generators' outputs against the original rubrics, without generator labels. Each row covers all 220 tasks. Overlapping score bounds count as unresolved.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Judge</th><th class="n">GPT favored</th><th class="n">Claude favored</th><th class="n">Tie</th><th class="n">Unresolved</th></tr></thead>
+      <tbody>
+        <tr><td>OpenAI judge</td><td class="n">38</td><td class="n">31</td><td class="n">8</td><td class="n">143</td></tr>
+        <tr><td>Claude judge</td><td class="n">26</td><td class="n">50</td><td class="n">10</td><td class="n">134</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid" style="margin-top:12px">
+    <div class="stat"><div class="num">17</div><div class="label">tasks where both judges favor GPT</div></div>
+    <div class="stat"><div class="num">29</div><div class="label">tasks where both judges favor Claude</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">tasks where the judges point in opposite directions</div></div>
+    <div class="stat"><div class="num">24.3%</div><div class="label">of criterion decisions in valid assessments marked unverified</div></div>
+  </div>
+
+  <h2>One finding for each research team</h2>
+  <div class="grid">
+    <div class="card gpt">
+      <h3 style="margin-top:0">OpenAI: delivery is not completion</h3>
+      <p>GPT reliably produces files, but they can omit specific requirements needed for professional use.</p>
+      <a href="gpt.html">See GPT findings →</a>
+    </div>
+    <div class="card claude">
+      <h3 style="margin-top:0">Anthropic: budget runs out before delivery</h3>
+      <p>62 Claude conversations hit a limit before finishing, and 13 more exhausted tool calls without producing a file.</p>
+      <a href="claude.html">See Claude findings →</a>
+    </div>
+  </div>
+
+  <h2>Separate higher-budget Claude retry study</h2>
+  <p>Fresh retries of the 62 incomplete Claude tasks with larger limits completed 54/62 conversations; 53 produced artifacts. Several limits changed together, retry quality is ungraded, and these results do not replace primary outcomes.</p>
+</main>
+
+<footer class="site"><div class="wrap">Provisional results from a take-home evaluation. GDPval public gold subset (OpenAI). Automated judgments are uncalibrated against professional review. <a href="methods.html">Methods and limitations</a>.</div></footer>
+</body>
+</html>
