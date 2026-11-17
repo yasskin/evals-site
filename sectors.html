@@ -73,37 +73,62 @@
   </ul>
 
   <h2>All the numbers</h2>
+  <p class="howto">The detail behind the two charts, one table each. Sectors are listed from the largest delivery gap to the smallest.</p>
+
+  <h3>Handing in a file</h3>
   <div class="table-wrap">
-  <table class="matrix">
+  <table class="matrix numbers">
     <thead>
-      <tr><th rowspan="2">Sector</th><th rowspan="2" class="n">Tasks</th><th colspan="7">Handed in a file</th><th colspan="2">GPT as judge</th><th colspan="2">Claude as judge</th></tr>
-      <tr><th class="n">GPT</th><th class="n">Claude</th><th class="n">Claude unfinished</th><th class="n">Only GPT / only Claude</th>
-      <th class="n">p</th><th class="n">p (adj.)</th><th>Verdict</th>
-      <th class="n">GPT–Claude better</th><th class="n">p (adj.)</th><th class="n">GPT–Claude better</th><th class="n">p (adj.)</th></tr>
+      <tr><th>Sector</th><th class="n">GPT</th><th class="n">Claude</th><th class="n">Gap<br><small>points</small></th>
+      <th class="n">Claude<br><small>ran out</small></th><th class="n">Only one<br><small>GPT / Claude</small></th><th>Result</th></tr>
     </thead>
     <tbody>
-<tr><td>Finance &amp; insurance</td><td class='n'>25</td><td class='n'>24</td><td class='n'>9</td><td class='n'>15</td><td class='n'>15 / 0</td><td class='n'>&lt;0.001</td><td class='n'>&lt;0.001</td><td>Significant</td><td class='n'>8–5</td><td class='n'>1.00</td><td class='n'>4–5</td><td class='n'>1.00</td></tr>
-<tr><td>Government</td><td class='n'>25</td><td class='n'>24</td><td class='n'>16</td><td class='n'>7</td><td class='n'>8 / 0</td><td class='n'>0.008</td><td class='n'>0.062</td><td>Suggestive only</td><td class='n'>2–3</td><td class='n'>1.00</td><td class='n'>0–4</td><td class='n'>1.00</td></tr>
-<tr><td>Real estate &amp; leasing</td><td class='n'>25</td><td class='n'>25</td><td class='n'>17</td><td class='n'>4</td><td class='n'>8 / 0</td><td class='n'>0.008</td><td class='n'>0.062</td><td>Suggestive only</td><td class='n'>4–3</td><td class='n'>1.00</td><td class='n'>3–8</td><td class='n'>1.00</td></tr>
-<tr><td>Health care &amp; social assistance</td><td class='n'>25</td><td class='n'>24</td><td class='n'>16</td><td class='n'>8</td><td class='n'>8 / 0</td><td class='n'>0.008</td><td class='n'>0.062</td><td>Suggestive only</td><td class='n'>5–1</td><td class='n'>1.00</td><td class='n'>2–7</td><td class='n'>1.00</td></tr>
-<tr><td>Retail trade</td><td class='n'>20</td><td class='n'>20</td><td class='n'>14</td><td class='n'>4</td><td class='n'>6 / 0</td><td class='n'>0.031</td><td class='n'>0.094</td><td>Suggestive only</td><td class='n'>6–5</td><td class='n'>1.00</td><td class='n'>5–5</td><td class='n'>1.00</td></tr>
-<tr><td>Professional &amp; technical services</td><td class='n'>25</td><td class='n'>22</td><td class='n'>15</td><td class='n'>9</td><td class='n'>8 / 1</td><td class='n'>0.039</td><td class='n'>0.094</td><td>Suggestive only</td><td class='n'>3–3</td><td class='n'>1.00</td><td class='n'>2–5</td><td class='n'>1.00</td></tr>
-<tr><td>Information</td><td class='n'>25</td><td class='n'>23</td><td class='n'>16</td><td class='n'>7</td><td class='n'>7 / 0</td><td class='n'>0.016</td><td class='n'>0.078</td><td>Suggestive only</td><td class='n'>2–4</td><td class='n'>1.00</td><td class='n'>7–3</td><td class='n'>1.00</td></tr>
-<tr><td>Manufacturing</td><td class='n'>25</td><td class='n'>24</td><td class='n'>17</td><td class='n'>7</td><td class='n'>7 / 0</td><td class='n'>0.016</td><td class='n'>0.078</td><td>Suggestive only</td><td class='n'>5–4</td><td class='n'>1.00</td><td class='n'>2–6</td><td class='n'>1.00</td></tr>
-<tr><td>Wholesale trade</td><td class='n'>25</td><td class='n'>25</td><td class='n'>24</td><td class='n'>1</td><td class='n'>1 / 0</td><td class='n'>1.00</td><td class='n'>1.00</td><td>No clear difference</td><td class='n'>3–3</td><td class='n'>1.00</td><td class='n'>1–7</td><td class='n'>0.63</td></tr>
+<tr><td>Finance &amp; insurance</td><td class='n'>24/25<div class='mini'><span class='gpt' style='width:96%'></span></div></td><td class='n'>9/25<div class='mini'><span class='claude' style='width:36%'></span></div></td><td class='n'><strong>+60</strong></td><td class='n'>15</td><td class='n'>15 / 0</td><td><span class='badge gpt'>GPT ahead &middot; significant</span><div class='pnote'>p&lt;0.001 &middot; adj. &lt;0.001</div></td></tr>
+<tr><td>Government</td><td class='n'>24/25<div class='mini'><span class='gpt' style='width:96%'></span></div></td><td class='n'>16/25<div class='mini'><span class='claude' style='width:64%'></span></div></td><td class='n'><strong>+32</strong></td><td class='n'>7</td><td class='n'>8 / 0</td><td><span class='badge weak'>GPT ahead &middot; suggestive</span><div class='pnote'>p=0.008 &middot; adj. 0.062</div></td></tr>
+<tr><td>Real estate &amp; leasing</td><td class='n'>25/25<div class='mini'><span class='gpt' style='width:100%'></span></div></td><td class='n'>17/25<div class='mini'><span class='claude' style='width:68%'></span></div></td><td class='n'><strong>+32</strong></td><td class='n'>4</td><td class='n'>8 / 0</td><td><span class='badge weak'>GPT ahead &middot; suggestive</span><div class='pnote'>p=0.008 &middot; adj. 0.062</div></td></tr>
+<tr><td>Health care &amp; social assistance</td><td class='n'>24/25<div class='mini'><span class='gpt' style='width:96%'></span></div></td><td class='n'>16/25<div class='mini'><span class='claude' style='width:64%'></span></div></td><td class='n'><strong>+32</strong></td><td class='n'>8</td><td class='n'>8 / 0</td><td><span class='badge weak'>GPT ahead &middot; suggestive</span><div class='pnote'>p=0.008 &middot; adj. 0.062</div></td></tr>
+<tr><td>Retail trade</td><td class='n'>20/20<div class='mini'><span class='gpt' style='width:100%'></span></div></td><td class='n'>14/20<div class='mini'><span class='claude' style='width:70%'></span></div></td><td class='n'><strong>+30</strong></td><td class='n'>4</td><td class='n'>6 / 0</td><td><span class='badge weak'>GPT ahead &middot; suggestive</span><div class='pnote'>p=0.031 &middot; adj. 0.094</div></td></tr>
+<tr><td>Professional &amp; technical services</td><td class='n'>22/25<div class='mini'><span class='gpt' style='width:88%'></span></div></td><td class='n'>15/25<div class='mini'><span class='claude' style='width:60%'></span></div></td><td class='n'><strong>+28</strong></td><td class='n'>9</td><td class='n'>8 / 1</td><td><span class='badge weak'>GPT ahead &middot; suggestive</span><div class='pnote'>p=0.039 &middot; adj. 0.094</div></td></tr>
+<tr><td>Information</td><td class='n'>23/25<div class='mini'><span class='gpt' style='width:92%'></span></div></td><td class='n'>16/25<div class='mini'><span class='claude' style='width:64%'></span></div></td><td class='n'><strong>+28</strong></td><td class='n'>7</td><td class='n'>7 / 0</td><td><span class='badge weak'>GPT ahead &middot; suggestive</span><div class='pnote'>p=0.016 &middot; adj. 0.078</div></td></tr>
+<tr><td>Manufacturing</td><td class='n'>24/25<div class='mini'><span class='gpt' style='width:96%'></span></div></td><td class='n'>17/25<div class='mini'><span class='claude' style='width:68%'></span></div></td><td class='n'><strong>+28</strong></td><td class='n'>7</td><td class='n'>7 / 0</td><td><span class='badge weak'>GPT ahead &middot; suggestive</span><div class='pnote'>p=0.016 &middot; adj. 0.078</div></td></tr>
+<tr><td>Wholesale trade</td><td class='n'>25/25<div class='mini'><span class='gpt' style='width:100%'></span></div></td><td class='n'>24/25<div class='mini'><span class='claude' style='width:96%'></span></div></td><td class='n'><strong>+4</strong></td><td class='n'>1</td><td class='n'>1 / 0</td><td><span class='badge even'>No clear difference</span><div class='pnote'>p=1.00 &middot; adj. 1.00</div></td></tr>
     </tbody>
   </table>
   </div>
+  <p class="note">"Claude ran out" counts tasks where Claude hit a limit before finishing. "Only one" counts tasks where just one model delivered; these are the tasks the significance test uses.
+  "adj." is the p-value after correcting for nine sectors.</p>
+
+  <h3>Whose work was better</h3>
+  <div class="table-wrap">
+  <table class="matrix numbers">
+    <thead>
+      <tr><th>Sector</th><th class="n">GPT's judge<br><small><span class="wg">GPT</span> &ndash; <span class="wc">Claude</span> wins</small></th>
+      <th class="n">Claude's judge<br><small><span class="wg">GPT</span> &ndash; <span class="wc">Claude</span> wins</small></th><th>Result</th></tr>
+    </thead>
+    <tbody>
+<tr><td>Finance &amp; insurance</td><td class='n'><span class='wg'>8</span> &ndash; <span class='wc'>5</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>4</span> &ndash; <span class='wc'>5</span><div class='pnote'>adj. p=1.00</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+<tr><td>Government</td><td class='n'><span class='wg'>2</span> &ndash; <span class='wc'>3</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>0</span> &ndash; <span class='wc'>4</span><div class='pnote'>adj. p=1.00</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+<tr><td>Real estate &amp; leasing</td><td class='n'><span class='wg'>4</span> &ndash; <span class='wc'>3</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>3</span> &ndash; <span class='wc'>8</span><div class='pnote'>adj. p=1.00</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+<tr><td>Health care &amp; social assistance</td><td class='n'><span class='wg'>5</span> &ndash; <span class='wc'>1</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>2</span> &ndash; <span class='wc'>7</span><div class='pnote'>adj. p=1.00</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+<tr><td>Retail trade</td><td class='n'><span class='wg'>6</span> &ndash; <span class='wc'>5</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>5</span> &ndash; <span class='wc'>5</span><div class='pnote'>adj. p=1.00</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+<tr><td>Professional &amp; technical services</td><td class='n'><span class='wg'>3</span> &ndash; <span class='wc'>3</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>2</span> &ndash; <span class='wc'>5</span><div class='pnote'>adj. p=1.00</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+<tr><td>Information</td><td class='n'><span class='wg'>2</span> &ndash; <span class='wc'>4</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>7</span> &ndash; <span class='wc'>3</span><div class='pnote'>adj. p=1.00</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+<tr><td>Manufacturing</td><td class='n'><span class='wg'>5</span> &ndash; <span class='wc'>4</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>2</span> &ndash; <span class='wc'>6</span><div class='pnote'>adj. p=1.00</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+<tr><td>Wholesale trade</td><td class='n'><span class='wg'>3</span> &ndash; <span class='wc'>3</span><div class='pnote'>adj. p=1.00</div></td><td class='n'><span class='wg'>1</span> &ndash; <span class='wc'>7</span><div class='pnote'>adj. p=0.63</div></td><td><span class='badge even'>No significant difference</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Wins count only tasks where a judge picked a clear winner; every other task had no clear winner and is left out.</p>
 
   <h2>How significance was tested</h2>
   <ul>
     <li><strong>Matched pairs.</strong> Both models attempted the same tasks, so each test compares them task by task rather than as two separate groups.</li>
     <li><strong>Handing in a file:</strong> an exact McNemar test. Only tasks where one model delivered and the other did not
-    (“Only GPT / only Claude”) carry information about which is better.</li>
+    (the “Only one” column) carry information about which is better.</li>
     <li><strong>Quality:</strong> an exact sign test on tasks with a clear winner, run separately for each judge. Ties and unclear
     tasks are left out of the test, never counted as wins for either side, and the two judges are never averaged.</li>
     <li><strong>Correcting for nine sectors.</strong> Testing nine sectors gives nine chances of a fluke, so p-values are
-    Holm-adjusted (“p (adj.)”). A result is called significant when the adjusted p is below 0.05.</li>
+    Holm-adjusted (“adj.”). A result is called significant when the adjusted p is below 0.05.</li>
     <li><strong>Does the gap differ between sectors?</strong> A permutation test: tasks are shuffled between sectors 100,000 times to see
     how often the sector-to-sector differences are as large as the real ones.</li>
   </ul>

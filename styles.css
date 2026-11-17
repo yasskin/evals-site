@@ -244,3 +244,13 @@ table.scorecard tr.headline td { border-top: 2px solid var(--ink); border-bottom
 details.explain { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; margin: 12px 0; }
 details.explain summary { cursor: pointer; font-weight: 600; }
 @media (max-width: 760px) { .h2h-row { grid-template-columns: 1fr 1fr; gap: 6px 10px; } .h2h-row .who, .h2h-row .none { grid-column: 1 / -1; text-align: left; } .h2h-row.h2h-head { display: none; } .h2h .none::after { content: " no clear winner"; font-size: .85rem; } }
+/* Sector number tables */
+.badge.weak { background: #f4fbf8; color: #0b6b53; border: 1px dashed #9fd8c5; }
+.pnote { font-size: 0.75rem; color: var(--muted); margin-top: 2px; white-space: nowrap; }
+.wg { color: #0b7a5f; font-weight: 700; } .wc { color: #a24e30; font-weight: 700; }
+table.numbers th small { font-weight: 500; }
+table.numbers td, table.numbers th { vertical-align: middle; }
+p.note { font-size: 0.85rem; color: var(--muted); }
+table.numbers th.n { white-space: normal; }
+table.numbers td:first-child { min-width: 150px; }
+table.numbers .mini { min-width: 60px; }
