@@ -134,6 +134,27 @@ blockquote {
 ul.tight li { margin: 4px 0; }
 code { background: #eef1f4; padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
 
+.muted { color: var(--muted); font-size: 0.9rem; }
+blockquote.prompt { font-style: normal; font-size: 0.95rem; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pair .card h3 { margin-top: 0; }
+.excerpt p:not(.muted) { font-size: 0.93rem; }
+ol.outline { margin: 0; padding-left: 22px; font-size: 0.9rem; }
+ol.outline li { margin: 2px 0; }
+a.download { font-weight: 600; }
+mark { background: #fff1a8; padding: 0 2px; }
+table.evidence td:first-child { width: 30%; font-weight: 500; }
+table.evidence td { font-size: 0.88rem; }
+table.matrix td, table.matrix th { font-size: 0.85rem; padding: 6px 8px; }
+table.matrix th.gpt-h { border-bottom: 3px solid var(--gpt); text-align: center; }
+table.matrix th.claude-h { border-bottom: 3px solid var(--claude); text-align: center; }
+td.v { text-align: center; font-weight: 700; }
+.v-pass { color: #1a7f37; }
+.v-fail { color: #c62828; background: #fdecec; }
+.v-unv { color: var(--muted); }
+details { margin: 18px 0; }
+summary { cursor: pointer; font-weight: 600; padding: 8px 0; }
+
 footer.site {
   border-top: 1px solid var(--line);
   color: var(--muted);
@@ -144,4 +165,8 @@ footer.site {
 @media (max-width: 560px) {
   h1 { font-size: 1.5rem; }
   .bar-row { grid-template-columns: 70px 1fr 90px; }
+}
+
+@media (max-width: 760px) {
+  .pair { grid-template-columns: 1fr; }
 }

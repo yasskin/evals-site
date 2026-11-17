@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GDPval gold tasks · GDPval Paired Evaluation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">GDPval Paired Evaluation<small>What the gold tasks are and how they are scored</small></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="index.html">Overview</a>
+      <a href="tasks.html" aria-current="page">GDPval gold tasks</a>
+      <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
+      <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="example.html">Worked example</a>
+      <a href="methods.html">Methods &amp; limits</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>GDPval gold tasks</h1>
+  <p>GDPval is a benchmark of realistic professional work. Each task asks a model to act as a named professional
+  and produce a real work product, usually a file such as a spreadsheet, memo, slide deck, notebook or audio mix.
+  The public <a href="https://huggingface.co/datasets/openai/gdpval">gold set</a> has 220 tasks. Every task in
+  it was run once by each model in this study.</p>
+
+  <div class="grid">
+    <div class="stat"><div class="num">220</div><div class="label">tasks</div></div>
+    <div class="stat"><div class="num">9</div><div class="label">economic sectors</div></div>
+    <div class="stat"><div class="num">44</div><div class="label">occupations, 5 tasks each</div></div>
+    <div class="stat"><div class="num">10,453</div><div class="label">human-written rubric criteria</div></div>
+    <div class="stat"><div class="num">125</div><div class="label">tasks supply input files (261 files)</div></div>
+    <div class="stat"><div class="num">47</div><div class="label">median criteria per task (14–137)</div></div>
+  </div>
+
+  <h2>Anatomy of a task</h2>
+  <div class="table-wrap"><table><tbody>
+    <tr><th>Prompt</th><td>A role, a business situation and explicit deliverable requirements. Median 307 words
+      (range 100–1,064).</td></tr>
+    <tr><th>Reference files</th><td>Inputs the professional would be handed: source spreadsheets, PDFs, contracts, audio stems.
+      125 of 220 tasks have them, up to 17 per task.</td></tr>
+    <tr><th>Gold deliverable</th><td>An expert-made answer. It shows what good looks like but is <em>not</em> what the
+      model is scored against; 35 tasks have no gold file in the public release.</td></tr>
+    <tr><th>Rubric</th><td>A checklist of weighted criteria written by people. Each criterion is a concrete, checkable
+      statement about the deliverable. This is what is scored.</td></tr>
+  </tbody></table></div>
+
+  <h2>Sectors and occupations</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sector</th><th>Tasks</th><th>Occupations (5 tasks each)</th></tr></thead>
+    <tbody><tr><td>Finance and Insurance</td><td class="n">25</td><td>Customer Service Representatives; Financial Managers; Financial and Investment Analysts; Personal Financial Advisors; Securities, Commodities, and Financial Services Sales Agents</td></tr><tr><td>Government</td><td class="n">25</td><td>Administrative Services Managers; Child, Family, and School Social Workers; Compliance Officers; First-Line Supervisors of Police and Detectives; Recreation Workers</td></tr><tr><td>Health Care and Social Assistance</td><td class="n">25</td><td>First-Line Supervisors of Office and Administrative Support Workers; Medical Secretaries and Administrative Assistants; Medical and Health Services Managers; Nurse Practitioners; Registered Nurses</td></tr><tr><td>Information</td><td class="n">25</td><td>Audio and Video Technicians; Editors; Film and Video Editors; News Analysts, Reporters, and Journalists; Producers and Directors</td></tr><tr><td>Manufacturing</td><td class="n">25</td><td>Buyers and Purchasing Agents; First-Line Supervisors of Production and Operating Workers; Industrial Engineers; Mechanical Engineers; Shipping, Receiving, and Inventory Clerks</td></tr><tr><td>Professional, Scientific, and Technical Services</td><td class="n">25</td><td>Accountants and Auditors; Computer and Information Systems Managers; Lawyers; Project Management Specialists; Software Developers</td></tr><tr><td>Real Estate and Rental and Leasing</td><td class="n">25</td><td>Concierges; Counter and Rental Clerks; Property, Real Estate, and Community Association Managers; Real Estate Brokers; Real Estate Sales Agents</td></tr><tr><td>Retail Trade</td><td class="n">20</td><td>First-Line Supervisors of Retail Sales Workers; General and Operations Managers; Pharmacists; Private Detectives and Investigators</td></tr><tr><td>Wholesale Trade</td><td class="n">25</td><td>First-Line Supervisors of Non-Retail Sales Workers; Order Clerks; Sales Managers; Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products; Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products</td></tr></tbody>
+  </table></div>
+
+  <h2>Inputs and outputs are files, not chat answers</h2>
+  <p>The work is multimodal. Models must read spreadsheets and PDFs, and they often must produce Office files,
+  notebooks or media. A text-only reply cannot satisfy criteria such as “submits exactly one PDF”.</p>
+  <div class="pair">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Reference file type</th><th>Files</th></tr></thead>
+      <tbody><tr><td>.xlsx</td><td class="n">86</td></tr><tr><td>.pdf</td><td class="n">74</td></tr><tr><td>.docx</td><td class="n">67</td></tr><tr><td>.png</td><td class="n">9</td></tr><tr><td>.wav</td><td class="n">8</td></tr><tr><td>.zip</td><td class="n">3</td></tr><tr><td>.jpg</td><td class="n">3</td></tr><tr><td>.mp3</td><td class="n">2</td></tr><tr><td>.mp4</td><td class="n">2</td></tr><tr><td>.step</td><td class="n">2</td></tr><tr><td class="muted">Other (.webp, .txt, .psd, .pptx)</td><td class="n">5</td></tr></tbody>
+    </table></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Gold deliverable type</th><th>Files</th></tr></thead>
+      <tbody><tr><td>.pdf</td><td class="n">85</td></tr><tr><td>.xlsx</td><td class="n">65</td></tr><tr><td>.docx</td><td class="n">64</td></tr><tr><td>.pptx</td><td class="n">17</td></tr><tr><td>.zip</td><td class="n">5</td></tr><tr><td>.png</td><td class="n">3</td></tr><tr><td>.mp4</td><td class="n">2</td></tr><tr><td>.ipynb</td><td class="n">1</td></tr><tr><td>.py</td><td class="n">1</td></tr><tr><td>.jpg</td><td class="n">1</td></tr><tr><td class="muted">Other (.overpassql, .md, .txt, .yaml)</td><td class="n">4</td></tr></tbody>
+    </table></div>
+  </div>
+
+  <h2>What is evaluated</h2>
+  <p>Scoring is rubric-based. A judge model reads the task, the rubric and the model’s delivered files, then gives
+  each criterion a verdict. The task score is the share of rubric points earned. Criteria range from mechanical
+  checks to expert judgement:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Kind of check</th><th>Occupation</th><th>Real criterion (verbatim)</th><th>Weight</th></tr></thead>
+    <tbody><tr><td>File format and naming</td><td>Accountants and Auditors</td><td>“The submitted deliverable is an Excel workbook file whose basename is &#x27;Sample&#x27; (accept .xlsx, .xls, or .xlsm).”</td><td class="n">+2</td></tr><tr><td>Required structure</td><td>Accountants and Auditors</td><td>“The workbook contains a worksheet named exactly &#x27;Sample Size Calculation&#x27; (case-insensitive, ignoring surrounding spaces).”</td><td class="n">+2</td></tr><tr><td>Correct numbers and data</td><td>Accountants and Auditors</td><td>“The &#x27;Sample Size Calculation&#x27; worksheet shows the population size N used and N equals the number of data rows in the Population reference (excluding header).”</td><td class="n">+2</td></tr><tr><td>Professional constraints</td><td>Lawyers</td><td>“The memorandum’s body text does not exceed three pages; any separate cover page, if present, is not counted toward the limit”</td><td class="n">+2</td></tr><tr><td>Domain substance</td><td>Lawyers</td><td>“Applies CCPA/CPRA to the facts using the defined concepts of “sell” or “share” to assess whether parental opt‑in would be required”</td><td class="n">+1</td></tr><tr><td>Works when run</td><td>Financial and Investment Analysts</td><td>“The notebook runs end-to-end in a fresh kernel (Run All) without exceptions”</td><td class="n">+2</td></tr><tr><td>Technical quality of media</td><td>Audio and Video Technicians</td><td>“Bass stem bit depth/format is professional quality: either 24-bit PCM or IEEE float”</td><td class="n">+2</td></tr><tr><td>Penalty for a professional error</td><td>Counter and Rental Clerks</td><td>“Schedules paint work in M17 on the same day that paint work is scheduled in another unit”</td><td class="n">-10</td></tr></tbody>
+  </table></div>
+
+  <div class="pair">
+    <div>
+      <h3>Weights</h3>
+      <p>Most criteria are worth 1 or 2 points. A task carries a mean of 77 positive points
+      (range 22–234). 94 penalty criteria across 18 tasks subtract points
+      for professional errors, such as double-booking contractors or clipping an audio master.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Weight</th><th>Criteria</th></tr></thead>
+        <tbody><tr><td class="n">+1</td><td class="n">5,369</td></tr><tr><td class="n">+2</td><td class="n">4,341</td></tr><tr><td class="n">+5</td><td class="n">274</td></tr><tr><td class="n">+3</td><td class="n">252</td></tr><tr><td class="n">-10</td><td class="n">64</td></tr><tr><td class="n">+4</td><td class="n">61</td></tr></tbody>
+      </table></div>
+    </div>
+    <div>
+      <h3>Verdicts</h3>
+      <ul class="tight">
+        <li><strong>pass</strong>: the delivered evidence satisfies the criterion.</li>
+        <li><strong>fail</strong>: the evidence shows it is not satisfied.</li>
+        <li><strong>unverified</strong>: the judge could not confirm it from what it could inspect, for example
+          audio quality or whether a notebook runs.</li>
+        <li><strong>unassessed</strong>: no verdict recorded because that grading attempt did not complete.</li>
+      </ul>
+      <p>Because unverified items are uncertain, scores are reported as lower and upper bounds rather than
+      a single number. Two judges, GPT and Claude, grade independently and are never
+      averaged. See <a href="methods.html">Methods &amp; limits</a>.</p>
+    </div>
+  </div>
+
+  <h2>Six example tasks</h2>
+  <p>Excerpts are the first line of the prompt; full prompts continue with detailed requirements.</p>
+  
+    <div class="card">
+      <h3>Audit sample testing on anti-financial-crime metrics</h3>
+      <p class="muted">Professional, Scientific, and Technical Services · Accountants and Auditors · task <code>83d10b06</code></p>
+      <blockquote>You are an auditor and as part of an audit engagement, you are tasked with reviewing and testing the accuracy of reported Anti-Financial Crime Risk Metrics.</blockquote>
+      <ul class="tight">
+        <li><strong>Inputs provided:</strong> Population v2.xlsx</li>
+        <li><strong>Expert gold deliverable:</strong> Sample v2.xlsx</li>
+        <li><strong>Rubric:</strong> 38 criteria, 63 positive points</li>
+      </ul>
+      <details><summary>First three rubric criteria</summary><ul class="tight"><li>The submitted deliverable is an Excel workbook file whose basename is &#x27;Sample&#x27; (accept .xlsx, .xls, or .xlsm). <span class="muted">(+2)</span></li><li>The workbook contains a worksheet named exactly &#x27;Sample Size Calculation&#x27; (case-insensitive, ignoring surrounding spaces). <span class="muted">(+2)</span></li><li>The &#x27;Sample Size Calculation&#x27; worksheet explicitly states a confidence level of 90% and a tolerable error (error rate) of 10%. <span class="muted">(+2)</span></li></ul></details>
+    </div>
+    <div class="card">
+      <h3>Children&#x27;s privacy legal memo for a lay client</h3>
+      <p class="muted">Professional, Scientific, and Technical Services · Lawyers · task <code>3f625cb2</code></p>
+      <blockquote>You are an attorney at a small law firm based in California, X Privacy Law. A client, the father of a 10-year-old boy, has approached you with concerns that YouTube may have illegally collected personal information about his child — including the child&#x27;s name, gender, age, and address — without obtaining consent…</blockquote>
+      <ul class="tight">
+        <li><strong>Inputs provided:</strong> None</li>
+        <li><strong>Expert gold deliverable:</strong> Legal Concerns Regarding VueVid Collection of Child Personal Information.pdf</li>
+        <li><strong>Rubric:</strong> 64 criteria, 76 positive points</li>
+      </ul>
+      <details><summary>First three rubric criteria</summary><ul class="tight"><li>Submits exactly one PDF file containing the legal memorandum <span class="muted">(+2)</span></li><li>The memorandum’s body text does not exceed three pages; any separate cover page, if present, is not counted toward the limit <span class="muted">(+2)</span></li><li>The submitted PDF contains selectable, machine-readable text (not only scanned images) <span class="muted">(+1)</span></li></ul></details>
+    </div>
+    <div class="card">
+      <h3>American option pricing framework in a notebook</h3>
+      <p class="muted">Finance and Insurance · Financial and Investment Analysts · task <code>c7d83f01</code></p>
+      <blockquote>You are a Quantitative Researcher at a proprietary trading firm. Historically, your desk has focused on delta-one products, but there is now a strategic initiative to expand into single-name options trading.</blockquote>
+      <ul class="tight">
+        <li><strong>Inputs provided:</strong> None</li>
+        <li><strong>Expert gold deliverable:</strong> AmericanOptionPricing.ipynb</li>
+        <li><strong>Rubric:</strong> 43 criteria, 53 positive points</li>
+      </ul>
+      <details><summary>First three rubric criteria</summary><ul class="tight"><li>Provides a Python notebook file (.ipynb) as the deliverable implementing the American option pricing framework <span class="muted">(+2)</span></li><li>The notebook runs end-to-end in a fresh kernel (Run All) without exceptions <span class="muted">(+2)</span></li><li>Implements at least three distinct American option pricing methods chosen from: binomial or trinomial tree, finite-difference PDE, Monte Carlo with early exercise (e.g., LSM), or an analytical American approximation <span class="muted">(+2)</span></li></ul></details>
+    </div>
+    <div class="card">
+      <h3>Store promotion form plus a training deck</h3>
+      <p class="muted">Retail Trade · General and Operations Managers · task <code>4d61a19a</code></p>
+      <blockquote>You are the Regional Director of a region of multiple grocery store meat departments. Each store has a meat department manager known as a Meat Team Leader that follows the process leadership of your Regional Leadership team. Team Members at the stores have complained about the quantities of products they receive…</blockquote>
+      <ul class="tight">
+        <li><strong>Inputs provided:</strong> None</li>
+        <li><strong>Expert gold deliverable:</strong> Promotion Projection Form Template.xlsx, Promotion Projection Form.pptx</li>
+        <li><strong>Rubric:</strong> 43 criteria, 69 positive points</li>
+      </ul>
+      <details><summary>First three rubric criteria</summary><ul class="tight"><li>Outputs an Excel template file in .xlsx format <span class="muted">(+2)</span></li><li>Provides a PowerPoint training deck in .pptx format <span class="muted">(+2)</span></li><li>Both the Excel template and PowerPoint deck open without corruption or repair warnings in their native apps <span class="muted">(+1)</span></li></ul></details>
+    </div>
+    <div class="card">
+      <h3>Instrumental track built on a supplied drum stem</h3>
+      <p class="muted">Information · Audio and Video Technicians · task <code>38889c3b</code></p>
+      <blockquote>You are a Music Producer in Los Angeles in 2024. You are hired by a client to create an instrumental track for a music video for a song called &#x27;Deja Vu&#x27;. The artist was heavily inspired by an uptempo, bright, and tightly looped bossa-influenced groove with a crisp, modern beat feel that is punchy and high-energy. </blockquote>
+      <ul class="tight">
+        <li><strong>Inputs provided:</strong> DRUM REFERENCE TRACK.wav</li>
+        <li><strong>Expert gold deliverable:</strong> DEJA VU  STEMS .zip</li>
+        <li><strong>Rubric:</strong> 35 criteria, 62 positive points</li>
+      </ul>
+      <details><summary>First three rubric criteria</summary><ul class="tight"><li>Exactly one top-level ZIP archive is submitted as the final deliverable (one and only one .zip file). <span class="muted">(+2)</span></li><li>The deliverable includes a Master track file in WAV format (.wav). <span class="muted">(+2)</span></li><li>The deliverable includes a Guitars stem track file in WAV format (.wav). <span class="muted">(+2)</span></li></ul></details>
+    </div>
+    <div class="card">
+      <h3>Electrostatic discharge (ESD) standard operating procedure</h3>
+      <p class="muted">Manufacturing · Shipping, Receiving, and Inventory Clerks · task <code>a4a9195c</code></p>
+      <blockquote>You are a Warehouse Manager responsible for developing processes and procedures for the team members to utilize as guidance for their daily activities and tasks. The warehouse team at your company has experienced numerous issues with electronic components failing or suffering quality issues after being issued for…</blockquote>
+      <ul class="tight">
+        <li><strong>Inputs provided:</strong> None</li>
+        <li><strong>Expert gold deliverable:</strong> ESD_Handling_and_Storage_Procedure.docx</li>
+        <li><strong>Rubric:</strong> 55 criteria, 62 positive points</li>
+      </ul>
+      <details><summary>First three rubric criteria</summary><ul class="tight"><li>The deliverable is a single Microsoft Word (.docx) file. <span class="muted">(+2)</span></li><li>The delivered document&#x27;s length is no more than 5 pages. <span class="muted">(+2)</span></li><li>The document clearly identifies itself as a standard operating procedure (SOP) for handling and storage of ESD‑sensitive items (e.g., via title or opening statement). <span class="muted">(+2)</span></li></ul></details> <a href="example.html">See both models’ artifacts for this task →</a>
+    </div>
+
+  <div class="callout">
+    <strong>Caveat.</strong> Rubrics were written by people, but grading in this study is automated and
+    provisional. It has not been validated by occupational experts. Some criteria, especially audio, video and
+    “runs end-to-end” checks, cannot be verified fully from a judge’s view of the files.
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">Data: <a href="https://huggingface.co/datasets/openai/gdpval">openai/gdpval</a>
+public gold set. Statistics generated from the dataset by <code>build_site_tasks.py</code>.</div></footer>
+</body>
+</html>
