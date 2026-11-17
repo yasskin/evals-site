@@ -80,35 +80,26 @@
   <p>GPT's lead shows up in every industry, but it is far bigger in some than others: Claude delivered on only 9 of 25 finance tasks but 24 of 25 wholesale-trade tasks. <a href="sectors.html">See the breakdown by sector →</a></p>
 
   <h2>2. Whose work was better?</h2>
-  <p>Each file was graded twice, once by a GPT judge and once by a Claude judge, without being told which model made it. For each task we compare the two models' <a class="term" href="glossary.html#score">scores</a>. Because judges sometimes cannot check an item, each score is a <a class="term" href="glossary.html#bounds">range</a>. If the two ranges overlap, the task is <a class="term" href="glossary.html#favored">unresolved</a>: we cannot say which model did better.</p>
-  <p class="howto">each bar is one judge's verdicts on all 220 tasks. Green = GPT clearly better, grey = exact tie, orange = Claude clearly better, striped = can't tell. Compare the green and orange segments to see which way each judge leans.</p>
-  <div class="card">
-    <div class="legend"><span><i class="sw gpt"></i>GPT better</span><span><i class="sw tie"></i>Exact tie</span><span><i class="sw claude"></i>Claude better</span><span><i class="sw unk"></i>Can't tell</span></div>
-    <div class="stack-row">
-      <span class="who">GPT as judge</span>
-      <div class="stack" role="img" aria-label="GPT as judge: GPT better 38, tie 8, Claude better 31, can't tell 143">
-        <span class="seg gpt" style="width:17.3%">38</span><span class="seg tie" style="width:3.6%">8</span><span class="seg claude" style="width:14.1%">31</span><span class="seg unk" style="width:65%">143</span>
-      </div>
-      <span><span class="badge gpt">Leans GPT · 38–31</span></span>
-    </div>
-    <div class="stack-row">
-      <span class="who">Claude as judge</span>
-      <div class="stack" role="img" aria-label="Claude as judge: GPT better 26, tie 10, Claude better 50, can't tell 134">
-        <span class="seg gpt" style="width:11.8%">26</span><span class="seg tie" style="width:4.5%">10</span><span class="seg claude" style="width:22.7%">50</span><span class="seg unk" style="width:60.9%">134</span>
-      </div>
-      <span><span class="badge claude">Leans Claude · 50–26</span></span>
-    </div>
-    <p style="margin:10px 0 0;color:var(--muted);font-size:.9rem">The striped segment is the majority for both judges: on most tasks neither model was clearly better. Each judge leans toward its own model.</p>
-  </div>
-  <p>Each judge appears to rate its own model somewhat more favorably, so the most trustworthy signal is where <strong>both judges agree</strong>:</p>
+  <div class="callout"><strong>Short answer: too close to call.</strong> On most tasks the judges found no clear winner. When both judges agreed, Claude came out ahead more often: 29 tasks to GPT's 17.</div>
 
-  <div class="grid" style="margin-top:12px">
-    <div class="stat gpt"><div class="num">17</div><div class="label">tasks where both judges say GPT did better</div></div>
-    <div class="stat claude"><div class="num">29</div><div class="label">tasks where both judges say Claude did better</div></div>
-    <div class="stat"><div class="num">8</div><div class="label">tasks where the judges picked opposite winners</div></div>
-    <div class="stat"><div class="num">24.3%</div><div class="label">of individual checklist items the judges could not verify</div></div>
+  <p class="howto">Two AI <a class="term" href="glossary.html#judge">judges</a>, one from each company, graded every file without knowing which model made it. Each row counts the tasks each model clearly won. A longer bar means more wins.</p>
+  <div class="card h2h" role="table" aria-label="Tasks won by each model, by judge">
+    <div class="h2h-row h2h-head" role="row"><span role="columnheader">Who decided</span><span class="r" role="columnheader">GPT won</span><span role="columnheader">Claude won</span><span class="r" role="columnheader">No clear winner</span></div>
+    <div class="h2h-row key" role="row"><span class="who" role="cell">&#9733; Both judges agree<small>Most trustworthy</small></span><span class="side gpt" role="cell"><b>17</b><i style="width:27.2%"></i></span><span class="side claude" role="cell"><i style="width:46.4%"></i><b>29</b><span class="badge claude">Claude ahead</span></span><span class="none" role="cell">174</span></div>
+    <div class="h2h-row" role="row"><span class="who" role="cell">GPT's judge</span><span class="side gpt" role="cell"><span class="badge gpt">GPT ahead</span><b>38</b><i style="width:60.8%"></i></span><span class="side claude" role="cell"><i style="width:49.6%"></i><b>31</b></span><span class="none" role="cell">151</span></div>
+    <div class="h2h-row" role="row"><span class="who" role="cell">Claude's judge</span><span class="side gpt" role="cell"><b>26</b><i style="width:41.6%"></i></span><span class="side claude" role="cell"><i style="width:80%"></i><b>50</b><span class="badge claude">Claude ahead</span></span><span class="none" role="cell">144</span></div>
   </div>
 
+  <ul>
+    <li><strong>Each judge favored its own company's model.</strong> That is why the top row, where both judges agree, is the one to trust.</li>
+    <li><strong>About 2 in 3 tasks had no clear winner</strong> under either judge.</li>
+  </ul>
+
+  <details class="explain">
+    <summary>Why can't the judges pick a winner more often?</summary>
+    <p>Judges score each file against a <a class="term" href="glossary.html#rubric">checklist</a>. Sometimes a judge cannot check an item (for example, it can't open a chart), so each <a class="term" href="glossary.html#score">score</a> is a <a class="term" href="glossary.html#bounds">range</a> rather than one number. If the two models' ranges overlap, the task is <a class="term" href="glossary.html#favored">unresolved</a>. Across all files, judges could not verify 24.3% of checklist items.</p>
+    <p>"No clear winner" combines unresolved tasks with exact ties (GPT's judge: 143 + 8; Claude's judge: 134 + 10). In the top row it covers every task where the judges did not both pick the same winner, including 8 tasks where they picked opposite winners.</p>
+  </details>
   <h2>3. What each company could improve</h2>
   <p>These pages are written for the <a class="term" href="glossary.html#trainers">teams that train each model</a>, with a suggested kind of training data to fix the weakness.</p>
   <div class="grid">
