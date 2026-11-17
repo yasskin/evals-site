@@ -34,7 +34,7 @@
       <div class="bar-row"><span>GPT</span><div class="bar-track"><div class="bar-fill gpt" style="width:95.9%"></div></div><span>211/220 · 95.9%</span></div>
       <div class="bar-row"><span>Claude</span><div class="bar-track"><div class="bar-fill claude" style="width:65.5%"></div></div><span>144/220 · 65.5%</span></div>
     </div>
-    <p style="margin:10px 0 0;color:var(--muted);font-size:.9rem">An artifact's presence does not prove the deliverable is complete or correct.</p>
+    <p style="margin:10px 0 0;color:var(--muted);font-size:.9rem">The run finished normally and left at least one file. Counting files left by runs that hit a limit too gives GPT 212/220 and Claude 153/220; those 10 partial runs were still graded. A file's presence does not prove the deliverable is complete or correct.</p>
   </div>
 
   <div class="table-wrap">
@@ -42,7 +42,8 @@
       <thead><tr><th>Primary outcome</th><th class="n">GPT</th><th class="n">Claude</th></tr></thead>
       <tbody>
         <tr><td>Conversation completed</td><td class="n">212/220</td><td class="n">158/220</td></tr>
-        <tr><td>Completed with any artifact</td><td class="n">211/220</td><td class="n">144/220</td></tr>
+        <tr><td>Completed with any artifact (headline)</td><td class="n">211/220</td><td class="n">144/220</td></tr>
+        <tr><td>Any artifact, including runs that hit a limit</td><td class="n">212/220</td><td class="n">153/220</td></tr>
         <tr><td>Incomplete conversation (limit reached)</td><td class="n">3</td><td class="n">62</td></tr>
         <tr><td>Completed without artifacts</td><td class="n">1</td><td class="n">14</td></tr>
         <tr><td>Provider or harness error</td><td class="n">5</td><td class="n">0</td></tr>
