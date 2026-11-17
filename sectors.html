@@ -13,9 +13,9 @@
     <nav class="tabs" aria-label="Sections">
       <a href="index.html">Overview</a>
       <a href="tasks.html">GDPval gold tasks</a>
+      <a href="sectors.html" aria-current="page">By sector</a>
       <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
-      <a href="sectors.html" aria-current="page">By sector</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
       <a href="glossary.html">Glossary</a>
@@ -24,8 +24,9 @@
 </header>
 
 <main class="wrap">
-  <h1>Results by sector</h1>
-  <p class="lede">Does the GPT-vs-Claude picture change from one industry to another?</p>
+  <h1>Results by sector: the industry view</h1>
+  <p class="lede">Does the GPT-vs-Claude picture change from one industry to another? This page compares both models side by side,
+  before the per-company pages go deeper on each model.</p>
 
   <div class="plain">
     <p><strong>In plain English:</strong> GDPval groups its 220 tasks into nine <a class="term" href="glossary.html#sector">sectors</a>
@@ -112,6 +113,13 @@
     20–25 tasks and one attempt per model. Grades are <a class="term" href="glossary.html#provisional">provisional</a> and automated,
     and most quality comparisons are unresolved. Sectors also differ in the kinds of files and inputs their tasks involve, so a sector gap does
     not prove that the industry itself is the cause.
+  </div>
+
+  <h2>Next: what each company could improve</h2>
+  <p>The company pages turn these patterns into specific weaknesses and suggested training data for each model's team.</p>
+  <div class="grid">
+    <div class="card gpt"><h3>For OpenAI (GPT)</h3><p>GPT delivered almost everywhere; the open question is whether its files meet every requirement.</p><a href="gpt.html">See GPT findings →</a></div>
+    <div class="card claude"><h3>For Anthropic (Claude)</h3><p>Claude's delivery gap is largest in Finance &amp; insurance, where it often ran out of room before saving a file.</p><a href="claude.html">See Claude findings →</a></div>
   </div>
 </main>
 

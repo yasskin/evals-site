@@ -6,9 +6,9 @@ Static GitHub Pages site summarizing the paired GPT-6 Astra vs. Claude Opus 5.5 
 | --- | --- |
 | `index.html` | Overview: delivery, judge outcomes, retry study |
 | `tasks.html` | GDPval gold tasks: sectors, file types, rubric structure, example tasks |
+| `sectors.html` | Industry overview: GPT vs. Claude by sector, with paired significance tests and two SVG charts |
 | `gpt.html` | OpenAI model trainers |
 | `claude.html` | Anthropic model trainers |
-| `sectors.html` | GPT vs. Claude by sector, with paired significance tests and two SVG charts |
 | `example.html` | Worked example: one task's prompt, both artifacts and all rubric verdicts |
 | `methods.html` | Protocol, grading coverage, score bounds, limitations |
 | `glossary.html` | Plain-English definitions; jargon elsewhere links here via `a.term` anchors |
