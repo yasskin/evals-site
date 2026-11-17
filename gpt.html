@@ -16,8 +16,10 @@
       <a href="sectors.html">By sector</a>
       <a class="gpt" href="gpt.html" aria-current="page">For OpenAI (GPT)</a>
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="failures.html">Failures</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="data.html">Data &amp; code</a>
       <a href="glossary.html">Glossary</a>
     </nav>
   </div>
@@ -30,6 +32,15 @@
   <div class="plain">
     <strong>In plain English</strong>
     <p>GPT is very reliable at producing the requested file. But when the files are checked line by line against the task's <a class="term" href="glossary.html#rubric">checklist</a>, they sometimes skip specific required details. A document can look polished and still be unusable at work if it misses a required safety step. The fix we suggest is training examples that teach the model to cover every stated requirement.</p>
+  </div>
+
+  <div class="card gpt pitch">
+    <h3>Why this dataset is worth buying</h3>
+    <ul class="tight">
+      <li><strong>The problem is quality, not delivery.</strong> GPT delivered 211 of 220 files, but on 67 of the 143 tasks where both models delivered, both judges failed a GPT checklist item that both judges passed for Claude.</li>
+      <li><strong>The misses that matter are judgment calls.</strong> In our 12-item GPT draft ledger, 5 are domain-judgment errors and 4 are high severity, such as a wrong legal bottom line or invented figures a board could act on.</li>
+      <li><strong>It is testable.</strong> Expert checklists turn "complete" into pass/fail checks, so improvement can be measured on held-out tasks.</li>
+    </ul>
   </div>
 
   <div class="grid">
@@ -67,16 +78,22 @@
     </table>
   </div>
 
-  <h2>Suggested training data: cover every requirement</h2>
-  <p>A <a class="term" href="glossary.html#dataset">training dataset proposal</a> describes new examples that could teach the model to fix this weakness.</p>
-  <div class="card">
-    <ul class="tight">
-      <li><strong>Tasks:</strong> professional instructions and input files with many specific requirements, such as procedures, reports and regulated documents.</li>
-      <li><strong>Expert guidance:</strong> checklists from experts that link each requirement to the part of the file that satisfies it.</li>
-      <li><strong>Near-misses:</strong> plausible but incomplete files, paired with expert corrections.</li>
-      <li><strong>Automatic checks:</strong> format and content rules a computer can verify where possible.</li>
-    </ul>
-  </div>
+  <h2>Proposed dataset: cover every requirement</h2>
+  <p>A <a class="term" href="glossary.html#dataset">training dataset proposal</a> describes new examples that could teach the model to fix this weakness. This is a draft specification; sizes are starting points to test, not commitments.</p>
+  <div class="table-wrap"><table class="spec">
+    <tbody>
+      <tr><th>Task mix</th><td>Requirement-dense professional deliverables where a missed detail changes the decision: legal memos, engineering and safety procedures, deal documents, financial analyses and clinical or pharmacy guidance.</td></tr>
+      <tr><th>Inputs</th><td>Realistic instructions plus reference files (spreadsheets, PDFs, prior records) that contain the facts the answer must use.</td></tr>
+      <tr><th>Gold outputs</th><td>Expert-written files in the requested format that satisfy every stated requirement.</td></tr>
+      <tr><th>Expert annotations</th><td>A requirement checklist that links each item to the part of the gold file that satisfies it, with a severity label (high / medium / low).</td></tr>
+      <tr><th>Negative / repair pairs</th><td>Plausible but incomplete drafts (polished, yet missing a safety step, deal term or legal conclusion) paired with the expert's corrected version.</td></tr>
+      <tr><th>Acceptance tests</th><td>Machine-checkable format and content rules where possible, plus expert review of the high-severity items.</td></tr>
+      <tr><th>Proposed size</th><td>A pilot of about 300 tasks across the professions where GPT missed items most often, scaled only if the held-out test below improves.</td></tr>
+      <tr><th>Evidence so far</th><td>29 of 220 tasks where both judges scored Claude clearly higher; 67 of 143 both-delivered tasks with a checklist item both judges failed for GPT and passed for Claude; 12 draft ledger items (5 domain judgment, 3 completeness, 2 quantitative). See <a href="failures.html">Failures</a>.</td></tr>
+      <tr><th>Other explanations</th><td>GPT ran with a <strong>low</strong> reasoning setting, so some misses may disappear at higher effort. AI judges are not yet checked against human experts.</td></tr>
+      <tr><th>Follow-up test</th><td>Re-run the 29 tasks and new held-out tasks from the same occupations at a higher reasoning setting. Have experts count critical omissions. The dataset is worth building if omissions persist.</td></tr>
+    </tbody>
+  </table></div>
   <blockquote>"Your model already delivers files reliably. The opportunity is making them operationally complete: covering the specific requirements that separate a plausible document from a usable one."</blockquote>
   <p><strong>How to tell it worked:</strong> experts find fewer critical omissions on new tasks, and the model still delivers files just as often.</p>
 

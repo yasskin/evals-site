@@ -254,3 +254,28 @@ p.note { font-size: 0.85rem; color: var(--muted); }
 table.numbers th.n { white-space: normal; }
 table.numbers td:first-child { min-width: 150px; }
 table.numbers .mini { min-width: 60px; }
+
+/* ---- Failures ledger, cost and trust sections ---- */
+.sev { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+.sev-high { background: #fdecec; color: #b42318; border: 1px solid #f3b4ae; }
+.sev-med { background: #fff4e0; color: #8a5300; border: 1px solid #f1cf8f; }
+.sev-low { background: #eef1f4; color: var(--muted); border: 1px solid var(--line); }
+.sev-na { background: #eef3fb; color: #2f5597; border: 1px dashed #9db5dd; }
+table.ledger td { font-size: 0.86rem; }
+table.ledger td:nth-child(2), table.ledger td:nth-child(3) { min-width: 200px; }
+code.hash { word-break: break-all; font-size: 0.78rem; }
+table.cost td.n b { font-size: 1rem; }
+.checklist { list-style: none; padding: 0; display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.checklist li { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; font-size: 0.9rem; }
+.checklist li b { display: block; }
+.checklist li .st { font-size: 0.78rem; font-weight: 600; }
+.st.done { color: #1a7f37; } .st.done::before { content: "\2713\00a0"; }
+.st.part { color: #8a5300; } .st.part::before { content: "\25D0\00a0"; }
+
+/* ---- Pitch box and dataset spec card ---- */
+.card.pitch h3 { margin-top: 0; }
+.card.pitch ul { margin-bottom: 0; }
+table.spec { width: 100%; }
+table.spec th { text-align: left; width: 190px; vertical-align: top; background: var(--card); white-space: nowrap; }
+table.spec td { vertical-align: top; }
+@media (max-width: 640px) { table.spec th { white-space: normal; width: 110px; } }

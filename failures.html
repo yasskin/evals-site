@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Failures · GDPval Paired Evaluation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">GDPval Paired Evaluation<small>Which failures matter, and which are noise</small></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="index.html">Overview</a>
+      <a href="tasks.html">GDPval gold tasks</a>
+      <a href="sectors.html">By sector</a>
+      <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
+      <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="failures.html" aria-current="page">Failures</a>
+      <a href="example.html">Worked example</a>
+      <a href="methods.html">Methods &amp; limits</a>
+      <a href="data.html">Data &amp; code</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>What went wrong, and which failures matter</h1>
+  <p class="lede">A failure taxonomy sorts mistakes into types so a researcher can see which are worth fixing with data and which are noise. We split failures into two kinds: tasks where no usable file was produced, and errors inside files that were handed in.</p>
+
+  <div class="plain">
+    <strong>In plain English</strong>
+    <p>Not every failure says something about the model. A server timeout is noise. A checklist that contradicts its own task is a grading problem. A model that runs out of room before saving its work, or confidently writes the wrong case number, is a real gap a dataset could target. Each failure below is labeled with who or what was responsible and whether it matters to a researcher.</p>
+  </div>
+
+  <div class="grid">
+    <div class="stat claude"><div class="num">85</div><div class="label">tasks with no usable file (9 GPT, 76 Claude), all classified</div></div>
+    <div class="stat"><div class="num">30</div><div class="label">errors inside delivered files, classified in a draft ledger</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">of the 30 rated high severity (could mislead a decision)</div></div>
+    <div class="stat"><div class="num">4</div><div class="label">of the 30 are grading problems or noise, not model weaknesses</div></div>
+  </div>
+
+  <h2>Part A: tasks that produced no usable file (85 of 440 attempts)</h2>
+  <p class="howto">each row is one cause. "Matters?" asks whether the failure tells a researcher something about the model that better data could fix. Every one of the 85 attempts was checked against its saved run records.</p>
+  <div class="table-wrap">
+    <table class="numbers">
+      <thead><tr><th>What happened</th><th class="n">GPT</th><th class="n">Claude</th><th>Responsible</th><th>Matters?</th></tr></thead>
+      <tbody>
+        <tr><td>Ran out of its 50,000-token writing budget mid-task<div class="pnote" style="white-space:normal">Claude spent its budget exploring before writing the file.</div></td><td class="n">–</td><td class="n">33</td><td>Model + limits</td><td><span class="badge gpt">Yes</span></td></tr>
+        <tr><td>Final reply cut off before it finished<div class="pnote" style="white-space:normal">The answer was too long for one reply.</div></td><td class="n">–</td><td class="n">14</td><td>Model + limits</td><td><span class="badge gpt">Yes</span></td></tr>
+        <tr><td>Used all 14 turns while still working<div class="pnote" style="white-space:normal">Still working when the turn limit hit.</div></td><td class="n">3</td><td class="n">15</td><td>Model + limits</td><td><span class="badge gpt">Yes</span></td></tr>
+        <tr><td>Used all 24 tool calls, then wrote the content as chat text instead of a file<div class="pnote" style="white-space:normal">The most actionable: the work existed but the save step never ran.</div></td><td class="n">–</td><td class="n">13</td><td>Model</td><td><span class="badge gpt">Yes</span></td></tr>
+        <tr><td>Web-search request cut off; our software could not read it<div class="pnote" style="white-space:normal">Shorter requests or better error recovery would fix it.</div></td><td class="n">3</td><td class="n">–</td><td>Model + harness</td><td><span class="badge weak">Partly</span></td></tr>
+        <tr><td>Requested video not produced<div class="pnote" style="white-space:normal">GPT said it could not export video; not independently checked.</div></td><td class="n">1</td><td class="n">–</td><td>Tool limit</td><td><span class="badge weak">Partly</span></td></tr>
+        <tr><td>OpenAI server timed out<div class="pnote" style="white-space:normal">Network noise; says nothing about the model.</div></td><td class="n">2</td><td class="n">–</td><td>Provider</td><td><span class="badge even">No, noise</span></td></tr>
+        <tr><td>Content filter returned an empty answer<div class="pnote" style="white-space:normal">An operations issue, not a training-data gap.</div></td><td class="n">–</td><td class="n">1</td><td>Provider / serving</td><td><span class="badge even">No, noise</span></td></tr>
+        <tr><td><strong>Total</strong></td><td class="n"><strong>9</strong></td><td class="n"><strong>76</strong></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Nine of these attempts left partial files (1 GPT, 8 Claude). Limits were identical for both models: 14 turns, 24 tool calls and 50,000 written tokens per task. In a separate follow-up with larger limits, 53 of 62 cut-off Claude tasks produced a file (<a href="claude.html">details</a>).</p>
+
+  <h2>Part B: errors inside delivered files (draft ledger of 30)</h2>
+  <div class="callout"><strong>Status: draft.</strong> Each item was classified from both AI judges' cited evidence. A human re-check of each item against the original file is still pending, so treat severities as provisional. <a href="data/failure_ledger_draft.csv">Download the full ledger (CSV)</a> with task, run and checklist-item IDs and both judges' reasoning.</div>
+  <h3>How the 30 were chosen</h3>
+  <ol class="steps">
+    <li><strong>Start from agreement</strong>Only checklist items that <em>both</em> judges failed. One judge alone is not enough.</li>
+    <li><strong>Find contrasts</strong>On the 143 tasks where both models delivered a file: 67 tasks where both judges failed an item for GPT and passed it for Claude, 40 the reverse, and 86 where both failed.</li>
+    <li><strong>Prioritize weight</strong>Highest-weight item per task, so the errors that cost the most points come first.</li>
+    <li><strong>Spread and label</strong>Picked 12 GPT, 12 Claude and 6 shared items across occupations, then labeled each one's type and severity.</li>
+  </ol>
+  <p class="note">Those counts compare the two models on the same tasks, but they do not include judge self-preference or unverifiable items, so read them as a direction, not a rate.</p>
+
+  <h3>Types of error, by model</h3>
+  <div class="table-wrap">
+    <table class="numbers" style="max-width:620px">
+      <thead><tr><th>Error type</th><th class="n">GPT</th><th class="n">Claude</th><th class="n">Both</th></tr></thead>
+      <tbody>
+        <tr><td>Reference grounding</td><td class="n">1</td><td class="n">3</td><td class="n">–</td></tr>
+        <tr><td>Quantitative reasoning</td><td class="n">2</td><td class="n">4</td><td class="n">1</td></tr>
+        <tr><td>Domain judgment &amp; risk</td><td class="n">5</td><td class="n">2</td><td class="n">–</td></tr>
+        <tr><td>Completeness</td><td class="n">3</td><td class="n">1</td><td class="n">1</td></tr>
+        <tr><td>Format &amp; constraints</td><td class="n">1</td><td class="n">2</td><td class="n">–</td></tr>
+        <tr><td>Tool or modality limit</td><td class="n">–</td><td class="n">–</td><td class="n">2</td></tr>
+        <tr><td>Grader / rubric defect</td><td class="n">–</td><td class="n">–</td><td class="n">2</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="legend"><span><span class="sev sev-high">High</span> could mislead a decision</span><span><span class="sev sev-med">Medium</span> needs rework before use</span><span><span class="sev sev-low">Low</span> cosmetic or debatable</span><span><span class="sev sev-na">Not a model failure</span> grading problem</span></p>
+
+  <h3>GPT-6 Astra: 12 errors</h3>
+  <div class="table-wrap"><table class="numbers ledger">
+      <thead><tr><th>Occupation</th><th>The checklist required</th><th>What went wrong</th><th>Type</th><th>Severity</th></tr></thead>
+      <tbody>
+        <tr><td>Medical and Health Services Managers<div class="pnote"><code>61e7b9c6</code></div></td>
+          <td>A one-month uninsured cost for every medication in a formulary</td><td>Costs missing for almost every medication</td>
+          <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Administrative Services Managers<div class="pnote"><code>27e8912c</code></div></td>
+          <td>Carry every column of a source checklist PDF into a Word version</td><td>Items copied, but the per-item details from the PDF were dropped</td>
+          <td>Reference grounding</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products<div class="pnote"><code>fe0d3941</code></div></td>
+          <td>A Yes/No-only survey with no free-text fields</td><td>Added a fill-in blank on both pages<div class="pnote" style="white-space:normal">Cosmetic; easy to fix</div></td>
+          <td>Format &amp; constraints</td><td><span class="sev sev-low">Low</span></td></tr>
+        <tr><td>Concierges<div class="pnote"><code>f5d428fd</code></div></td>
+          <td>A yacht itinerary covering six named islands</td><td>Three of the six destinations are not stops</td>
+          <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Mechanical Engineers<div class="pnote"><code>46fc494e</code></div></td>
+          <td>Interpret a heat map, including whether any hotspot is within 10 °C of a 150 °C limit</td><td>No interpretation of the safety margin<div class="pnote" style="white-space:normal">Safety-relevant engineering conclusion left out</div></td>
+          <td>Domain judgment &amp; risk</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Private Detectives and Investigators<div class="pnote"><code>57b2cdf2</code></div></td>
+          <td>Confirm that surveillance photos match the logged events</td><td>The report declines to confirm the match<div class="pnote" style="white-space:normal">Debatable: caution can be professionally defensible</div></td>
+          <td>Domain judgment &amp; risk</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Lawyers<div class="pnote"><code>a97369c7</code></div></td>
+          <td>Conclude that a shareholder veto right is facially enforceable under Delaware law</td><td>Treats the charter clause as an obstacle, the opposite conclusion<div class="pnote" style="white-space:normal">Wrong legal bottom line</div></td>
+          <td>Domain judgment &amp; risk</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Real Estate Brokers<div class="pnote"><code>2d06bc0a</code></div></td>
+          <td>Letter of intent states when the extra deposit becomes nonrefundable</td><td>Key deal term deferred instead of stated<div class="pnote" style="white-space:normal">Money-at-risk term missing from a deal document</div></td>
+          <td>Domain judgment &amp; risk</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Pharmacists<div class="pnote"><code>045aba2e</code></div></td>
+          <td>Monthly check of the pharmacist-to-technician ratio under California rules</td><td>Cites the regulation but never schedules the check</td>
+          <td>Domain judgment &amp; risk</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Medical Secretaries and Administrative Assistants<div class="pnote"><code>f1be6436</code></div></td>
+          <td>Travel plan that gets the doctor back to Chicago by 3 pm, with arrival time shown</td><td>No arrival time documented</td>
+          <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Financial Managers<div class="pnote"><code>b78fd844</code></div></td>
+          <td>Say only whether each project&#x27;s return is above or below 9%, without inventing numbers</td><td>Reports precise returns calculated from invented cash flows<div class="pnote" style="white-space:normal">Fabricated precision a board could act on</div></td>
+          <td>Quantitative reasoning</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>05389f78</code></div></td>
+          <td>Report one supplier&#x27;s cost difference versus another (₹769.56 million)</td><td>The required comparison figure is missing</td>
+          <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
+      </tbody></table></div>
+
+  <h3>Claude Opus 5.5: 12 errors</h3>
+  <div class="table-wrap"><table class="numbers ledger">
+      <thead><tr><th>Occupation</th><th>The checklist required</th><th>What went wrong</th><th>Type</th><th>Severity</th></tr></thead>
+      <tbody>
+        <tr><td>Concierges<div class="pnote"><code>f5d428fd</code></div></td>
+          <td>A polished, client-ready luxury itinerary</td><td>Missing images and large empty areas<div class="pnote" style="white-space:normal">Presentation only</div></td>
+          <td>Format &amp; constraints</td><td><span class="sev sev-low">Low</span></td></tr>
+        <tr><td>Lawyers<div class="pnote"><code>a97369c7</code></div></td>
+          <td>Conclude that the board likely breached its duty of loyalty</td><td>Lists risks but never reaches the required conclusion<div class="pnote" style="white-space:normal">Hedged legal advice</div></td>
+          <td>Domain judgment &amp; risk</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Personal Financial Advisors<div class="pnote"><code>c657103b</code></div></td>
+          <td>Calculate conversion tax at a flat 35% marginal rate</td><td>Used a bracket-filling method instead<div class="pnote" style="white-space:normal">Debatable: the alternative method may be more realistic</div></td>
+          <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Counter and Rental Clerks<div class="pnote"><code>61f546a8</code></div></td>
+          <td>Schedule carpet cleaning before staff work in unit M2</td><td>Scheduled it after staff work<div class="pnote" style="white-space:normal">Ignores an ordering constraint in the inputs</div></td>
+          <td>Reference grounding</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Customer Service Representatives<div class="pnote"><code>d025a41c</code></div></td>
+          <td>Quote real agent statements from the support case file</td><td>Quoted a customer line and claimed an agent message was missing when it exists<div class="pnote" style="white-space:normal">Misstates the record being reviewed</div></td>
+          <td>Reference grounding</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>93b336f3</code></div></td>
+          <td>Phase 1 covers local assembly of vehicles, battery packs and motor controllers</td><td>Vehicles and motor controllers left out</td>
+          <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>e996036e</code></div></td>
+          <td>Year-1 shipments total $225,000</td><td>Totals $255,000; Claude flagged the brief as inconsistent<div class="pnote" style="white-space:normal">Possibly a rubric problem, not a model error</div></td>
+          <td>Quantitative reasoning</td><td><span class="sev sev-low">Low</span></td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>3f821c2d</code></div></td>
+          <td>Totals computed with formulas that sum the channel cells</td><td>Numerically correct, but not built the required way<div class="pnote" style="white-space:normal">Noise: same numbers</div></td>
+          <td>Format &amp; constraints</td><td><span class="sev sev-low">Low</span></td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>05389f78</code></div></td>
+          <td>Report one supplier&#x27;s investment difference (₹294.39 million)</td><td>The required figure is never stated</td>
+          <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Registered Nurses<div class="pnote"><code>116e791e</code></div></td>
+          <td>Nursing care plan includes ordering lab tests for infection risk</td><td>That intervention is missing</td>
+          <td>Domain judgment &amp; risk</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Child, Family, and School Social Workers<div class="pnote"><code>76d10872</code></div></td>
+          <td>Court case number PT-2025-1782</td><td>Wrote DV-2025-1782, the wrong case number<div class="pnote" style="white-space:normal">Wrong legal identifier in a case file</div></td>
+          <td>Reference grounding</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Pharmacists<div class="pnote"><code>ffed32d8</code></div></td>
+          <td>Revenue difference defined as 100-day minus 90-day</td><td>Defined the other way round, so signs are flipped</td>
+          <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
+      </tbody></table></div>
+
+  <h3>Both models: 6 shared failures</h3>
+  <div class="table-wrap"><table class="numbers ledger">
+      <thead><tr><th>Occupation</th><th>The checklist required</th><th>What went wrong</th><th>Type</th><th>Severity</th></tr></thead>
+      <tbody>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><code>d7cfae6f</code></div></td>
+          <td>Inventory coverage = total supply ÷ expected sales</td><td>Both models subtracted demand from supply<div class="pnote" style="white-space:normal">Same error in both: the prompt may be ambiguous</div></td>
+          <td>Quantitative reasoning</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Compliance Officers<div class="pnote"><code>7bbfcfe9</code></div></td>
+          <td>Workbook includes an &#x27;Exercise of Rights&#x27; tab</td><td>Neither model created it</td>
+          <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Real Estate Brokers<div class="pnote"><code>0818571f</code></div></td>
+          <td>A map for each property listing</td><td>Neither model included maps<div class="pnote" style="white-space:normal">Needs map tools, not just data</div></td>
+          <td>Tool or modality limit</td><td><span class="sev sev-med">Medium</span></td></tr>
+        <tr><td>Concierges<div class="pnote"><code>f5d428fd</code></div></td>
+          <td>One photo per itinerary day</td><td>Neither model included photos<div class="pnote" style="white-space:normal">Needs image tools</div></td>
+          <td>Tool or modality limit</td><td><span class="sev sev-low">Low</span></td></tr>
+        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><code>a95a5829</code></div></td>
+          <td>Checklist demands a PDF</td><td>The task itself asked for a Word file<div class="pnote" style="white-space:normal">The checklist contradicts the task</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><code>4c4dc603</code></div></td>
+          <td>Checklist demands a specific phone number</td><td>Both used the number the task gave<div class="pnote" style="white-space:normal">The checklist contradicts the task</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+      </tbody></table></div>
+
+  <h2>Three patterns worth building data for</h2>
+  <div class="pair">
+    <div class="card claude">
+      <h3>1. Claude runs out of room before saving the file</h3>
+      <p><strong>Evidence:</strong> 76 of 220 tasks without a usable file; 13 used every tool call and then pasted the content as chat text. With larger limits, 53 of 62 cut-off tasks delivered.</p>
+      <p><strong>Other explanation:</strong> the limits may simply be tight for Claude's default reasoning. The retry shows budget sensitivity, not a single cause.</p>
+      <p><strong>Data that could help:</strong> worked examples that save a first draft early and then improve it, under explicit budgets.</p>
+      <p style="margin-bottom:0"><strong>Follow-up test:</strong> rerun the 76 tasks at the same limits; count files and grade them.</p>
+    </div>
+    <div class="card gpt">
+      <h3>2. GPT's files look finished but miss specific requirements</h3>
+      <p><strong>Evidence:</strong> on 143 tasks where both delivered, both judges failed a GPT checklist item that they passed for Claude on 67 tasks, versus 40 the other way. Examples above include a wrong legal conclusion, invented return figures and a missing safety margin.</p>
+      <p><strong>Other explanation:</strong> GPT ran with a low reasoning setting, and judges may prefer their own model's style.</p>
+      <p><strong>Data that could help:</strong> requirement-dense tasks with item-by-item expert checklists and near-miss files paired with corrections.</p>
+      <p style="margin-bottom:0"><strong>Follow-up test:</strong> new held-out tasks scored by experts on critical omissions.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>3. Both: the grading itself is a gap, so evaluation data has value too</h3>
+    <p><strong>Evidence:</strong> judges could not verify 24.3% of checklist items, including 98% of items on PowerPoint files. Two of the 30 ledger items are checklists that contradict their own task. Both models also failed the same items on 86 tasks, often ones needing maps, photos or careful formulas.</p>
+    <p style="margin-bottom:0"><strong>Data that could help:</strong> rendered gold-standard files, machine-checkable acceptance tests and audited checklists. These make an evaluation trustworthy for <em>both</em> labs before any training claim. See <a href="methods.html#judges">Can we trust the judges?</a></p>
+  </div>
+  <p class="note">These patterns come from one try per task and AI grading. They suggest where data might help; they do not show that training on such data would improve either model.</p>
+
+</main>
+
+<footer class="site"><div class="wrap">Provisional results. <a href="methods.html">Methods and limitations</a>.</div></footer>
+</body>
+</html>

@@ -16,8 +16,10 @@
       <a href="sectors.html">By sector</a>
       <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="failures.html">Failures</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="data.html">Data &amp; code</a>
       <a href="glossary.html" aria-current="page">Glossary</a>
     </nav>
   </div>
@@ -77,6 +79,21 @@
 
     <dt id="token">Token</dt>
     <dd>The unit AI models read and write in, roughly three-quarters of an English word. Token counts measure how much text a model generated and drive cost.</dd>
+
+    <dt id="hash">Hash (SHA-256 fingerprint)</dt>
+    <dd>A long code calculated from a file's exact contents. If even one byte changes, the code changes, so matching hashes prove the inputs and outputs were not altered.</dd>
+
+    <dt id="taxonomy">Failure taxonomy</dt>
+    <dd>A set of categories for sorting mistakes by type, such as a calculation error, a misread input or a missing requirement. It shows which failures repeat and which a dataset could target. <span class="eg">See the <a href="failures.html">Failures</a> page.</span></dd>
+
+    <dt id="severity">Severity</dt>
+    <dd>How much a mistake matters. <strong>High</strong>: could mislead a real decision, such as a wrong case number or invented figures. <strong>Medium</strong>: needs rework before use. <strong>Low</strong>: cosmetic or debatable.</dd>
+
+    <dt id="kappa">Agreement (kappa)</dt>
+    <dd>A measure of how often two graders agree beyond what chance alone would produce. 0 means chance-level agreement and 1 means perfect agreement; above 0.8 is usually read as strong.</dd>
+
+    <dt id="slice">Slice</dt>
+    <dd>A smaller set of tasks chosen for close, hand-checked inspection. Ours is chosen by a rule fixed before seeing results: the six occupations where the judges agreed most strongly on a difference.</dd>
 
     <dt id="turn">Turn</dt>
     <dd>One round of the model responding (and possibly calling tools) before the harness replies with results.</dd>

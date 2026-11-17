@@ -16,8 +16,10 @@
       <a href="sectors.html">By sector</a>
       <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
       <a class="claude" href="claude.html" aria-current="page">For Anthropic (Claude)</a>
+      <a href="failures.html">Failures</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="data.html">Data &amp; code</a>
       <a href="glossary.html">Glossary</a>
     </nav>
   </div>
@@ -30,6 +32,15 @@
   <div class="plain">
     <strong>In plain English</strong>
     <p>Every task had the same <a class="term" href="glossary.html#budget">limits</a>: at most 14 rounds of work, 24 actions such as web searches, and a cap on how much text the model could write. Claude often spent its allowance researching and planning, then ran out before saving the requested file. When Claude <em>did</em> deliver, its files often scored well. The fix we suggest is training examples that teach the model to save a basic version of the file early and then improve it.</p>
+  </div>
+
+  <div class="card claude pitch">
+    <h3>Why this dataset is worth buying</h3>
+    <ul class="tight">
+      <li><strong>Delivery is the biggest, cheapest gap.</strong> 76 of 220 tasks ended without a usable file, versus 9 for GPT. However good the unfinished work was, none of it reached the customer.</li>
+      <li><strong>The work was mostly there.</strong> With more room, 53 of the 62 cut-off tasks produced a file, so the skill to learn is budgeting: deliver first, then improve.</li>
+      <li><strong>Quality is the second step.</strong> On tasks where both delivered, our 12-item Claude draft ledger shows quantitative errors (4) and misread inputs (3), such as a wrong legal identifier in a case file.</li>
+    </ul>
   </div>
 
   <div class="grid">
@@ -64,16 +75,22 @@
   <h2>Where Claude's work was stronger</h2>
   <p>Where both judges agreed, Claude did better on 29 tasks and GPT on 17. Examples include a surveillance report that tied photo evidence to each timeline entry, and the warehouse safety procedure in the <a href="example.html">worked example</a>. On most tasks the judges could not separate the two models, so this is not an overall ranking.</p>
 
-  <h2>Suggested training data: deliver first, then improve</h2>
-  <p>A <a class="term" href="glossary.html#dataset">training dataset proposal</a> describes new examples that could teach the model to fix this weakness.</p>
-  <div class="card">
-    <ul class="tight">
-      <li><strong>Tasks:</strong> long, multi-step professional assignments involving input files, research and file creation.</li>
-      <li><strong>Worked examples:</strong> sessions that save a basic but complete file early, then improve it.</li>
-      <li><strong>Budget awareness:</strong> examples that track remaining limits and spend effort on the essential steps first.</li>
-      <li><strong>Automatic checks:</strong> the requested file exists, opens and covers the core requirements before the session ends.</li>
-    </ul>
-  </div>
+  <h2>Proposed dataset: deliver first, then improve</h2>
+  <p>A <a class="term" href="glossary.html#dataset">training dataset proposal</a> describes new examples that could teach the model to fix this weakness. This is a draft specification; sizes are starting points to test, not commitments.</p>
+  <div class="table-wrap"><table class="spec">
+    <tbody>
+      <tr><th>Task mix</th><td>Long, multi-step professional assignments that need research, input files and a saved file: financial models, reports, presentations and spreadsheets, weighted toward finance where the gap was largest.</td></tr>
+      <tr><th>Inputs</th><td>Instructions, reference files and an explicit budget (rounds, actions and tokens), shown to the model as it works.</td></tr>
+      <tr><th>Gold outputs</th><td>Complete sessions that save a basic but valid file early, then improve it, and end with the file finished inside the budget.</td></tr>
+      <tr><th>Expert annotations</th><td>Marks on which steps were essential versus optional, and a requirement checklist for the final file.</td></tr>
+      <tr><th>Negative / repair pairs</th><td>Sessions that ran out of budget without a file, paired with a repaired session that delivers. Our 62 cut-off runs are ready-made examples of the failure.</td></tr>
+      <tr><th>Acceptance tests</th><td>Automatic: the file exists, opens and matches the requested format before the session ends. Expert review: core requirements covered.</td></tr>
+      <tr><th>Proposed size</th><td>A pilot of about 300 tasks with varied budgets, scaled only if the held-out test below improves.</td></tr>
+      <tr><th>Evidence so far</th><td>76 of 220 tasks with no usable file; 62 cut off by a limit; 53 of 62 produced a file with more room. On quality: 40 of 143 both-delivered tasks with a checklist item both judges failed for Claude and passed for GPT; 12 draft ledger items (4 quantitative, 3 reference grounding). See <a href="failures.html">Failures</a>.</td></tr>
+      <tr><th>Other explanations</th><td>The limits may simply be too tight for Claude's style; the retry raised several limits at once; and Claude ran through Databricks, whose serving setup may differ from Anthropic's.</td></tr>
+      <tr><th>Follow-up test</th><td>Re-run the 62 tasks raising <em>one</em> limit at a time, and grade the retry files. The dataset is worth building if a simple instruction such as "save a draft early" does not close the gap within the original limits.</td></tr>
+    </tbody>
+  </table></div>
   <blockquote>"The opportunity is converting more of Claude's work into delivered outcomes. These tasks show where planning and tool use consume the budget before the professional artifact exists."</blockquote>
   <p><strong>How to tell it worked:</strong> more correct, complete files within the same limits, not just more tasks marked "done".</p>
 

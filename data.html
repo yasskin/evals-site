@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data &amp; code · GDPval Paired Evaluation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">GDPval Paired Evaluation<small>Reproducibility, frozen settings and the full status matrix</small></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="index.html">Overview</a>
+      <a href="tasks.html">GDPval gold tasks</a>
+      <a href="sectors.html">By sector</a>
+      <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
+      <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="failures.html">Failures</a>
+      <a href="example.html">Worked example</a>
+      <a href="methods.html">Methods &amp; limits</a>
+      <a href="data.html" aria-current="page">Data &amp; code</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Data and code: how to check our work</h1>
+  <p class="lede">Every number on this site comes from saved run records. This page lists what was frozen before running, the checks that passed, the code that produced the results and the status of all 440 attempts.</p>
+
+  <div class="plain">
+    <strong>In plain English</strong>
+    <p>A trustworthy evaluation is one someone else can re-check. We fixed the settings before running, recorded a fingerprint (a <a class="term" href="glossary.html#hash">hash</a>) of every input, saved every request and reply, and never dropped a failed task from the totals.</p>
+  </div>
+
+  <h2>The pipeline</h2>
+  <ol class="steps">
+    <li><strong>1. Preflight</strong>Checked all 220 tasks, 10,453 checklist items and 261 input files (1.66 GB) before any paid run.</li>
+    <li><strong>2. Generate</strong>One resumable job ran all 220 tasks with GPT, then all 220 with Claude.</li>
+    <li><strong>3. Inspect</strong>Extracted text and page images from every saved file for the judges.</li>
+    <li><strong>4. Calibrate</strong>Graded 6 tasks (24 assessments), reviewed them by hand, then approved full grading.</li>
+    <li><strong>5. Grade</strong>880 blinded assessments, checkpointed one by one.</li>
+    <li><strong>6. Analyze</strong>Offline scripts built every table and chart; no new model calls.</li>
+  </ol>
+
+  <h2>Settings frozen before the run</h2>
+  <div class="table-wrap"><table class="numbers">
+    <tbody>
+      <tr><th>Models</th><td><code>gpt-6-astra</code> (low reasoning, OpenAI API) and <code>databricks-claude-opus-5-5</code> (default settings, Databricks)</td></tr>
+      <tr><th>Per-task limits (both models)</th><td>14 turns · 24 tool calls · 10,000 tokens per reply · 50,000 tokens written per task · 30-minute schedule · 150 s per code run</td></tr>
+      <tr><th>Tools (both models)</th><td>Python, web search and image viewing, with identical input files and instructions</td></tr>
+      <tr><th>Retries</th><td>At most 3 requests per reply on network errors; no task regenerated after a poor answer</td></tr>
+      <tr><th>Judge limits</th><td>16 turns · 32 tool calls · 12,000 tokens per reply · 60,000 per assessment; order randomized with a fixed seed</td></tr>
+      <tr><th>Experiment IDs</th><td>Generation <code>c6d44b16-80ed-4955-bba6-a34c1a10110d</code> · grading <code>51cfbb2b-90ca-42e6-8c61-1c28346844ee</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Fingerprints and checks</h2>
+  <div class="table-wrap"><table class="numbers">
+    <thead><tr><th>Item</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Dataset file (SHA-256)</td><td><code class="hash">f8422fab9b21d90c0ee5f0659842ab666d418cb8940842918f9f4b0df7ae0202</code></td></tr>
+      <tr><td>Reference-file manifest (SHA-256)</td><td><code class="hash">0bc42b02a40607ecd8255c5d485e3684fd3abd771ef3f45be2462baa3d0d0157</code><br>over 261 files, 1,656,670,179 bytes</td></tr>
+      <tr><td>Grading policy (SHA-256)</td><td><code class="hash">c47ea4141aecd94e332adcf58ebc36ccdb1ed80af1d023bd87c538624849e19f</code></td></tr>
+      <tr><td>Calibration results approved (SHA-256)</td><td><code class="hash">428c3ee4fd404088e34b070d217af4945bc2673940e0281ebe6a61b9752cfd20</code></td></tr>
+      <tr><td>Saved output files</td><td>550 files, each re-checked against its size and SHA-256</td></tr>
+      <tr><td>Automated tests</td><td>16 harness tests (preflight) · 21 run-orchestration tests · 15 grading tests, all passing</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>The code</h2>
+  <p>The code is included with the submission rather than on this public site, because it embeds local paths and dataset files. Main pieces:</p>
+  <div class="table-wrap"><table class="numbers">
+    <thead><tr><th>File</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>full_run.py</code></td><td>Resumable generation job: preflight hashes, both providers, limits, checkpoints, status matrix</td></tr>
+      <tr><td><code>full_grade.py</code></td><td>Separate grading workspace: inspect files, blinded judges, approval gates, aggregate reports</td></tr>
+      <tr><td><code>retry_claude.py</code></td><td>The separately labeled larger-limit Claude follow-up</td></tr>
+      <tr><td><code>analyze_sectors.py</code>, <code>analyze_plan_items.py</code></td><td>Offline statistics: sectors, costs, judge agreement, slice ranking, failure candidates</td></tr>
+      <tr><td><code>build_site_*.py</code></td><td>Generate this site's data-driven pages</td></tr>
+      <tr><td><code>test_full_grade.py</code> and run tests</td><td>Offline tests for coverage, resume, locking, retries and grading validation</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Re-running the job resumes from checkpoints and skips finished work: <code>uv run python full_run.py run --experiment &lt;dir&gt;</code>, then <code>full_grade.py inspect | grade | aggregate --workspace &lt;dir&gt;</code>. Every paid stage needed a recorded human approval.</p>
+
+  <h3>How the coding agent was used</h3>
+  <ul class="tight">
+    <li>Wrote the harness, grader, tests and analysis scripts, and this site, from a written plan.</li>
+    <li>Ran preflight checks, monitored the unattended jobs and diagnosed failures from saved records, such as the expired login that paused grading.</li>
+    <li>Paid stages, budgets and claims needed explicit human approval; the agent never launched paid work on its own.</li>
+  </ul>
+
+  <h2>Status of every task (220 × 2)</h2>
+  <p class="howto">one row per task. "Finished · 1 file" means the model said it was done and saved a file. The last two columns show each judge's verdict. <a href="data/status_matrix.csv">Download as CSV</a>.</p>
+  <details class="explain">
+    <summary>Show all 220 tasks</summary>
+    <p><input id="q" type="search" placeholder="Filter by occupation or status…" style="width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px"></p>
+    <div class="table-wrap"><table class="matrix" id="m">
+      <thead><tr><th>Occupation · task</th><th class="gpt-h">GPT</th><th class="claude-h">Claude</th><th>GPT's judge</th><th>Claude's judge</th></tr></thead>
+      <tbody>
+        <tr><td>Customer Service Representatives<div class="pnote"><code>0ed38524</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Customer Service Representatives<div class="pnote"><code>61717508</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="wc">Claude better</td><td class="">Can't tell</td></tr>
+        <tr><td>Customer Service Representatives<div class="pnote"><code>87da214f</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Customer Service Representatives<div class="pnote"><code>d025a41c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Customer Service Representatives<div class="pnote"><code>f3351922</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Financial Managers<div class="pnote"><code>4520f882</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Financial Managers<div class="pnote"><code>5f6c57dd</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Financial Managers<div class="pnote"><code>a1963a68</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Financial Managers<div class="pnote"><code>b39a5aa7</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Financial Managers<div class="pnote"><code>b78fd844</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="wg">GPT better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Financial and Investment Analysts<div class="pnote"><code>46b34f78</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Financial and Investment Analysts<div class="pnote"><code>8079e27d</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Financial and Investment Analysts<div class="pnote"><code>9e8607e7</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Financial and Investment Analysts<div class="pnote"><code>c7d83f01</code></div></td><td class="v-pass">Finished · 6 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Financial and Investment Analysts<div class="pnote"><code>e21cd746</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Personal Financial Advisors<div class="pnote"><code>3600de06</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Personal Financial Advisors<div class="pnote"><code>664a42e5</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Personal Financial Advisors<div class="pnote"><code>9a0d8d36</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Personal Financial Advisors<div class="pnote"><code>c657103b</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Personal Financial Advisors<div class="pnote"><code>feb5eefc</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="wg">GPT better</td></tr>
+        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><code>1d4672c8</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Finished · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><code>4c4dc603</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><code>4de6a529</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="">Exact tie</td></tr>
+        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><code>9efbcd35</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><code>bb499d9c</code></div></td><td class="v-fail">Server error · 0 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Administrative Services Managers<div class="pnote"><code>17111c03</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Administrative Services Managers<div class="pnote"><code>27e8912c</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Administrative Services Managers<div class="pnote"><code>a328feea</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Administrative Services Managers<div class="pnote"><code>c44e9b62</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-pass">Finished · 3 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Administrative Services Managers<div class="pnote"><code>f84ea6ac</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Child, Family, and School Social Workers<div class="pnote"><code>575f8679</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Child, Family, and School Social Workers<div class="pnote"><code>76d10872</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Child, Family, and School Social Workers<div class="pnote"><code>85d95ce5</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Child, Family, and School Social Workers<div class="pnote"><code>a74ead3b</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Child, Family, and School Social Workers<div class="pnote"><code>bbe0a93b</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-pass">Finished · 3 files</td><td class="">Exact tie</td><td class="">Exact tie</td></tr>
+        <tr><td>Compliance Officers<div class="pnote"><code>2696757c</code></div></td><td class="v-fail">Cut off · 0 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Compliance Officers<div class="pnote"><code>36d567ba</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Compliance Officers<div class="pnote"><code>4c18ebae</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Compliance Officers<div class="pnote"><code>7bbfcfe9</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Compliance Officers<div class="pnote"><code>dfb4e0cd</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><code>11e1b169</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><code>22c0809b</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><code>8c823e32</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><code>a95a5829</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><code>eb54f575</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Recreation Workers<div class="pnote"><code>01d7e53e</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Recreation Workers<div class="pnote"><code>1bff4551</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Recreation Workers<div class="pnote"><code>403b9234</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Recreation Workers<div class="pnote"><code>650adcb1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Recreation Workers<div class="pnote"><code>a73fbc98</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Exact tie</td></tr>
+        <tr><td>First-Line Supervisors of Office and Administrative Support Workers<div class="pnote"><code>0353ee0c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Office and Administrative Support Workers<div class="pnote"><code>1aecc095</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-pass">Finished · 3 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Office and Administrative Support Workers<div class="pnote"><code>40a8c4b1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Office and Administrative Support Workers<div class="pnote"><code>4d1a8410</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-pass">Finished · 3 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Office and Administrative Support Workers<div class="pnote"><code>6dcae3f5</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Medical Secretaries and Administrative Assistants<div class="pnote"><code>41f6ef59</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Medical Secretaries and Administrative Assistants<div class="pnote"><code>4b98ccce</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-pass">Finished · 3 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Medical Secretaries and Administrative Assistants<div class="pnote"><code>6d2c8e55</code></div></td><td class="v-pass">Finished · 11 files</td><td class="v-pass">Finished · 12 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Medical Secretaries and Administrative Assistants<div class="pnote"><code>a0552909</code></div></td><td class="v-pass">Finished · 6 files</td><td class="v-pass">Finished · 6 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Medical Secretaries and Administrative Assistants<div class="pnote"><code>f1be6436</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Medical and Health Services Managers<div class="pnote"><code>61b0946a</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Medical and Health Services Managers<div class="pnote"><code>61e7b9c6</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Medical and Health Services Managers<div class="pnote"><code>74d6e8b0</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Medical and Health Services Managers<div class="pnote"><code>81db15ff</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Medical and Health Services Managers<div class="pnote"><code>c9bf9801</code></div></td><td class="v-pass">Finished · 4 files</td><td class="v-fail">Cut off · 3 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Nurse Practitioners<div class="pnote"><code>0112fc9b</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Nurse Practitioners<div class="pnote"><code>1a78e076</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Nurse Practitioners<div class="pnote"><code>1b9ec237</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Nurse Practitioners<div class="pnote"><code>772e7524</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Nurse Practitioners<div class="pnote"><code>e6429658</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Registered Nurses<div class="pnote"><code>0ec25916</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Registered Nurses<div class="pnote"><code>116e791e</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Registered Nurses<div class="pnote"><code>7151c60a</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Registered Nurses<div class="pnote"><code>90edba97</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Registered Nurses<div class="pnote"><code>dd724c67</code></div></td><td class="v-fail">Harness error · 0 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Audio and Video Technicians<div class="pnote"><code>38889c3b</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Audio and Video Technicians<div class="pnote"><code>4b894ae3</code></div></td><td class="v-fail">Cut off · 0 files</td><td class="v-fail">Cut off · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Audio and Video Technicians<div class="pnote"><code>99ac6944</code></div></td><td class="v-pass">Finished · 4 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Audio and Video Technicians<div class="pnote"><code>f9a1c16c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Audio and Video Technicians<div class="pnote"><code>ff85ee58</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Editors<div class="pnote"><code>3a4c347c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Editors<div class="pnote"><code>401a07f1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Editors<div class="pnote"><code>9a8c8e28</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Editors<div class="pnote"><code>afe56d05</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Editors<div class="pnote"><code>ec2fccc9</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="">Can't tell</td><td class="wg">GPT better</td></tr>
+        <tr><td>Film and Video Editors<div class="pnote"><code>75401f7c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Film and Video Editors<div class="pnote"><code>8c8fc328</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="wg">GPT better</td></tr>
+        <tr><td>Film and Video Editors<div class="pnote"><code>a941b6d8</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 3 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Film and Video Editors<div class="pnote"><code>c94452e4</code></div></td><td class="v-fail">Finished · 0 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Film and Video Editors<div class="pnote"><code>e222075d</code></div></td><td class="v-pass">Finished · 4 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="wg">GPT better</td></tr>
+        <tr><td>News Analysts, Reporters, and Journalists<div class="pnote"><code>3baa0009</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 3 files</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>News Analysts, Reporters, and Journalists<div class="pnote"><code>5d0feb24</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>News Analysts, Reporters, and Journalists<div class="pnote"><code>60221cd0</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wg">GPT better</td></tr>
+        <tr><td>News Analysts, Reporters, and Journalists<div class="pnote"><code>6974adea</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>News Analysts, Reporters, and Journalists<div class="pnote"><code>ef8719da</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Producers and Directors<div class="pnote"><code>6241e678</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Producers and Directors<div class="pnote"><code>a079d38f</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Producers and Directors<div class="pnote"><code>b1a79ce1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Exact tie</td><td class="">Can't tell</td></tr>
+        <tr><td>Producers and Directors<div class="pnote"><code>e14e32ba</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="">Can't tell</td><td class="wg">GPT better</td></tr>
+        <tr><td>Producers and Directors<div class="pnote"><code>e4f664ea</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>05389f78</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>15ddd28d</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>1b1ade2d</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>24d1e93f</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>93b336f3</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>First-Line Supervisors of Production and Operating Workers<div class="pnote"><code>1752cb53</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Production and Operating Workers<div class="pnote"><code>68d8d901</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Production and Operating Workers<div class="pnote"><code>9e39df84</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Production and Operating Workers<div class="pnote"><code>bf68f2ad</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Production and Operating Workers<div class="pnote"><code>efca245f</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Industrial Engineers<div class="pnote"><code>40a99a31</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-pass">Finished · 3 files</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Industrial Engineers<div class="pnote"><code>8a7b6fca</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Exact tie</td><td class="">Exact tie</td></tr>
+        <tr><td>Industrial Engineers<div class="pnote"><code>b9665ca1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Industrial Engineers<div class="pnote"><code>be830ca0</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Industrial Engineers<div class="pnote"><code>c6269101</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Mechanical Engineers<div class="pnote"><code>3940b7e7</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 1 file</td><td class="wg">GPT better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Mechanical Engineers<div class="pnote"><code>46fc494e</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 6 files</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Mechanical Engineers<div class="pnote"><code>5a2d70da</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Mechanical Engineers<div class="pnote"><code>5e2b6aab</code></div></td><td class="v-fail">Cut off · 2 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="wg">GPT better</td></tr>
+        <tr><td>Mechanical Engineers<div class="pnote"><code>8077e700</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Shipping, Receiving, and Inventory Clerks<div class="pnote"><code>11dcc268</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Shipping, Receiving, and Inventory Clerks<div class="pnote"><code>5349dd7b</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Shipping, Receiving, and Inventory Clerks<div class="pnote"><code>552b7dd0</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Shipping, Receiving, and Inventory Clerks<div class="pnote"><code>76418a2c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Shipping, Receiving, and Inventory Clerks<div class="pnote"><code>a4a9195c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Accountants and Auditors<div class="pnote"><code>43dc9778</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Accountants and Auditors<div class="pnote"><code>7b08cd4d</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Accountants and Auditors<div class="pnote"><code>7d7fc9a7</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Accountants and Auditors<div class="pnote"><code>83d10b06</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Accountants and Auditors<div class="pnote"><code>ee09d943</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Computer and Information Systems Managers<div class="pnote"><code>2ea2e5b5</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Computer and Information Systems Managers<div class="pnote"><code>a45bc83b</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-fail">Cut off · 2 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Computer and Information Systems Managers<div class="pnote"><code>c2e8f271</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Computer and Information Systems Managers<div class="pnote"><code>c357f0e2</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Computer and Information Systems Managers<div class="pnote"><code>cebf301e</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Exact tie</td><td class="">Exact tie</td></tr>
+        <tr><td>Lawyers<div class="pnote"><code>3f625cb2</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Exact tie</td><td class="wc">Claude better</td></tr>
+        <tr><td>Lawyers<div class="pnote"><code>8314d1b1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Lawyers<div class="pnote"><code>a97369c7</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Lawyers<div class="pnote"><code>aad21e4c</code></div></td><td class="v-fail">Server error · 0 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Lawyers<div class="pnote"><code>cd9efc18</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Project Management Specialists<div class="pnote"><code>02aa1805</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Project Management Specialists<div class="pnote"><code>3c19c6d1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Project Management Specialists<div class="pnote"><code>58ac1cc5</code></div></td><td class="v-pass">Finished · 4 files</td><td class="v-pass">Finished · 4 files</td><td class="wg">GPT better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Project Management Specialists<div class="pnote"><code>ce864f41</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Project Management Specialists<div class="pnote"><code>fd6129bd</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="wg">GPT better</td></tr>
+        <tr><td>Software Developers<div class="pnote"><code>0e386e32</code></div></td><td class="v-fail">Harness error · 0 files</td><td class="v-fail">Finished · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Software Developers<div class="pnote"><code>2c249e0f</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Software Developers<div class="pnote"><code>4122f866</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Software Developers<div class="pnote"><code>7de33b48</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Software Developers<div class="pnote"><code>854f3814</code></div></td><td class="v-fail">Harness error · 0 files</td><td class="v-pass">Finished · 4 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Concierges<div class="pnote"><code>0e4fe8cd</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Concierges<div class="pnote"><code>2fa8e956</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Concierges<div class="pnote"><code>a10ec48c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Concierges<div class="pnote"><code>f5d428fd</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Concierges<div class="pnote"><code>fccaa4a1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Counter and Rental Clerks<div class="pnote"><code>476db143</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Exact tie</td><td class="">Exact tie</td></tr>
+        <tr><td>Counter and Rental Clerks<div class="pnote"><code>61f546a8</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Exact tie</td><td class="wg">GPT better</td></tr>
+        <tr><td>Counter and Rental Clerks<div class="pnote"><code>a0ef404e</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 1 file</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Counter and Rental Clerks<div class="pnote"><code>aa071045</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Counter and Rental Clerks<div class="pnote"><code>b7a5912e</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Property, Real Estate, and Community Association Managers<div class="pnote"><code>0419f1c3</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Property, Real Estate, and Community Association Managers<div class="pnote"><code>1e5a1d7f</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Property, Real Estate, and Community Association Managers<div class="pnote"><code>55ddb773</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Property, Real Estate, and Community Association Managers<div class="pnote"><code>a99d85fc</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Property, Real Estate, and Community Association Managers<div class="pnote"><code>ed2bc14c</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Real Estate Brokers<div class="pnote"><code>0818571f</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Real Estate Brokers<div class="pnote"><code>2d06bc0a</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Real Estate Brokers<div class="pnote"><code>46bc7238</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Real Estate Brokers<div class="pnote"><code>6074bba3</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Real Estate Brokers<div class="pnote"><code>fd3ad420</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Real Estate Sales Agents<div class="pnote"><code>11593a50</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Cut off · 2 files</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Real Estate Sales Agents<div class="pnote"><code>5ad0c554</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Real Estate Sales Agents<div class="pnote"><code>90f37ff3</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 1 file</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Real Estate Sales Agents<div class="pnote"><code>94925f49</code></div></td><td class="v-pass">Finished · 5 files</td><td class="v-fail">Finished · 0 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Real Estate Sales Agents<div class="pnote"><code>d3d255b2</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="">Exact tie</td></tr>
+        <tr><td>First-Line Supervisors of Retail Sales Workers<div class="pnote"><code>211d0093</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="">Exact tie</td></tr>
+        <tr><td>First-Line Supervisors of Retail Sales Workers<div class="pnote"><code>45c6237b</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 2 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>First-Line Supervisors of Retail Sales Workers<div class="pnote"><code>bd72994f</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Retail Sales Workers<div class="pnote"><code>cecac8f9</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-fail">Cut off · 1 file</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>First-Line Supervisors of Retail Sales Workers<div class="pnote"><code>d4525420</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 2 files</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>General and Operations Managers<div class="pnote"><code>02314fc6</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Exact tie</td><td class="">Exact tie</td></tr>
+        <tr><td>General and Operations Managers<div class="pnote"><code>0fad6023</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>General and Operations Managers<div class="pnote"><code>4d61a19a</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>General and Operations Managers<div class="pnote"><code>6436ff9e</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>General and Operations Managers<div class="pnote"><code>8f9e8bcd</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Pharmacists<div class="pnote"><code>045aba2e</code></div></td><td class="v-pass">Finished · 3 files</td><td class="v-pass">Finished · 3 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Pharmacists<div class="pnote"><code>8384083a</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Pharmacists<div class="pnote"><code>91060ff0</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Pharmacists<div class="pnote"><code>f2986c1f</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Finished · 0 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Pharmacists<div class="pnote"><code>ffed32d8</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Private Detectives and Investigators<div class="pnote"><code>57b2cdf2</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Private Detectives and Investigators<div class="pnote"><code>84322284</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Private Detectives and Investigators<div class="pnote"><code>a46d5cd2</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Private Detectives and Investigators<div class="pnote"><code>ae0c1093</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Private Detectives and Investigators<div class="pnote"><code>f9f82549</code></div></td><td class="v-pass">Finished · 7 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>327fbc21</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>3f821c2d</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>62f04c2f</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>e996036e</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>ec591973</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Order Clerks<div class="pnote"><code>1137e2bb</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="wg">GPT better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Order Clerks<div class="pnote"><code>47ef842d</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Order Clerks<div class="pnote"><code>b5d2e6f1</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Order Clerks<div class="pnote"><code>c3525d4d</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Order Clerks<div class="pnote"><code>f841ddcf</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Sales Managers<div class="pnote"><code>69a8ef86</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Sales Managers<div class="pnote"><code>74ed1dc7</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Sales Managers<div class="pnote"><code>788d2bc6</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wg">GPT better</td><td class="wg">GPT better</td></tr>
+        <tr><td>Sales Managers<div class="pnote"><code>a69be28f</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Exact tie</td></tr>
+        <tr><td>Sales Managers<div class="pnote"><code>b3573f20</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><code>105f8ad0</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-fail">Cut off · 0 files</td><td class="wg">GPT better</td><td class="">Can't tell</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><code>19403010</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><code>7ed932dd</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><code>ab81b076</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><code>d7cfae6f</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products<div class="pnote"><code>15d37511</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="wc">Claude better</td><td class="wc">Claude better</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products<div class="pnote"><code>6a900a40</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products<div class="pnote"><code>b57efde3</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="wc">Claude better</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products<div class="pnote"><code>bb863dd9</code></div></td><td class="v-pass">Finished · 1 file</td><td class="v-pass">Finished · 1 file</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products<div class="pnote"><code>fe0d3941</code></div></td><td class="v-pass">Finished · 2 files</td><td class="v-pass">Finished · 2 files</td><td class="">Can't tell</td><td class="">Can't tell</td></tr>
+      </tbody></table></div>
+  </details>
+  <script>
+    document.getElementById('q').addEventListener('input', e => {
+      const q = e.target.value.toLowerCase();
+      for (const tr of document.querySelectorAll('#m tbody tr')) tr.hidden = !tr.textContent.toLowerCase().includes(q);
+    });
+  </script>
+
+</main>
+
+<footer class="site"><div class="wrap">Provisional results. <a href="methods.html">Methods and limitations</a>.</div></footer>
+</body>
+</html>

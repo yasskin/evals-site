@@ -17,8 +17,10 @@
       <a href="sectors.html">By sector</a>
       <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="failures.html">Failures</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="data.html">Data &amp; code</a>
       <a href="glossary.html">Glossary</a>
     </nav>
   </div>
@@ -117,6 +119,17 @@
 
   <h2>4. Follow-up: giving Claude more room</h2>
   <p>In a separate <a class="term" href="glossary.html#retry">retry study</a>, we re-ran Claude's 62 cut-off tasks with roughly two to three times the limits. Claude finished 54 of them, and 53 included a file. This suggests the limits explain much of the gap, but several settings changed at once, and the retry files have not been graded. These results do not replace the main results.</p>
+
+  <h2 id="coverage">5. What this project covers</h2>
+  <p class="howto">each card is one part of the assignment, with where to find it on this site. <span class="st done">Done</span> means complete; <span class="st part">Draft</span> means the work is shown but still awaits a human check.</p>
+  <ul class="checklist">
+    <li><b>Run and grade both models</b><span class="st done">Done</span> All 220 tasks for each model, graded by two judges, with an estimated cost of about $1,165. <a href="methods.html#cost">Cost</a> · <a href="methods.html#judges">Judge checks</a></li>
+    <li><b>Choose a slice to inspect</b><span class="st part">Draft</span> 30 tasks picked by a rule fixed in advance. The hand audit is not yet done. <a href="methods.html#slice">How we chose</a></li>
+    <li><b>Sort the failures</b><span class="st part">Draft</span> All 85 missing-file failures explained, plus 30 quality failures sorted by type and severity. <a href="failures.html">Failures</a></li>
+    <li><b>Pitch each model's trainers</b><span class="st done">Done</span> A separate page per company, each with a proposed dataset and a test to confirm it is needed. <a href="gpt.html">OpenAI</a> · <a href="claude.html">Anthropic</a></li>
+    <li><b>Be honest about limits</b><span class="st done">Done</span> What the judges could not check, where they disagree and what is still provisional. <a href="methods.html">Methods &amp; limits</a></li>
+    <li><b>Make it reproducible</b><span class="st done">Done</span> Frozen settings, file fingerprints, tests and a downloadable result for every task. <a href="data.html">Data &amp; code</a></li>
+  </ul>
 </main>
 
 <footer class="site"><div class="wrap">Provisional results from a take-home evaluation. GDPval public gold subset (OpenAI). Automated judgments are uncalibrated against professional review. <a href="methods.html">Methods and limitations</a>.</div></footer>
