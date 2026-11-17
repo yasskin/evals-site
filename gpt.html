@@ -17,60 +17,69 @@
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="glossary.html">Glossary</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
-  <h1>Delivering a file is not completing the task.</h1>
-  <p class="lede">GPT-6 Astra (low reasoning) completed with an artifact on 211/220 tasks. The next opportunity is making those artifacts meet every professional requirement.</p>
+  <h1>Delivering a file is not the same as finishing the job.</h1>
+  <p class="lede">GPT-6 Astra (with a <a class="term" href="glossary.html#reasoning">low reasoning setting</a>) finished and handed in a file on 211 of 220 tasks. The next step is making those files meet every requirement a professional would expect.</p>
+
+  <div class="plain">
+    <strong>In plain English</strong>
+    <p>GPT is very reliable at producing the requested file. But when the files are checked line by line against the task's <a class="term" href="glossary.html#rubric">checklist</a>, they sometimes skip specific required details. A document can look polished and still be unusable at work if it misses a required safety step. The fix we suggest is training examples that teach the model to cover every stated requirement.</p>
+  </div>
 
   <div class="grid">
-    <div class="stat"><div class="num">211/220</div><div class="label">completed with an artifact</div></div>
-    <div class="stat"><div class="num">9</div><div class="label">operational failures</div></div>
-    <div class="stat"><div class="num">31 / 50</div><div class="label">tasks favoring Claude (OpenAI / Claude judge)</div></div>
-    <div class="stat"><div class="num">29</div><div class="label">tasks where both judges favor Claude</div></div>
+    <div class="stat"><div class="num">211/220</div><div class="label">tasks finished with a file</div></div>
+    <div class="stat"><div class="num">9</div><div class="label">tasks that failed to run properly</div></div>
+    <div class="stat"><div class="num">31 / 50</div><div class="label">tasks where Claude scored clearly higher (GPT judge / Claude judge)</div></div>
+    <div class="stat"><div class="num">29</div><div class="label">tasks where both judges say Claude did better</div></div>
   </div>
 
-  <h2>Case study: warehouse electrostatic-discharge SOP</h2>
+  <h2>Example: a warehouse safety procedure</h2>
+  <p>The task asked for an <a class="term" href="glossary.html#sop">SOP</a> (step-by-step procedure) for handling electronics that can be damaged by static electricity (<a class="term" href="glossary.html#esd">ESD</a>).</p>
   <div class="card gpt">
-    <p>Both models delivered a Word SOP. Both judges favored Claude by at least <strong>11.3 percentage points</strong>. Each judge independently recorded these GPT omissions, which Claude's document addressed:</p>
+    <p>Both models delivered a Word document. Both judges scored Claude's at least <strong>11.3 percentage points</strong> higher. Both judges found that GPT's document left out these requirements, which Claude's included:</p>
     <ul class="tight">
-      <li>Explicit common-point grounding of the protected area</li>
-      <li>Grounded shelving or racks for storage</li>
-      <li>Description of the ESD protective-packaging symbol</li>
-      <li>Plain-language definitions of ESD and ESD-sensitive items</li>
+      <li>Connecting the protected work area to a single shared ground point</li>
+      <li>Storing parts on grounded shelves or racks</li>
+      <li>Describing the symbol that marks static-protective packaging</li>
+      <li>Plain-language definitions of ESD and of parts that static can damage</li>
     </ul>
-    <p style="margin-bottom:0">Inspection of the original documents confirmed GPT supplied sound general grounding guidance but omitted these specific requirements. <a href="example.html">See both artifacts and every rubric verdict →</a></p>
+    <p style="margin-bottom:0">We also read the original documents. GPT gave sound general advice on grounding but left out these specific requirements. <a href="example.html">See both files and every checklist verdict →</a></p>
   </div>
-  <p>A similar pattern appears in a journalism task: GPT delivered Markdown rather than the requested PDF and omitted rubric-required trade-retaliation context and figures. These are case examples, not a measured dataset-wide omission rate.</p>
+  <p>A similar pattern appeared in a journalism task: GPT delivered a Markdown text file instead of the requested PDF, and it left out context and figures the checklist required. These are individual examples; we have not measured how often this happens across all tasks.</p>
 
-  <h2>Operational failures (9/220)</h2>
+  <h2>Tasks that failed to run properly (9 of 220)</h2>
+  <p class="howto">only some of these failures reflect the model itself. Timeouts, for example, are server problems.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Class</th><th class="n">Attempts</th><th>Interpretation</th></tr></thead>
+      <thead><tr><th>What went wrong</th><th class="n">Tasks</th><th>What it means</th></tr></thead>
       <tbody>
-        <tr><td>Truncated web-tool arguments causing a parse error</td><td class="n">3</td><td>Model-output/adapter boundary; needs bounded arguments and harness recovery.</td></tr>
-        <tr><td>Provider request timeout</td><td class="n">2</td><td>Transport failure; says nothing about task competence.</td></tr>
-        <tr><td>Turn budget exhausted</td><td class="n">3</td><td>Still requesting tools at 14 turns; one left partial files.</td></tr>
-        <tr><td>Completed without the requested video</td><td class="n">1</td><td>Model reported export limitations; not independently verified.</td></tr>
+        <tr><td>GPT sent a web-search request that was cut off mid-way, so our software could not read it</td><td class="n">3</td><td>Partly the model, partly the <a class="term" href="glossary.html#harness">harness</a>. Shorter requests and better error recovery would help.</td></tr>
+        <tr><td>OpenAI's server timed out</td><td class="n">2</td><td>A network problem. It says nothing about GPT's ability.</td></tr>
+        <tr><td>Used all 14 <a class="term" href="glossary.html#turn">turns</a> before finishing</td><td class="n">3</td><td>Still working when time ran out; one left partial files.</td></tr>
+        <tr><td>Finished without the requested video</td><td class="n">1</td><td>GPT said it could not export video; we did not check this independently.</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h2>Dataset proposal: requirement-to-artifact completeness</h2>
+  <h2>Suggested training data: cover every requirement</h2>
+  <p>A <a class="term" href="glossary.html#dataset">training dataset proposal</a> describes new examples that could teach the model to fix this weakness.</p>
   <div class="card">
     <ul class="tight">
-      <li><strong>Tasks:</strong> professional instructions and reference files with dense, specific requirements (SOPs, reports, regulated documents).</li>
-      <li><strong>Supervision:</strong> expert checklists linking each requirement to the artifact section that satisfies it.</li>
-      <li><strong>Negative examples:</strong> plausible but incomplete deliverables, with expert corrections.</li>
-      <li><strong>Acceptance tests:</strong> machine-checkable format and content constraints where possible.</li>
+      <li><strong>Tasks:</strong> professional instructions and input files with many specific requirements, such as procedures, reports and regulated documents.</li>
+      <li><strong>Expert guidance:</strong> checklists from experts that link each requirement to the part of the file that satisfies it.</li>
+      <li><strong>Near-misses:</strong> plausible but incomplete files, paired with expert corrections.</li>
+      <li><strong>Automatic checks:</strong> format and content rules a computer can verify where possible.</li>
     </ul>
   </div>
   <blockquote>"Your model already delivers files reliably. The opportunity is making them operationally complete: covering the specific requirements that separate a plausible document from a usable one."</blockquote>
-  <p><strong>Success measure:</strong> fewer expert-confirmed critical omissions on unseen tasks, with no drop in delivery rate.</p>
+  <p><strong>How to tell it worked:</strong> experts find fewer critical omissions on new tasks, and the model still delivers files just as often.</p>
 
-  <div class="callout">GPT ran with low reasoning effort; higher effort may change these results. Judge outcomes are provisional and judge-sensitive. Rubric compliance does not certify technical safety.</div>
+  <div class="callout">GPT ran with a low reasoning setting; a higher setting might change these results. Quality results come from AI judges and are provisional. Meeting the checklist does not certify that a document is technically safe.</div>
 </main>
 
 <footer class="site"><div class="wrap">Provisional results. <a href="methods.html">Methods and limitations</a>.</div></footer>

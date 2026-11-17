@@ -18,76 +18,100 @@
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="glossary.html">Glossary</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
-  <h1>GPT delivered far more files. Quality remains unresolved.</h1>
-  <p class="lede">We ran every public GDPval gold task once with each model configuration. GPT completed with an artifact on 211/220 tasks; Claude on 144/220. Judge outcomes depend on which model is grading, and most task pairs remain unresolved.</p>
+  <h1>Can AI do real professional work? We tested two leading models on 220 job tasks.</h1>
+  <p class="lede">GPT handed in a file far more often. Whose files were <em>better</em> is still mostly unclear, because the AI graders often could not tell and sometimes disagreed.</p>
 
-  <div class="callout"><strong>Read this as:</strong> a delivery proxy and provisional automated grades for two exact configurations, not an overall provider ranking. No expert adjudication has occurred.</div>
+  <div class="plain">
+    <strong>New here? The 60-second version</strong>
+    <ol class="steps">
+      <li><strong>The tasks</strong>220 realistic assignments from 44 jobs, such as an auditor's spreadsheet or a lawyer's memo, from OpenAI's <a class="term" href="glossary.html#gdpval">GDPval</a> benchmark. <a href="tasks.html">See the tasks →</a></li>
+      <li><strong>The models</strong>Each task was given once to <strong>GPT-6 Astra</strong> (OpenAI) and once to <strong>Claude Opus 5.5</strong> (Anthropic), with the same tools and the same <a class="term" href="glossary.html#budget">limits</a>.</li>
+      <li><strong>The output</strong>Each model had to produce the actual work file, such as a Word document or Excel workbook. We call this the <a class="term" href="glossary.html#artifact">artifact</a>.</li>
+      <li><strong>The grading</strong>AI <a class="term" href="glossary.html#judge">judges</a> checked every file against a human-written <a class="term" href="glossary.html#rubric">checklist</a> for that task. Both models served as judges.</li>
+    </ol>
+    <p>New to the vocabulary? Underlined words link to the <a href="glossary.html">glossary</a>. To see one task end to end, open the <a href="example.html">worked example</a>.</p>
+  </div>
 
-  <h2>Delivery: completed with at least one artifact</h2>
+  <h2>Key results in plain English</h2>
+  <ul class="tight">
+    <li><strong>GPT almost always delivered a file:</strong> 211 of 220 tasks, compared with 144 for Claude.</li>
+    <li><strong>Claude often ran out of room:</strong> on 62 tasks Claude was still working when it hit the limits on steps or text length. Given more room in a follow-up test, it finished 54 of those 62.</li>
+    <li><strong>On quality, there is no clear overall winner yet.</strong> On the tasks where both judges agreed, Claude's work was better on 29 and GPT's on 17. On most tasks, the judges could not separate the two.</li>
+  </ul>
+
+  <div class="callout"><strong>Keep in mind:</strong> this compares two specific <a class="term" href="glossary.html#configuration">model settings</a>, one try per task, graded by AI rather than human experts. Treat the quality results as <a class="term" href="glossary.html#provisional">provisional</a>.</div>
+
+  <h2>1. Did each model hand in a file?</h2>
+  <p>The first question is simply whether the model finished and produced the requested file. This is the <a class="term" href="glossary.html#delivery">delivery rate</a>. A delivered file can still be incomplete or wrong; quality is covered in section 2.</p>
   <div class="card">
     <div class="bars" role="img" aria-label="GPT 211 of 220 (95.9%); Claude 144 of 220 (65.5%)">
       <div class="bar-row"><span>GPT</span><div class="bar-track"><div class="bar-fill gpt" style="width:95.9%"></div></div><span>211/220 · 95.9%</span></div>
       <div class="bar-row"><span>Claude</span><div class="bar-track"><div class="bar-fill claude" style="width:65.5%"></div></div><span>144/220 · 65.5%</span></div>
     </div>
-    <p style="margin:10px 0 0;color:var(--muted);font-size:.9rem">The run finished normally and left at least one file. Counting files left by runs that hit a limit too gives GPT 212/220 and Claude 153/220; those 10 partial runs were still graded. A file's presence does not prove the deliverable is complete or correct.</p>
+    <p style="margin:10px 0 0;color:var(--muted);font-size:.9rem">Counts tasks where the model finished normally and saved at least one file. Including files saved by attempts that were cut off by a limit gives GPT 212 and Claude 153. Those 10 partial attempts were still graded.</p>
   </div>
 
+  <p class="howto">each row counts tasks out of 220. The rows overlap, so they do not add up to 220.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Primary outcome</th><th class="n">GPT</th><th class="n">Claude</th></tr></thead>
+      <thead><tr><th>What happened</th><th class="n">GPT</th><th class="n">Claude</th></tr></thead>
       <tbody>
-        <tr><td>Conversation completed</td><td class="n">212/220</td><td class="n">158/220</td></tr>
-        <tr><td>Completed with any artifact (headline)</td><td class="n">211/220</td><td class="n">144/220</td></tr>
-        <tr><td>Any artifact, including runs that hit a limit</td><td class="n">212/220</td><td class="n">153/220</td></tr>
-        <tr><td>Incomplete conversation (limit reached)</td><td class="n">3</td><td class="n">62</td></tr>
-        <tr><td>Completed without artifacts</td><td class="n">1</td><td class="n">14</td></tr>
-        <tr><td>Provider or harness error</td><td class="n">5</td><td class="n">0</td></tr>
-        <tr><td>Median elapsed time per attempt</td><td class="n">129 s</td><td class="n">245 s</td></tr>
-        <tr><td>Metered generation tokens</td><td class="n">19.7M</td><td class="n">48.9M</td></tr>
+        <tr><td>Finished the task (said it was done)</td><td class="n">212/220</td><td class="n">158/220</td></tr>
+        <tr><td><strong>Finished and saved at least one file</strong> (headline)</td><td class="n">211/220</td><td class="n">144/220</td></tr>
+        <tr><td>Saved a file, including attempts cut off by a limit</td><td class="n">212/220</td><td class="n">153/220</td></tr>
+        <tr><td>Cut off by a limit before finishing (<a class="term" href="glossary.html#incomplete">incomplete</a>)</td><td class="n">3</td><td class="n">62</td></tr>
+        <tr><td>Finished but saved no file</td><td class="n">1</td><td class="n">14</td></tr>
+        <tr><td>Technical failure outside the model's control (<a class="term" href="glossary.html#error">error</a>)</td><td class="n">5</td><td class="n">0</td></tr>
+        <tr><td>Typical time per task (median)</td><td class="n">129 s</td><td class="n">245 s</td></tr>
+        <tr><td>Total text generated, in <a class="term" href="glossary.html#token">tokens</a></td><td class="n">19.7M</td><td class="n">48.9M</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h2>Quality: paired outcomes depend on the judge</h2>
-  <p>Each model graded both generators' outputs against the original rubrics, without generator labels. Each row covers all 220 tasks. Overlapping score bounds count as unresolved.</p>
+  <h2>2. Whose work was better?</h2>
+  <p>Each file was graded twice, once by a GPT judge and once by a Claude judge, without being told which model made it. For each task we compare the two models' <a class="term" href="glossary.html#score">scores</a>. Because judges sometimes cannot check an item, each score is a <a class="term" href="glossary.html#bounds">range</a>. If the two ranges overlap, the task is <a class="term" href="glossary.html#favored">unresolved</a>: we cannot say which model did better.</p>
+  <p class="howto">each row is one judge's verdict across all 220 tasks. "GPT better" means that judge scored GPT clearly higher on that many tasks.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Judge</th><th class="n">GPT favored</th><th class="n">Claude favored</th><th class="n">Tie</th><th class="n">Unresolved</th></tr></thead>
+      <thead><tr><th>Judge</th><th class="n">GPT better</th><th class="n">Claude better</th><th class="n">Exact tie</th><th class="n">Can't tell</th></tr></thead>
       <tbody>
-        <tr><td>OpenAI judge</td><td class="n">38</td><td class="n">31</td><td class="n">8</td><td class="n">143</td></tr>
-        <tr><td>Claude judge</td><td class="n">26</td><td class="n">50</td><td class="n">10</td><td class="n">134</td></tr>
+        <tr><td>GPT as judge</td><td class="n">38</td><td class="n">31</td><td class="n">8</td><td class="n">143</td></tr>
+        <tr><td>Claude as judge</td><td class="n">26</td><td class="n">50</td><td class="n">10</td><td class="n">134</td></tr>
       </tbody>
     </table>
   </div>
+  <p>Each judge appears to rate its own model somewhat more favorably, so the most trustworthy signal is where <strong>both judges agree</strong>:</p>
 
   <div class="grid" style="margin-top:12px">
-    <div class="stat"><div class="num">17</div><div class="label">tasks where both judges favor GPT</div></div>
-    <div class="stat"><div class="num">29</div><div class="label">tasks where both judges favor Claude</div></div>
-    <div class="stat"><div class="num">8</div><div class="label">tasks where the judges point in opposite directions</div></div>
-    <div class="stat"><div class="num">24.3%</div><div class="label">of criterion decisions in valid assessments marked unverified</div></div>
+    <div class="stat"><div class="num">17</div><div class="label">tasks where both judges say GPT did better</div></div>
+    <div class="stat"><div class="num">29</div><div class="label">tasks where both judges say Claude did better</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">tasks where the judges picked opposite winners</div></div>
+    <div class="stat"><div class="num">24.3%</div><div class="label">of individual checklist items the judges could not verify</div></div>
   </div>
 
-  <h2>One finding for each research team</h2>
+  <h2>3. What each company could improve</h2>
+  <p>These pages are written for the <a class="term" href="glossary.html#trainers">teams that train each model</a>, with a suggested kind of training data to fix the weakness.</p>
   <div class="grid">
     <div class="card gpt">
-      <h3 style="margin-top:0">OpenAI: delivery is not completion</h3>
-      <p>GPT reliably produces files, but they can omit specific requirements needed for professional use.</p>
+      <h3 style="margin-top:0">OpenAI: a delivered file isn't always a finished job</h3>
+      <p>GPT reliably produces files, but they can miss specific requirements that a professional would need.</p>
       <a href="gpt.html">See GPT findings →</a>
     </div>
     <div class="card claude">
-      <h3 style="margin-top:0">Anthropic: budget runs out before delivery</h3>
-      <p>62 Claude conversations hit a limit before finishing, and 13 more exhausted tool calls without producing a file.</p>
+      <h3 style="margin-top:0">Anthropic: Claude ran out of room before delivering</h3>
+      <p>On 62 tasks Claude hit a limit before finishing, and 13 more ended with an explanation instead of the requested file.</p>
       <a href="claude.html">See Claude findings →</a>
     </div>
   </div>
 
-  <h2>Separate higher-budget Claude retry study</h2>
-  <p>Fresh retries of the 62 incomplete Claude tasks with larger limits completed 54/62 conversations; 53 produced artifacts. Several limits changed together, retry quality is ungraded, and these results do not replace primary outcomes.</p>
+  <h2>4. Follow-up: giving Claude more room</h2>
+  <p>In a separate <a class="term" href="glossary.html#retry">retry study</a>, we re-ran Claude's 62 cut-off tasks with roughly two to three times the limits. Claude finished 54 of them, and 53 included a file. This suggests the limits explain much of the gap, but several settings changed at once, and the retry files have not been graded. These results do not replace the main results.</p>
 </main>
 
 <footer class="site"><div class="wrap">Provisional results from a take-home evaluation. GDPval public gold subset (OpenAI). Automated judgments are uncalibrated against professional review. <a href="methods.html">Methods and limitations</a>.</div></footer>

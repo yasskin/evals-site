@@ -17,6 +17,7 @@
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="glossary.html">Glossary</a>
     </nav>
   </div>
 </header>
@@ -27,6 +28,11 @@
   and produce a real work product, usually a file such as a spreadsheet, memo, slide deck, notebook or audio mix.
   The public <a href="https://huggingface.co/datasets/openai/gdpval">gold set</a> has 220 tasks. Every task in
   it was run once by each model in this study.</p>
+
+  <div class="plain">
+    <strong>In plain English</strong>
+    <p>Think of each task as a realistic work assignment handed to a new employee: a description of the job, sometimes some files to work from, and a request for a finished file. Experts also wrote a detailed <a class="term" href="glossary.html#rubric">grading checklist</a> for each assignment, listing everything a good answer must include. The checklist, not the expert's own answer, is what the models are graded against.</p>
+  </div>
 
   <div class="grid">
     <div class="stat"><div class="num">220</div><div class="label">tasks</div></div>
@@ -70,9 +76,7 @@
   </div>
 
   <h2>What is evaluated</h2>
-  <p>Scoring is rubric-based. A judge model reads the task, the rubric and the model’s delivered files, then gives
-  each criterion a verdict. The task score is the share of rubric points earned. Criteria range from mechanical
-  checks to expert judgement:</p>
+  <p>Scoring uses the checklist. An <a class="term" href="glossary.html#judge">AI judge</a> reads the task, the checklist and the model's files, then marks each item. The task score is the share of checklist points earned. Items range from simple mechanical checks to calls that need expert judgement:</p>
   <div class="table-wrap"><table>
     <thead><tr><th>Kind of check</th><th>Occupation</th><th>Real criterion (verbatim)</th><th>Weight</th></tr></thead>
     <tbody><tr><td>File format and naming</td><td>Accountants and Auditors</td><td>“The submitted deliverable is an Excel workbook file whose basename is &#x27;Sample&#x27; (accept .xlsx, .xls, or .xlsm).”</td><td class="n">+2</td></tr><tr><td>Required structure</td><td>Accountants and Auditors</td><td>“The workbook contains a worksheet named exactly &#x27;Sample Size Calculation&#x27; (case-insensitive, ignoring surrounding spaces).”</td><td class="n">+2</td></tr><tr><td>Correct numbers and data</td><td>Accountants and Auditors</td><td>“The &#x27;Sample Size Calculation&#x27; worksheet shows the population size N used and N equals the number of data rows in the Population reference (excluding header).”</td><td class="n">+2</td></tr><tr><td>Professional constraints</td><td>Lawyers</td><td>“The memorandum’s body text does not exceed three pages; any separate cover page, if present, is not counted toward the limit”</td><td class="n">+2</td></tr><tr><td>Domain substance</td><td>Lawyers</td><td>“Applies CCPA/CPRA to the facts using the defined concepts of “sell” or “share” to assess whether parental opt‑in would be required”</td><td class="n">+1</td></tr><tr><td>Works when run</td><td>Financial and Investment Analysts</td><td>“The notebook runs end-to-end in a fresh kernel (Run All) without exceptions”</td><td class="n">+2</td></tr><tr><td>Technical quality of media</td><td>Audio and Video Technicians</td><td>“Bass stem bit depth/format is professional quality: either 24-bit PCM or IEEE float”</td><td class="n">+2</td></tr><tr><td>Penalty for a professional error</td><td>Counter and Rental Clerks</td><td>“Schedules paint work in M17 on the same day that paint work is scheduled in another unit”</td><td class="n">-10</td></tr></tbody>

@@ -10,6 +10,7 @@ Static GitHub Pages site summarizing the paired GPT-6 Astra vs. Claude Opus 5.5 
 | `claude.html` | Anthropic model trainers |
 | `example.html` | Worked example: one task's prompt, both artifacts and all rubric verdicts |
 | `methods.html` | Protocol, grading coverage, score bounds, limitations |
+| `glossary.html` | Plain-English definitions; jargon elsewhere links here via `a.term` anchors |
 
 Preview locally by opening `index.html` in a browser.
 

@@ -17,59 +17,66 @@
       <a class="claude" href="claude.html" aria-current="page">For Anthropic (Claude)</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="glossary.html">Glossary</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
-  <h1>The work often ran out of budget before it was delivered.</h1>
-  <p class="lede">Claude Opus 5.5 (endpoint defaults) completed with an artifact on 144/220 tasks. The largest observed gap is turning extended work into a delivered file within fixed limits.</p>
+  <h1>Claude often ran out of room before handing in the work.</h1>
+  <p class="lede">Claude Opus 5.5 (default settings) finished and handed in a file on 144 of 220 tasks. The biggest gap was turning a lot of work into a delivered file within fixed limits.</p>
 
-  <div class="grid">
-    <div class="stat"><div class="num">144/220</div><div class="label">completed with an artifact</div></div>
-    <div class="stat"><div class="num">62</div><div class="label">incomplete conversations</div></div>
-    <div class="stat"><div class="num">13</div><div class="label">"completed" after exhausting tools, with no file</div></div>
-    <div class="stat"><div class="num">54/62</div><div class="label">completed on higher-budget retry</div></div>
+  <div class="plain">
+    <strong>In plain English</strong>
+    <p>Every task had the same <a class="term" href="glossary.html#budget">limits</a>: at most 14 rounds of work, 24 actions such as web searches, and a cap on how much text the model could write. Claude often spent its allowance researching and planning, then ran out before saving the requested file. When Claude <em>did</em> deliver, its files often scored well. The fix we suggest is training examples that teach the model to save a basic version of the file early and then improve it.</p>
   </div>
 
-  <h2>Operational failures (76/220)</h2>
-  <p>Each attempt is assigned one stopping mechanism; several also reached other limits.</p>
+  <div class="grid">
+    <div class="stat"><div class="num">144/220</div><div class="label">tasks finished with a file</div></div>
+    <div class="stat"><div class="num">62</div><div class="label">tasks cut off by a limit before finishing</div></div>
+    <div class="stat"><div class="num">13</div><div class="label">tasks marked "done" with an explanation but no file, after using up its actions</div></div>
+    <div class="stat"><div class="num">54/62</div><div class="label">cut-off tasks finished when re-run with more room</div></div>
+  </div>
+
+  <h2>Why tasks didn't produce a file (76 of 220)</h2>
+  <p class="howto">each task is listed under its main reason for stopping. "No file" counts how many in that row left nothing behind.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Class</th><th class="n">Attempts</th><th class="n">No artifact</th><th>Interpretation</th></tr></thead>
+      <thead><tr><th>What happened</th><th class="n">Tasks</th><th class="n">No file</th><th>What it means</th></tr></thead>
       <tbody>
-        <tr><td>Cumulative 50,000-token budget exhausted</td><td class="n">33</td><td class="n">30</td><td>Still mid-workflow when generation budget ran out.</td></tr>
-        <tr><td>Truncated final response</td><td class="n">14</td><td class="n">13</td><td>Final response hit a length limit without tool calls.</td></tr>
-        <tr><td>14-turn limit reached</td><td class="n">15</td><td class="n">10</td><td>Still requesting tools at the turn limit.</td></tr>
-        <tr><td>Tool budget exhausted; prose instead of file</td><td class="n">13</td><td class="n">13</td><td>Final answer said file creation did not run; some offered content to paste.</td></tr>
-        <tr><td>Content-filter stop recorded as completed</td><td class="n">1</td><td class="n">1</td><td>Serving/classification issue, not a budget failure.</td></tr>
+        <tr><td>Used up the total writing allowance (50,000 <a class="term" href="glossary.html#token">tokens</a>)</td><td class="n">33</td><td class="n">30</td><td>Still in the middle of the work when the allowance ran out.</td></tr>
+        <tr><td>Final reply cut off at the length limit</td><td class="n">14</td><td class="n">13</td><td>The reply hit the 10,000-token per-reply limit and was cut off mid-answer.</td></tr>
+        <tr><td>Used all 14 <a class="term" href="glossary.html#turn">turns</a></td><td class="n">15</td><td class="n">10</td><td>Still requesting actions when the round limit hit.</td></tr>
+        <tr><td>Used all 24 <a class="term" href="glossary.html#tool">actions</a>, then replied in text instead of a file</td><td class="n">13</td><td class="n">13</td><td>Said it could not create the file; some offered text to copy and paste instead.</td></tr>
+        <tr><td>Blocked by a safety filter but recorded as finished</td><td class="n">1</td><td class="n">1</td><td>A serving-side issue, not a limits problem.</td></tr>
       </tbody>
     </table>
   </div>
-  <p>Not limited to unsupported formats: on the 205 tasks without capability-limit flags, Claude completed 150 conversations versus GPT's 200.</p>
+  <p>This is not just about file types Claude can't handle. Even on the 205 tasks with no known file-type limitation, Claude finished 150 versus GPT's 200.</p>
 
-  <h2>Higher-budget retry study</h2>
+  <h2>Follow-up: what happens with more room?</h2>
   <div class="card claude">
-    <p>Fresh conversations for the 62 incomplete tasks, with larger limits: 32k tokens per response (from 10k), 150k per conversation (from 50k), 28 turns (from 14) and 48 tool calls (from 24).</p>
-    <p style="margin-bottom:0"><strong>Result:</strong> 54 completed, 53 with artifacts; four incomplete; four provider errors. This suggests sensitivity to the budget configuration, but several settings and fresh sampling changed together. Retry quality is ungraded and does not replace primary results.</p>
+    <p>We re-ran the 62 cut-off tasks from scratch with larger limits: up to 32,000 tokens per reply (was 10,000), 150,000 per task (was 50,000), 28 rounds (was 14) and 48 actions (was 24).</p>
+    <p style="margin-bottom:0"><strong>Result:</strong> 54 finished, and 53 of those included a file. Four were still cut off and four hit server errors. This suggests the limits explain much of the gap. However, several settings changed at once, and the retry files have not been graded, so this does not replace the main results.</p>
   </div>
 
-  <h2>Counterexamples: where Claude's work was stronger</h2>
-  <p>Both judges favored Claude on 29 task pairs, versus 17 for GPT. Examples include a surveillance report that linked photographic evidence to each timeline entry and a warehouse SOP that covered grounding requirements GPT omitted. Most pairs remain unresolved, so this is not an overall quality ranking.</p>
+  <h2>Where Claude's work was stronger</h2>
+  <p>Where both judges agreed, Claude did better on 29 tasks and GPT on 17. Examples include a surveillance report that tied photo evidence to each timeline entry, and the warehouse safety procedure in the <a href="example.html">worked example</a>. On most tasks the judges could not separate the two models, so this is not an overall ranking.</p>
 
-  <h2>Dataset proposal: deliverable-first, budget-aware execution</h2>
+  <h2>Suggested training data: deliver first, then improve</h2>
+  <p>A <a class="term" href="glossary.html#dataset">training dataset proposal</a> describes new examples that could teach the model to fix this weakness.</p>
   <div class="card">
     <ul class="tight">
-      <li><strong>Tasks:</strong> long-horizon professional workflows with references, multi-step research and file creation.</li>
-      <li><strong>Trajectories:</strong> early creation of a minimally complete artifact, then iterative improvement.</li>
-      <li><strong>Supervision:</strong> explicit budget accounting and prioritization of essential research and tool calls.</li>
-      <li><strong>Acceptance tests:</strong> a requested deliverable exists, opens and satisfies core requirements before the run ends.</li>
+      <li><strong>Tasks:</strong> long, multi-step professional assignments involving input files, research and file creation.</li>
+      <li><strong>Worked examples:</strong> sessions that save a basic but complete file early, then improve it.</li>
+      <li><strong>Budget awareness:</strong> examples that track remaining limits and spend effort on the essential steps first.</li>
+      <li><strong>Automatic checks:</strong> the requested file exists, opens and covers the core requirements before the session ends.</li>
     </ul>
   </div>
   <blockquote>"The opportunity is converting more of Claude's work into delivered outcomes. These tasks show where planning and tool use consume the budget before the professional artifact exists."</blockquote>
-  <p><strong>Success measure:</strong> more correct, complete deliverables per fixed task budget, not merely more completed conversations.</p>
+  <p><strong>How to tell it worked:</strong> more correct, complete files within the same limits, not just more tasks marked "done".</p>
 
-  <div class="callout">Reasoning compute was not matched; Claude used endpoint defaults versus GPT at low effort. Identical numeric limits do not imply equal compute. Judge outcomes are provisional.</div>
+  <div class="callout">The two models were not set to the same <a class="term" href="glossary.html#reasoning">reasoning effort</a>: Claude used default settings and GPT used "low". Identical limits do not mean equal computing power. Quality results are provisional.</div>
 </main>
 
 <footer class="site"><div class="wrap">Provisional results. <a href="methods.html">Methods and limitations</a>.</div></footer>

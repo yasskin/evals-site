@@ -17,13 +17,18 @@
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
       <a href="example.html" aria-current="page">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
+      <a href="glossary.html">Glossary</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
   <h1>One task, two artifacts, two judges</h1>
-  <p class="lede">This page traces exactly what was tested on one of the 220 tasks: the prompt each model received, the Word files they produced, and how each rubric line was graded.</p>
+  <p class="lede">This page shows exactly what was tested on one of the 220 tasks: the instructions each model received, the Word files they produced, and how each checklist item was graded.</p>
+  <div class="plain">
+    <strong>What you're looking at</strong>
+    <p>The task asked each model to write an <a class="term" href="glossary.html#sop">SOP</a>, a step-by-step workplace procedure, for safely handling electronic parts that static electricity can damage (<a class="term" href="glossary.html#esd">ESD</a>). Both models wrote a Word document. Two <a class="term" href="glossary.html#judge">AI judges</a> then checked each document against a 55-item <a class="term" href="glossary.html#rubric">checklist</a>. You can download both documents below and see every checklist verdict.</p>
+  </div>
   <div class="callout">This task was chosen because both models delivered a Word file, both judges agreed that Claude's was stronger, and the two documents are short enough to inspect directly. It is one of the clearest Claude-favored cases, not a typical result, and it illustrates the method rather than the overall comparison.</div>
 
   <h2>1. The task</h2>
@@ -32,7 +37,7 @@
   <p class="muted">Source: <a href="https://huggingface.co/datasets/openai/gdpval">OpenAI GDPval</a> public gold set.</p>
 
   <h2>2. How each model ran</h2>
-  <p>Both models used the same harness, with web search and a Python sandbox, and had to save deliverables as files. Neither run hit a turn, token, or tool limit.</p>
+  <p>Both models used the same <a class="term" href="glossary.html#harness">harness</a>, with web search and a Python environment, and had to save their answers as files. Neither run hit a turn, token or tool limit.</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th></th><th>GPT-6 Astra (low reasoning)</th><th>Claude Opus 5.5</th></tr></thead>
@@ -99,7 +104,7 @@
       </tbody>
     </table>
   </div>
-  <p class="muted">Scores are ranges because neither judge could verify the five-page limit, a 2-point criterion, from the file contents. The low end counts it as failed; the high end counts it as passed.</p>
+  <p class="muted">Scores are <a class="term" href="glossary.html#bounds">ranges</a> because neither judge could check the five-page limit, a 2-point item, from the file contents. The low end counts it as failed; the high end counts it as passed.</p>
 
   <div class="grid">
     <div class="stat"><div class="num">33</div><div class="label">criteria passed by both models under both judges</div></div>

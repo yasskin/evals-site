@@ -155,6 +155,29 @@ td.v { text-align: center; font-weight: 700; }
 details { margin: 18px 0; }
 summary { cursor: pointer; font-weight: 600; padding: 8px 0; }
 
+.plain {
+  background: #eef4ff;
+  border: 1px solid #c7d7fb;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+.plain > strong:first-child { display: block; margin-bottom: 4px; color: var(--accent); }
+.plain p:last-child, .plain ul:last-child { margin-bottom: 0; }
+.howto { color: var(--muted); font-size: 0.9rem; margin: 6px 0 10px; }
+.howto::before { content: "How to read this: "; font-weight: 600; color: var(--ink); }
+a.term { color: inherit; text-decoration: underline dotted var(--accent); text-underline-offset: 3px; }
+a.term:hover { color: var(--accent); }
+ol.steps { list-style: none; counter-reset: step; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+ol.steps li { counter-increment: step; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; font-size: 0.93rem; }
+ol.steps li::before { content: counter(step); display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 0.8rem; margin-bottom: 6px; }
+ol.steps li strong { display: block; }
+dl.glossary { margin: 0; }
+dl.glossary dt { font-weight: 700; margin-top: 16px; scroll-margin-top: 16px; }
+dl.glossary dt:target { background: #fff1a8; }
+dl.glossary dd { margin: 4px 0 0; }
+dl.glossary dd .eg { color: var(--muted); font-size: 0.9rem; }
+
 footer.site {
   border-top: 1px solid var(--line);
   color: var(--muted);

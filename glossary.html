@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glossary · GDPval Paired Evaluation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">GDPval Paired Evaluation<small>Plain-English definitions of every term on this site</small></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="index.html">Overview</a>
+      <a href="tasks.html">GDPval gold tasks</a>
+      <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
+      <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="example.html">Worked example</a>
+      <a href="methods.html">Methods &amp; limits</a>
+      <a href="glossary.html" aria-current="page">Glossary</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Glossary</h1>
+  <p class="lede">No background in AI evaluation needed. Underlined terms elsewhere on the site link here.</p>
+
+  <h2>The study</h2>
+  <dl class="glossary">
+    <dt id="eval">Evaluation (eval)</dt>
+    <dd>A structured test of an AI model. You give it the same set of tasks, grade the results the same way, and compare.</dd>
+
+    <dt id="gdpval">GDPval</dt>
+    <dd>A benchmark published by OpenAI that asks AI models to do realistic paid work from real occupations, such as an auditor's spreadsheet, a lawyer's memo or a music producer's audio track. The name refers to jobs that contribute to GDP (economic output).</dd>
+
+    <dt id="gold">Gold task / gold set</dt>
+    <dd>The 220 tasks OpenAI released publicly. Each comes with the instructions, any input files, a grading checklist and usually an example answer made by a professional. "Gold" means it is a reference set with expert-made materials.</dd>
+
+    <dt id="model">Model / AI model</dt>
+    <dd>The AI system being tested. Here: <strong>GPT-6 Astra</strong> from OpenAI and <strong>Claude Opus 5.5</strong> from Anthropic.</dd>
+
+    <dt id="configuration">Model configuration</dt>
+    <dd>A model plus its settings. Results describe these exact settings, not the companies' models in general. Here GPT used a "low" reasoning setting and Claude used its default settings.</dd>
+
+    <dt id="reasoning">Reasoning effort</dt>
+    <dd>A setting that controls how much the model "thinks" before answering. More effort usually costs more and can improve quality. The two models were not set to equal effort, so this is not a perfectly level comparison.</dd>
+
+    <dt id="paired">Paired comparison</dt>
+    <dd>Both models did the same task, so their results can be compared task by task rather than only as overall averages.</dd>
+
+    <dt id="attempt">Attempt / run</dt>
+    <dd>One try by one model at one task. Each model had exactly one attempt per task (440 in total).</dd>
+  </dl>
+
+  <h2>What the models received and produced</h2>
+  <dl class="glossary">
+    <dt id="prompt">Prompt</dt>
+    <dd>The written instructions for a task, for example "You are an auditor… calculate the sample size and save it as an Excel file."</dd>
+
+    <dt id="reference">Reference files</dt>
+    <dd>Input files handed to the model with the prompt, like a spreadsheet of data or a contract PDF. 125 of 220 tasks include them.</dd>
+
+    <dt id="artifact">Artifact / deliverable</dt>
+    <dd>The file the model produces as its answer: a Word document, spreadsheet, slide deck, PDF, audio file and so on. Most tasks require a file, not just a chat reply.</dd>
+
+    <dt id="delivery">Delivery rate</dt>
+    <dd>The share of tasks where the model finished and left at least one file. It shows whether the model <em>produced</em> something, not whether it was any good.
+      <div class="eg">Headline: GPT 211/220, Claude 144/220. Counting files left by attempts that were cut off early: GPT 212, Claude 153.</div></dd>
+
+    <dt id="tool">Tool / tool call</dt>
+    <dd>Actions the model can take besides writing text, such as searching the web or running Python code to build a spreadsheet. Each use is one tool call.</dd>
+
+    <dt id="harness">Harness</dt>
+    <dd>The software we wrote that gives each model its task, runs its tool calls, enforces limits and collects its files. Both models used the same harness.</dd>
+
+    <dt id="token">Token</dt>
+    <dd>The unit AI models read and write in, roughly three-quarters of an English word. Token counts measure how much text a model generated and drive cost.</dd>
+
+    <dt id="turn">Turn</dt>
+    <dd>One round of the model responding (and possibly calling tools) before the harness replies with results.</dd>
+
+    <dt id="budget">Limits / budget</dt>
+    <dd>Caps applied to every attempt so the test is fair and affordable: 14 turns, 24 tool calls, 10,000 tokens per response and 50,000 generated tokens per task.</dd>
+
+    <dt id="incomplete">Incomplete conversation</dt>
+    <dd>An attempt that hit one of the limits before the model said it was finished. Sometimes it had already saved a partial file.</dd>
+
+    <dt id="error">Provider / harness error</dt>
+    <dd>A technical failure outside the model's control, such as the company's server timing out or our software failing to read a malformed tool request.</dd>
+  </dl>
+
+  <h2>How grading works</h2>
+  <dl class="glossary">
+    <dt id="rubric">Rubric</dt>
+    <dd>A checklist written by people that defines what a good answer must contain. GDPval tasks have 14 to 137 items each (median 47).</dd>
+
+    <dt id="criterion">Criterion (plural: criteria)</dt>
+    <dd>One checklist item, for example "The workbook contains a sheet named 'Sample Size Calculation'". Each is worth points; a few <em>subtract</em> points for serious mistakes.</dd>
+
+    <dt id="judge">Judge (AI judge)</dt>
+    <dd>An AI model asked to grade an answer against the rubric. We used both models as judges, so every file was graded twice: once by a GPT judge and once by a Claude judge. A model therefore also grades its own work, which is why we report both judges and highlight where they agree.</dd>
+
+    <dt id="blind">Blinded</dt>
+    <dd>The judge was not told which model made the file. Writing style could still give hints.</dd>
+
+    <dt id="verdict">Verdict: pass / fail / unverified</dt>
+    <dd><strong>Pass</strong>: the file meets the criterion. <strong>Fail</strong>: it does not. <strong>Unverified</strong>: the judge could not tell, for example whether a document is under five pages, or how an audio file sounds. About 24% of verdicts were unverified.</dd>
+
+    <dt id="score">Score</dt>
+    <dd>Points earned divided by points available, as a percentage.</dd>
+
+    <dt id="bounds">Score range (bounds)</dt>
+    <dd>Because some verdicts are unverified, each score is a range rather than one number. The low end assumes every unverified item failed; the high end assumes it passed.
+      <div class="eg">Example: 69.4–72.6% means the true score is somewhere in between, depending on items the judge could not check.</div></dd>
+
+    <dt id="favored">Favored / tie / unresolved</dt>
+    <dd>For each task, a judge <strong>favors</strong> one model if that model's entire score range is above the other's. It is a <strong>tie</strong> only if both scores are exact (nothing unverified) and identical. It is <strong>unresolved</strong> if the ranges overlap, or if one of the two grades is missing, meaning we cannot tell which is better. Most tasks were unresolved.</dd>
+
+    <dt id="provisional">Provisional</dt>
+    <dd>Not final. The grading is automated and has not been checked by human experts in each occupation, so treat quality results as early signals.</dd>
+  </dl>
+
+  <h2>Terms from the findings</h2>
+  <dl class="glossary">
+    <dt id="trainers">Model trainers / research teams</dt>
+    <dd>The people at OpenAI and Anthropic who improve their models, often by creating new training data. The GPT and Claude tabs are written for them.</dd>
+
+    <dt id="dataset">Training dataset proposal</dt>
+    <dd>A suggestion for new examples a company could train on to fix a weakness this evaluation revealed.</dd>
+
+    <dt id="retry">Retry study</dt>
+    <dd>A separate follow-up where Claude's 62 incomplete tasks were run again with larger limits, to see whether the limits caused the failures. It does not replace the main results.</dd>
+
+    <dt id="sop">SOP</dt>
+    <dd>Standard operating procedure: a step-by-step workplace instruction document.</dd>
+
+    <dt id="esd">ESD</dt>
+    <dd>Electrostatic discharge: a static-electricity spark that can destroy electronic parts. The worked example is an SOP for handling such parts safely in a warehouse.</dd>
+  </dl>
+</main>
+
+<footer class="site"><div class="wrap">Provisional results from a take-home evaluation. <a href="index.html">Back to overview</a>.</div></footer>
+</body>
+</html>
