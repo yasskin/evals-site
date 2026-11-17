@@ -12,7 +12,7 @@ Static GitHub Pages site summarizing the paired GPT-6 Astra vs. Claude Opus 5.5 
 | `failures.html` | Delivery-failure taxonomy (85) and draft 30-item quality ledger |
 | `example.html` | Worked example: one task's prompt, both artifacts and all rubric verdicts |
 | `methods.html` | Protocol, slice selection, cost estimate, judge reliability, pilot, score bounds, limitations |
-| `data.html` | Reproducibility: frozen settings, hashes, tests, code, 220-task status matrix |
+| `data.html` | Reproducibility: frozen settings, hashes, tests, code (linked to [yasskin/gdpval-paired-eval](https://github.com/yasskin/gdpval-paired-eval)), 220-task status matrix |
 | `glossary.html` | Plain-English definitions; jargon elsewhere links here via `a.term` anchors |
 
 Preview locally by opening `index.html` in a browser.
