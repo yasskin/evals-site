@@ -195,3 +195,32 @@ footer.site {
 }
 
 figure.card { margin: 12px 0; padding: 10px; }
+
+/* Scannable results */
+.stat.gpt { border-top: 4px solid var(--gpt); } .stat.gpt .num { color: #0b7a5f; }
+.stat.claude { border-top: 4px solid var(--claude); } .stat.claude .num { color: #a24e30; }
+.badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+.badge.gpt { background: #dff3ec; color: #0b6b53; border: 1px solid #9fd8c5; }
+.badge.claude { background: #f9e6de; color: #96441f; border: 1px solid #e8b29c; }
+.badge.even { background: #eef1f4; color: var(--muted); border: 1px solid var(--line); font-weight: 500; }
+table.scorecard td.win.gpt { background: #e9f7f2; color: #0b6b53; font-weight: 700; }
+table.scorecard td.win.claude { background: #fbefe9; color: #96441f; font-weight: 700; }
+table.scorecard td.win::before { content: "\2713\00a0"; }
+table.scorecard tr.group td { background: #f7f8fa; color: var(--muted); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: 6px 12px; }
+table.scorecard tr.headline td { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+.mini { height: 6px; background: #e9edf1; border-radius: 3px; margin-top: 4px; min-width: 80px; overflow: hidden; }
+.mini span { display: block; height: 100%; }
+.mini .gpt { background: var(--gpt); } .mini .claude { background: var(--claude); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.85rem; color: var(--muted); margin-bottom: 10px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; }
+.sw.gpt, .seg.gpt { background: var(--gpt); }
+.sw.claude, .seg.claude { background: var(--claude); }
+.sw.tie, .seg.tie { background: #8a939d; }
+.sw.unk, .seg.unk { background: repeating-linear-gradient(45deg, #e4e8ec 0 6px, #f3f5f7 6px 12px); }
+.stack-row { display: grid; grid-template-columns: 120px 1fr 180px; gap: 12px; align-items: center; margin: 8px 0; }
+.stack-row .who { font-weight: 600; font-size: 0.92rem; }
+.stack { display: flex; height: 30px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+.seg { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.82rem; font-weight: 700; min-width: 0; }
+.seg.unk { color: var(--muted); }
+@media (max-width: 760px) { .stack-row { grid-template-columns: 1fr; gap: 4px; } }

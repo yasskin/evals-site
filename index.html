@@ -58,19 +58,22 @@
     <p style="margin:10px 0 0;color:var(--muted);font-size:.9rem">Counts tasks where the model finished normally and saved at least one file. Including files saved by attempts that were cut off by a limit gives GPT 212 and Claude 153. Those 10 partial attempts were still graded.</p>
   </div>
 
-  <p class="howto">each row counts tasks out of 220. The rows overlap, so they do not add up to 220.</p>
+  <p class="howto">a <span class="badge gpt">✓ GPT</span> or <span class="badge claude">✓ Claude</span> badge marks which model did better on that row; the winning cell is shaded. Rows count tasks out of 220 and overlap, so they do not add up to 220.</p>
   <div class="table-wrap">
-    <table>
-      <thead><tr><th>What happened</th><th class="n">GPT</th><th class="n">Claude</th></tr></thead>
+    <table class="scorecard">
+      <thead><tr><th>What happened</th><th class="n">GPT</th><th class="n">Claude</th><th>Edge</th></tr></thead>
       <tbody>
-        <tr><td>Finished the task (said it was done)</td><td class="n">212/220</td><td class="n">158/220</td></tr>
-        <tr><td><strong>Finished and saved at least one file</strong> (headline)</td><td class="n">211/220</td><td class="n">144/220</td></tr>
-        <tr><td>Saved a file, including attempts cut off by a limit</td><td class="n">212/220</td><td class="n">153/220</td></tr>
-        <tr><td>Cut off by a limit before finishing (<a class="term" href="glossary.html#incomplete">incomplete</a>)</td><td class="n">3</td><td class="n">62</td></tr>
-        <tr><td>Finished but saved no file</td><td class="n">1</td><td class="n">14</td></tr>
-        <tr><td>Technical failure outside the model's control (<a class="term" href="glossary.html#error">error</a>)</td><td class="n">5</td><td class="n">0</td></tr>
-        <tr><td>Typical time per task (median)</td><td class="n">129 s</td><td class="n">245 s</td></tr>
-        <tr><td>Total text generated, in <a class="term" href="glossary.html#token">tokens</a></td><td class="n">19.7M</td><td class="n">48.9M</td></tr>
+        <tr class="group"><td colspan="4">Higher is better</td></tr>
+        <tr><td>Finished the task (said it was done)</td><td class="n win gpt">212/220<div class="mini"><span class="gpt" style="width:96.4%"></span></div></td><td class="n">158/220<div class="mini"><span class="claude" style="width:71.8%"></span></div></td><td><span class="badge gpt">✓ GPT</span></td></tr>
+        <tr class="headline"><td><strong>Finished and saved at least one file</strong> (headline)</td><td class="n win gpt">211/220<div class="mini"><span class="gpt" style="width:95.9%"></span></div></td><td class="n">144/220<div class="mini"><span class="claude" style="width:65.5%"></span></div></td><td><span class="badge gpt">✓ GPT</span></td></tr>
+        <tr><td>Saved a file, including attempts cut off by a limit</td><td class="n win gpt">212/220<div class="mini"><span class="gpt" style="width:96.4%"></span></div></td><td class="n">153/220<div class="mini"><span class="claude" style="width:69.5%"></span></div></td><td><span class="badge gpt">✓ GPT</span></td></tr>
+        <tr class="group"><td colspan="4">Lower is better</td></tr>
+        <tr><td>Cut off by a limit before finishing (<a class="term" href="glossary.html#incomplete">incomplete</a>)</td><td class="n win gpt">3</td><td class="n">62</td><td><span class="badge gpt">✓ GPT</span></td></tr>
+        <tr><td>Finished but saved no file</td><td class="n win gpt">1</td><td class="n">14</td><td><span class="badge gpt">✓ GPT</span></td></tr>
+        <tr><td>Technical failure outside the model's control (<a class="term" href="glossary.html#error">error</a>)</td><td class="n">5</td><td class="n">0</td><td><span class="badge even">Not the model's fault</span></td></tr>
+        <tr class="group"><td colspan="4">For context (not scored)</td></tr>
+        <tr><td>Typical time per task (median)</td><td class="n">129 s</td><td class="n">245 s</td><td><span class="badge even">GPT faster</span></td></tr>
+        <tr><td>Total text generated, in <a class="term" href="glossary.html#token">tokens</a></td><td class="n">19.7M</td><td class="n">48.9M</td><td><span class="badge even">Claude wrote more</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -78,21 +81,30 @@
 
   <h2>2. Whose work was better?</h2>
   <p>Each file was graded twice, once by a GPT judge and once by a Claude judge, without being told which model made it. For each task we compare the two models' <a class="term" href="glossary.html#score">scores</a>. Because judges sometimes cannot check an item, each score is a <a class="term" href="glossary.html#bounds">range</a>. If the two ranges overlap, the task is <a class="term" href="glossary.html#favored">unresolved</a>: we cannot say which model did better.</p>
-  <p class="howto">each row is one judge's verdict across all 220 tasks. "GPT better" means that judge scored GPT clearly higher on that many tasks.</p>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Judge</th><th class="n">GPT better</th><th class="n">Claude better</th><th class="n">Exact tie</th><th class="n">Can't tell</th></tr></thead>
-      <tbody>
-        <tr><td>GPT as judge</td><td class="n">38</td><td class="n">31</td><td class="n">8</td><td class="n">143</td></tr>
-        <tr><td>Claude as judge</td><td class="n">26</td><td class="n">50</td><td class="n">10</td><td class="n">134</td></tr>
-      </tbody>
-    </table>
+  <p class="howto">each bar is one judge's verdicts on all 220 tasks. Green = GPT clearly better, grey = exact tie, orange = Claude clearly better, striped = can't tell. Compare the green and orange segments to see which way each judge leans.</p>
+  <div class="card">
+    <div class="legend"><span><i class="sw gpt"></i>GPT better</span><span><i class="sw tie"></i>Exact tie</span><span><i class="sw claude"></i>Claude better</span><span><i class="sw unk"></i>Can't tell</span></div>
+    <div class="stack-row">
+      <span class="who">GPT as judge</span>
+      <div class="stack" role="img" aria-label="GPT as judge: GPT better 38, tie 8, Claude better 31, can't tell 143">
+        <span class="seg gpt" style="width:17.3%">38</span><span class="seg tie" style="width:3.6%">8</span><span class="seg claude" style="width:14.1%">31</span><span class="seg unk" style="width:65%">143</span>
+      </div>
+      <span><span class="badge gpt">Leans GPT · 38–31</span></span>
+    </div>
+    <div class="stack-row">
+      <span class="who">Claude as judge</span>
+      <div class="stack" role="img" aria-label="Claude as judge: GPT better 26, tie 10, Claude better 50, can't tell 134">
+        <span class="seg gpt" style="width:11.8%">26</span><span class="seg tie" style="width:4.5%">10</span><span class="seg claude" style="width:22.7%">50</span><span class="seg unk" style="width:60.9%">134</span>
+      </div>
+      <span><span class="badge claude">Leans Claude · 50–26</span></span>
+    </div>
+    <p style="margin:10px 0 0;color:var(--muted);font-size:.9rem">The striped segment is the majority for both judges: on most tasks neither model was clearly better. Each judge leans toward its own model.</p>
   </div>
   <p>Each judge appears to rate its own model somewhat more favorably, so the most trustworthy signal is where <strong>both judges agree</strong>:</p>
 
   <div class="grid" style="margin-top:12px">
-    <div class="stat"><div class="num">17</div><div class="label">tasks where both judges say GPT did better</div></div>
-    <div class="stat"><div class="num">29</div><div class="label">tasks where both judges say Claude did better</div></div>
+    <div class="stat gpt"><div class="num">17</div><div class="label">tasks where both judges say GPT did better</div></div>
+    <div class="stat claude"><div class="num">29</div><div class="label">tasks where both judges say Claude did better</div></div>
     <div class="stat"><div class="num">8</div><div class="label">tasks where the judges picked opposite winners</div></div>
     <div class="stat"><div class="num">24.3%</div><div class="label">of individual checklist items the judges could not verify</div></div>
   </div>
