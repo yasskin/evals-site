@@ -1,0 +1,141 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 780 498' width='780' height='498' font-family='-apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif' font-size='13' role='img' aria-labelledby='qtitle'><title id='qtitle'>Tasks where each judge picked a winner, by sector</title>
+<rect width='780' height='498' fill='#fff'/>
+<text x='12' y='22' font-size='15' font-weight='600' fill='#1b1f24'>Whose work was better? Tasks with a clear winner, by sector and judge</text>
+<text x='492' y='46' text-anchor='end' fill='#c96442' font-weight='600'>◀ Claude better</text>
+<text x='508' y='46' fill='#10a37f' font-weight='600'>GPT better ▶</text>
+<text x='768' y='46' text-anchor='end' fill='#5b6470'>Can't tell · p (adj.)</text>
+<line x1='500' y1='56' x2='500' y2='458' stroke='#1b1f24'/>
+<line x1='430' y1='56' x2='430' y2='458' stroke='#d9dee4' stroke-dasharray='3 3'/>
+<text x='430' y='474' text-anchor='middle' fill='#5b6470' font-size='12'>5</text>
+<line x1='570' y1='56' x2='570' y2='458' stroke='#d9dee4' stroke-dasharray='3 3'/>
+<text x='570' y='474' text-anchor='middle' fill='#5b6470' font-size='12'>5</text>
+<line x1='360' y1='56' x2='360' y2='458' stroke='#d9dee4' stroke-dasharray='3 3'/>
+<text x='360' y='474' text-anchor='middle' fill='#5b6470' font-size='12'>10</text>
+<line x1='640' y1='56' x2='640' y2='458' stroke='#d9dee4' stroke-dasharray='3 3'/>
+<text x='640' y='474' text-anchor='middle' fill='#5b6470' font-size='12'>10</text>
+<text x='12' y='88' fill='#1b1f24'>Finance &amp; insurance</text>
+<text x='366' y='79' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='430' y='68' width='70' height='14' fill='#c96442'><title>GPT as judge: Claude better on 5</title></rect>
+<rect x='500' y='68' width='112' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 8</title></rect>
+<text x='426' y='79' text-anchor='end' fill='#1b1f24' font-size='11.5'>5</text>
+<text x='616' y='79' fill='#1b1f24' font-size='11.5'>8</text>
+<text x='768' y='79' text-anchor='end' fill='#5b6470' font-size='11.5'>12 · p=1.00</text>
+<text x='366' y='96' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='430' y='85' width='70' height='14' fill='#c96442'><title>Claude as judge: Claude better on 5</title></rect>
+<rect x='500' y='85' width='56' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 4</title></rect>
+<text x='426' y='96' text-anchor='end' fill='#1b1f24' font-size='11.5'>5</text>
+<text x='560' y='96' fill='#1b1f24' font-size='11.5'>4</text>
+<text x='768' y='96' text-anchor='end' fill='#5b6470' font-size='11.5'>16 · p=1.00</text>
+<line x1='12' y1='106' x2='768' y2='106' stroke='#eef1f4'/>
+<text x='12' y='132' fill='#1b1f24'>Government</text>
+<text x='366' y='123' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='458' y='112' width='42' height='14' fill='#c96442'><title>GPT as judge: Claude better on 3</title></rect>
+<rect x='500' y='112' width='28' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 2</title></rect>
+<text x='454' y='123' text-anchor='end' fill='#1b1f24' font-size='11.5'>3</text>
+<text x='532' y='123' fill='#1b1f24' font-size='11.5'>2</text>
+<text x='768' y='123' text-anchor='end' fill='#5b6470' font-size='11.5'>20 · p=1.00</text>
+<text x='366' y='140' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='444' y='129' width='56' height='14' fill='#c96442'><title>Claude as judge: Claude better on 4</title></rect>
+<rect x='500' y='129' width='0' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 0</title></rect>
+<text x='440' y='140' text-anchor='end' fill='#1b1f24' font-size='11.5'>4</text>
+<text x='768' y='140' text-anchor='end' fill='#5b6470' font-size='11.5'>21 · p=1.00</text>
+<line x1='12' y1='150' x2='768' y2='150' stroke='#eef1f4'/>
+<text x='12' y='176' fill='#1b1f24'>Real estate &amp; leasing</text>
+<text x='366' y='167' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='458' y='156' width='42' height='14' fill='#c96442'><title>GPT as judge: Claude better on 3</title></rect>
+<rect x='500' y='156' width='56' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 4</title></rect>
+<text x='454' y='167' text-anchor='end' fill='#1b1f24' font-size='11.5'>3</text>
+<text x='560' y='167' fill='#1b1f24' font-size='11.5'>4</text>
+<text x='768' y='167' text-anchor='end' fill='#5b6470' font-size='11.5'>18 · p=1.00</text>
+<text x='366' y='184' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='388' y='173' width='112' height='14' fill='#c96442'><title>Claude as judge: Claude better on 8</title></rect>
+<rect x='500' y='173' width='42' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 3</title></rect>
+<text x='384' y='184' text-anchor='end' fill='#1b1f24' font-size='11.5'>8</text>
+<text x='546' y='184' fill='#1b1f24' font-size='11.5'>3</text>
+<text x='768' y='184' text-anchor='end' fill='#5b6470' font-size='11.5'>14 · p=1.00</text>
+<line x1='12' y1='194' x2='768' y2='194' stroke='#eef1f4'/>
+<text x='12' y='220' fill='#1b1f24'>Health care &amp; social assistance</text>
+<text x='366' y='211' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='486' y='200' width='14' height='14' fill='#c96442'><title>GPT as judge: Claude better on 1</title></rect>
+<rect x='500' y='200' width='70' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 5</title></rect>
+<text x='482' y='211' text-anchor='end' fill='#1b1f24' font-size='11.5'>1</text>
+<text x='574' y='211' fill='#1b1f24' font-size='11.5'>5</text>
+<text x='768' y='211' text-anchor='end' fill='#5b6470' font-size='11.5'>19 · p=1.00</text>
+<text x='366' y='228' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='402' y='217' width='98' height='14' fill='#c96442'><title>Claude as judge: Claude better on 7</title></rect>
+<rect x='500' y='217' width='28' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 2</title></rect>
+<text x='398' y='228' text-anchor='end' fill='#1b1f24' font-size='11.5'>7</text>
+<text x='532' y='228' fill='#1b1f24' font-size='11.5'>2</text>
+<text x='768' y='228' text-anchor='end' fill='#5b6470' font-size='11.5'>16 · p=1.00</text>
+<line x1='12' y1='238' x2='768' y2='238' stroke='#eef1f4'/>
+<text x='12' y='264' fill='#1b1f24'>Retail trade</text>
+<text x='366' y='255' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='430' y='244' width='70' height='14' fill='#c96442'><title>GPT as judge: Claude better on 5</title></rect>
+<rect x='500' y='244' width='84' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 6</title></rect>
+<text x='426' y='255' text-anchor='end' fill='#1b1f24' font-size='11.5'>5</text>
+<text x='588' y='255' fill='#1b1f24' font-size='11.5'>6</text>
+<text x='768' y='255' text-anchor='end' fill='#5b6470' font-size='11.5'>9 · p=1.00</text>
+<text x='366' y='272' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='430' y='261' width='70' height='14' fill='#c96442'><title>Claude as judge: Claude better on 5</title></rect>
+<rect x='500' y='261' width='70' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 5</title></rect>
+<text x='426' y='272' text-anchor='end' fill='#1b1f24' font-size='11.5'>5</text>
+<text x='574' y='272' fill='#1b1f24' font-size='11.5'>5</text>
+<text x='768' y='272' text-anchor='end' fill='#5b6470' font-size='11.5'>10 · p=1.00</text>
+<line x1='12' y1='282' x2='768' y2='282' stroke='#eef1f4'/>
+<text x='12' y='308' fill='#1b1f24'>Professional &amp; technical services</text>
+<text x='366' y='299' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='458' y='288' width='42' height='14' fill='#c96442'><title>GPT as judge: Claude better on 3</title></rect>
+<rect x='500' y='288' width='42' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 3</title></rect>
+<text x='454' y='299' text-anchor='end' fill='#1b1f24' font-size='11.5'>3</text>
+<text x='546' y='299' fill='#1b1f24' font-size='11.5'>3</text>
+<text x='768' y='299' text-anchor='end' fill='#5b6470' font-size='11.5'>19 · p=1.00</text>
+<text x='366' y='316' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='430' y='305' width='70' height='14' fill='#c96442'><title>Claude as judge: Claude better on 5</title></rect>
+<rect x='500' y='305' width='28' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 2</title></rect>
+<text x='426' y='316' text-anchor='end' fill='#1b1f24' font-size='11.5'>5</text>
+<text x='532' y='316' fill='#1b1f24' font-size='11.5'>2</text>
+<text x='768' y='316' text-anchor='end' fill='#5b6470' font-size='11.5'>18 · p=1.00</text>
+<line x1='12' y1='326' x2='768' y2='326' stroke='#eef1f4'/>
+<text x='12' y='352' fill='#1b1f24'>Information</text>
+<text x='366' y='343' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='444' y='332' width='56' height='14' fill='#c96442'><title>GPT as judge: Claude better on 4</title></rect>
+<rect x='500' y='332' width='28' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 2</title></rect>
+<text x='440' y='343' text-anchor='end' fill='#1b1f24' font-size='11.5'>4</text>
+<text x='532' y='343' fill='#1b1f24' font-size='11.5'>2</text>
+<text x='768' y='343' text-anchor='end' fill='#5b6470' font-size='11.5'>19 · p=1.00</text>
+<text x='366' y='360' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='458' y='349' width='42' height='14' fill='#c96442'><title>Claude as judge: Claude better on 3</title></rect>
+<rect x='500' y='349' width='98' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 7</title></rect>
+<text x='454' y='360' text-anchor='end' fill='#1b1f24' font-size='11.5'>3</text>
+<text x='602' y='360' fill='#1b1f24' font-size='11.5'>7</text>
+<text x='768' y='360' text-anchor='end' fill='#5b6470' font-size='11.5'>15 · p=1.00</text>
+<line x1='12' y1='370' x2='768' y2='370' stroke='#eef1f4'/>
+<text x='12' y='396' fill='#1b1f24'>Manufacturing</text>
+<text x='366' y='387' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='444' y='376' width='56' height='14' fill='#c96442'><title>GPT as judge: Claude better on 4</title></rect>
+<rect x='500' y='376' width='70' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 5</title></rect>
+<text x='440' y='387' text-anchor='end' fill='#1b1f24' font-size='11.5'>4</text>
+<text x='574' y='387' fill='#1b1f24' font-size='11.5'>5</text>
+<text x='768' y='387' text-anchor='end' fill='#5b6470' font-size='11.5'>16 · p=1.00</text>
+<text x='366' y='404' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='416' y='393' width='84' height='14' fill='#c96442'><title>Claude as judge: Claude better on 6</title></rect>
+<rect x='500' y='393' width='28' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 2</title></rect>
+<text x='412' y='404' text-anchor='end' fill='#1b1f24' font-size='11.5'>6</text>
+<text x='532' y='404' fill='#1b1f24' font-size='11.5'>2</text>
+<text x='768' y='404' text-anchor='end' fill='#5b6470' font-size='11.5'>17 · p=1.00</text>
+<line x1='12' y1='414' x2='768' y2='414' stroke='#eef1f4'/>
+<text x='12' y='440' fill='#1b1f24'>Wholesale trade</text>
+<text x='366' y='431' text-anchor='end' fill='#5b6470' font-size='11.5'>GPT as judge</text>
+<rect x='458' y='420' width='42' height='14' fill='#c96442'><title>GPT as judge: Claude better on 3</title></rect>
+<rect x='500' y='420' width='42' height='14' fill='#10a37f'><title>GPT as judge: GPT better on 3</title></rect>
+<text x='454' y='431' text-anchor='end' fill='#1b1f24' font-size='11.5'>3</text>
+<text x='546' y='431' fill='#1b1f24' font-size='11.5'>3</text>
+<text x='768' y='431' text-anchor='end' fill='#5b6470' font-size='11.5'>19 · p=1.00</text>
+<text x='366' y='448' text-anchor='end' fill='#5b6470' font-size='11.5'>Claude as judge</text>
+<rect x='402' y='437' width='98' height='14' fill='#c96442'><title>Claude as judge: Claude better on 7</title></rect>
+<rect x='500' y='437' width='14' height='14' fill='#10a37f'><title>Claude as judge: GPT better on 1</title></rect>
+<text x='398' y='448' text-anchor='end' fill='#1b1f24' font-size='11.5'>7</text>
+<text x='518' y='448' fill='#1b1f24' font-size='11.5'>1</text>
+<text x='768' y='448' text-anchor='end' fill='#5b6470' font-size='11.5'>17 · p=0.63</text>
+<text x='12' y='490' fill='#5b6470' font-size='12'>No sector is significant for either judge. Does the pattern differ between sectors? No (p=0.91 GPT judge; p=0.32 Claude judge).</text>
+</svg>

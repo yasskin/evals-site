@@ -15,6 +15,7 @@
       <a href="tasks.html">GDPval gold tasks</a>
       <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="sectors.html">By sector</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
       <a href="glossary.html" aria-current="page">Glossary</a>
@@ -119,6 +120,13 @@
 
     <dt id="provisional">Provisional</dt>
     <dd>Not final. The grading is automated and has not been checked by human experts in each occupation, so treat quality results as early signals.</dd>
+
+    <dt id="sector">Sector</dt>
+    <dd>The industry a task comes from. GDPval groups its 220 tasks into nine sectors, such as Finance &amp; insurance or Health care &amp; social assistance, with 20–25 tasks each.</dd>
+
+    <dt id="significant">Statistically significant / p-value</dt>
+    <dd>A <strong>p-value</strong> estimates how often a gap at least this large would appear by luck alone if the two models were really equal. We call a gap <strong>significant</strong> when p is below 0.05 (less than a 1-in-20 chance). Checking many groups at once raises the odds of a fluke, so for the nine sectors we use an <strong>adjusted p</strong> (Holm correction) that is stricter.
+      <div class="eg">Example: Claude missed 15 Finance tasks that GPT delivered, and GPT missed none that Claude delivered. That split is very unlikely by chance (adjusted p ≈ 0.0005), so it is significant.</div></dd>
   </dl>
 
   <h2>Terms from the findings</h2>

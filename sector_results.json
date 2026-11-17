@@ -1,0 +1,296 @@
+{
+  "sectors": [
+    {
+      "sector": "Finance and Insurance",
+      "label": "Finance & insurance",
+      "n": 25,
+      "gpt_delivered": 24,
+      "claude_delivered": 9,
+      "gpt_only": 15,
+      "claude_only": 0,
+      "claude_incomplete": 15,
+      "gpt_incomplete": 0,
+      "delivery_p": 6.103515625e-05,
+      "gpt_judge": {
+        "gpt_better": 8,
+        "claude_better": 5,
+        "tie": 0,
+        "unresolved": 12,
+        "p": 0.5810546875,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 4,
+        "claude_better": 5,
+        "tie": 1,
+        "unresolved": 15,
+        "p": 1.0,
+        "p_holm": 1.0
+      },
+      "delivery_p_holm": 0.00054931640625
+    },
+    {
+      "sector": "Government",
+      "label": "Government",
+      "n": 25,
+      "gpt_delivered": 24,
+      "claude_delivered": 16,
+      "gpt_only": 8,
+      "claude_only": 0,
+      "claude_incomplete": 7,
+      "gpt_incomplete": 1,
+      "delivery_p": 0.0078125,
+      "gpt_judge": {
+        "gpt_better": 2,
+        "claude_better": 3,
+        "tie": 1,
+        "unresolved": 19,
+        "p": 1.0,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 0,
+        "claude_better": 4,
+        "tie": 2,
+        "unresolved": 19,
+        "p": 0.125,
+        "p_holm": 1.0
+      },
+      "delivery_p_holm": 0.0625
+    },
+    {
+      "sector": "Real Estate and Rental and Leasing",
+      "label": "Real estate & leasing",
+      "n": 25,
+      "gpt_delivered": 25,
+      "claude_delivered": 17,
+      "gpt_only": 8,
+      "claude_only": 0,
+      "claude_incomplete": 4,
+      "gpt_incomplete": 0,
+      "delivery_p": 0.0078125,
+      "gpt_judge": {
+        "gpt_better": 4,
+        "claude_better": 3,
+        "tie": 2,
+        "unresolved": 16,
+        "p": 1.0,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 3,
+        "claude_better": 8,
+        "tie": 2,
+        "unresolved": 12,
+        "p": 0.2265625,
+        "p_holm": 1.0
+      },
+      "delivery_p_holm": 0.0625
+    },
+    {
+      "sector": "Health Care and Social Assistance",
+      "label": "Health care & social assistance",
+      "n": 25,
+      "gpt_delivered": 24,
+      "claude_delivered": 16,
+      "gpt_only": 8,
+      "claude_only": 0,
+      "claude_incomplete": 8,
+      "gpt_incomplete": 0,
+      "delivery_p": 0.0078125,
+      "gpt_judge": {
+        "gpt_better": 5,
+        "claude_better": 1,
+        "tie": 0,
+        "unresolved": 19,
+        "p": 0.21875,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 2,
+        "claude_better": 7,
+        "tie": 0,
+        "unresolved": 16,
+        "p": 0.1796875,
+        "p_holm": 1.0
+      },
+      "delivery_p_holm": 0.0625
+    },
+    {
+      "sector": "Retail Trade",
+      "label": "Retail trade",
+      "n": 20,
+      "gpt_delivered": 20,
+      "claude_delivered": 14,
+      "gpt_only": 6,
+      "claude_only": 0,
+      "claude_incomplete": 4,
+      "gpt_incomplete": 0,
+      "delivery_p": 0.03125,
+      "gpt_judge": {
+        "gpt_better": 6,
+        "claude_better": 5,
+        "tie": 1,
+        "unresolved": 8,
+        "p": 1.0,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 5,
+        "claude_better": 5,
+        "tie": 2,
+        "unresolved": 8,
+        "p": 1.0,
+        "p_holm": 1.0
+      },
+      "delivery_p_holm": 0.09375
+    },
+    {
+      "sector": "Professional, Scientific, and Technical Services",
+      "label": "Professional & technical services",
+      "n": 25,
+      "gpt_delivered": 22,
+      "claude_delivered": 15,
+      "gpt_only": 8,
+      "claude_only": 1,
+      "claude_incomplete": 9,
+      "gpt_incomplete": 0,
+      "delivery_p": 0.0390625,
+      "gpt_judge": {
+        "gpt_better": 3,
+        "claude_better": 3,
+        "tie": 2,
+        "unresolved": 17,
+        "p": 1.0,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 2,
+        "claude_better": 5,
+        "tie": 1,
+        "unresolved": 17,
+        "p": 0.453125,
+        "p_holm": 1.0
+      },
+      "delivery_p_holm": 0.09375
+    },
+    {
+      "sector": "Information",
+      "label": "Information",
+      "n": 25,
+      "gpt_delivered": 23,
+      "claude_delivered": 16,
+      "gpt_only": 7,
+      "claude_only": 0,
+      "claude_incomplete": 7,
+      "gpt_incomplete": 1,
+      "delivery_p": 0.015625,
+      "gpt_judge": {
+        "gpt_better": 2,
+        "claude_better": 4,
+        "tie": 1,
+        "unresolved": 18,
+        "p": 0.6875,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 7,
+        "claude_better": 3,
+        "tie": 0,
+        "unresolved": 15,
+        "p": 0.34375,
+        "p_holm": 1.0
+      },
+      "delivery_p_holm": 0.078125
+    },
+    {
+      "sector": "Manufacturing",
+      "label": "Manufacturing",
+      "n": 25,
+      "gpt_delivered": 24,
+      "claude_delivered": 17,
+      "gpt_only": 7,
+      "claude_only": 0,
+      "claude_incomplete": 7,
+      "gpt_incomplete": 1,
+      "delivery_p": 0.015625,
+      "gpt_judge": {
+        "gpt_better": 5,
+        "claude_better": 4,
+        "tie": 1,
+        "unresolved": 15,
+        "p": 1.0,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 2,
+        "claude_better": 6,
+        "tie": 1,
+        "unresolved": 16,
+        "p": 0.2890625,
+        "p_holm": 1.0
+      },
+      "delivery_p_holm": 0.078125
+    },
+    {
+      "sector": "Wholesale Trade",
+      "label": "Wholesale trade",
+      "n": 25,
+      "gpt_delivered": 25,
+      "claude_delivered": 24,
+      "gpt_only": 1,
+      "claude_only": 0,
+      "claude_incomplete": 1,
+      "gpt_incomplete": 0,
+      "delivery_p": 1.0,
+      "gpt_judge": {
+        "gpt_better": 3,
+        "claude_better": 3,
+        "tie": 0,
+        "unresolved": 19,
+        "p": 1.0,
+        "p_holm": 1.0
+      },
+      "claude_judge": {
+        "gpt_better": 1,
+        "claude_better": 7,
+        "tie": 1,
+        "unresolved": 16,
+        "p": 0.0703125,
+        "p_holm": 0.6328125
+      },
+      "delivery_p_holm": 1.0
+    }
+  ],
+  "heterogeneity": {
+    "delivery": {
+      "stat": 3.995454545454545,
+      "p": 0.01855981440185598
+    },
+    "claude_delivery_rate": {
+      "stat": 4.665454545454545,
+      "p": 0.007579924200757993
+    },
+    "gpt_judge": {
+      "stat": 1.1072727272727272,
+      "p": 0.9064309356906431
+    },
+    "claude_judge": {
+      "stat": 3.141818181818182,
+      "p": 0.3175468245317547
+    }
+  },
+  "overall": {
+    "delivery_p": 2.371692252312041e-19,
+    "gpt_judge": {
+      "gpt_better": 38,
+      "claude_better": 31,
+      "p": 0.47036853185814453
+    },
+    "claude_judge": {
+      "gpt_better": 26,
+      "claude_better": 50,
+      "p": 0.007905180027859783
+    }
+  }
+}

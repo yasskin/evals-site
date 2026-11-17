@@ -193,3 +193,5 @@ footer.site {
 @media (max-width: 760px) {
   .pair { grid-template-columns: 1fr; }
 }
+
+figure.card { margin: 12px 0; padding: 10px; }

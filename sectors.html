@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>By sector · GDPval Paired Evaluation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">GDPval Paired Evaluation<small>How GPT and Claude compare across the nine industries</small></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="index.html">Overview</a>
+      <a href="tasks.html">GDPval gold tasks</a>
+      <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
+      <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="sectors.html" aria-current="page">By sector</a>
+      <a href="example.html">Worked example</a>
+      <a href="methods.html">Methods &amp; limits</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Results by sector</h1>
+  <p class="lede">Does the GPT-vs-Claude picture change from one industry to another?</p>
+
+  <div class="plain">
+    <p><strong>In plain English:</strong> GDPval groups its 220 tasks into nine <a class="term" href="glossary.html#sector">sectors</a>
+    (industries), 20–25 tasks each. GPT handed in a file more often than Claude in every sector, but the size of that lead
+    varies a lot: it is largest in Finance &amp; insurance (24 vs 9 of 25) and almost zero in
+    Wholesale trade (25 vs 24). On the quality of the work, no sector shows a
+    <a class="term" href="glossary.html#significant">statistically significant</a> difference, and the quality pattern does not change by sector.</p>
+  </div>
+
+  <h2>1. Handing in a file</h2>
+  <figure class="card">
+    <img src="sector_delivery.svg" alt="Dot chart of delivery rate by sector. GPT is at or above 88% in every sector. Claude ranges from 9 of 25 in Finance and insurance to 24 of 25 in Wholesale trade." style="width:100%;height:auto">
+  </figure>
+  <p class="howto">Each row is one sector. The green dot is the share of that sector's tasks where GPT finished and handed in a file;
+  the orange dot is Claude. A longer grey line means a bigger gap. The number on the right is the gap in percentage points
+  and the corrected p-value (smaller means less likely to be luck).</p>
+  <ul>
+    <li><strong>Significant in 1 sector:</strong> Finance &amp; insurance. Claude did not finish 15 of its 25
+    conversations within the <a class="term" href="glossary.html#budget">budget</a>, so it often ran out before saving a file.</li>
+    <li><strong>Suggestive in 7 more sectors:</strong> GPT's lead is 28–32 points and each would pass a single test on its own,
+    but not after correcting for testing nine sectors at once. With only 25 tasks per sector, gaps this size are hard to confirm.</li>
+    <li><strong>No gap in Wholesale trade:</strong> 25 vs 24.</li>
+    <li><strong>Does the gap really differ between sectors?</strong> Yes. A test that shuffles tasks between sectors at random
+    produced variation this large only about 19 times in 1,000 (p=0.019).
+    The variation comes from Claude: GPT delivers at a similar rate everywhere.</li>
+  </ul>
+
+  <h2>2. Whose work was better</h2>
+  <figure class="card">
+    <img src="sector_quality.svg" alt="Diverging bar chart of tasks where each judge favored GPT or Claude, per sector. Bars are short, mostly under 8 tasks, and no sector is significant." style="width:100%;height:auto">
+  </figure>
+  <p class="howto">For each sector there are two bars, one per <a class="term" href="glossary.html#judge">judge</a>. Orange bars to the left count
+  tasks where that judge's scores put Claude clearly ahead; green bars to the right count GPT clearly ahead. The grey number on
+  the right counts tasks with no clear winner (<a class="term" href="glossary.html#bounds">score ranges</a> overlap, an exact tie,
+  or a missing grade). Most tasks fall in that last group, so the bars are built on small numbers.</p>
+  <ul>
+    <li><strong>No sector is significant for either judge.</strong> The smallest corrected p-value is
+    0.63.</li>
+    <li><strong>The judges lean opposite ways.</strong> Across all sectors, GPT as judge picks GPT 38–31
+    (p=0.47, not significant); Claude as judge picks Claude 50–26
+    (p=0.008). Each judge appears to favor its own model, so neither result is a reliable quality verdict.</li>
+    <li><strong>No sector stands out.</strong> The quality pattern is consistent across sectors
+    (p=0.91 with GPT as judge, p=0.32 with Claude as judge).</li>
+  </ul>
+
+  <h2>All the numbers</h2>
+  <div class="table-wrap">
+  <table class="matrix">
+    <thead>
+      <tr><th rowspan="2">Sector</th><th rowspan="2" class="n">Tasks</th><th colspan="7">Handed in a file</th><th colspan="2">GPT as judge</th><th colspan="2">Claude as judge</th></tr>
+      <tr><th class="n">GPT</th><th class="n">Claude</th><th class="n">Claude unfinished</th><th class="n">Only GPT / only Claude</th>
+      <th class="n">p</th><th class="n">p (adj.)</th><th>Verdict</th>
+      <th class="n">GPT–Claude better</th><th class="n">p (adj.)</th><th class="n">GPT–Claude better</th><th class="n">p (adj.)</th></tr>
+    </thead>
+    <tbody>
+<tr><td>Finance &amp; insurance</td><td class='n'>25</td><td class='n'>24</td><td class='n'>9</td><td class='n'>15</td><td class='n'>15 / 0</td><td class='n'>&lt;0.001</td><td class='n'>&lt;0.001</td><td>Significant</td><td class='n'>8–5</td><td class='n'>1.00</td><td class='n'>4–5</td><td class='n'>1.00</td></tr>
+<tr><td>Government</td><td class='n'>25</td><td class='n'>24</td><td class='n'>16</td><td class='n'>7</td><td class='n'>8 / 0</td><td class='n'>0.008</td><td class='n'>0.062</td><td>Suggestive only</td><td class='n'>2–3</td><td class='n'>1.00</td><td class='n'>0–4</td><td class='n'>1.00</td></tr>
+<tr><td>Real estate &amp; leasing</td><td class='n'>25</td><td class='n'>25</td><td class='n'>17</td><td class='n'>4</td><td class='n'>8 / 0</td><td class='n'>0.008</td><td class='n'>0.062</td><td>Suggestive only</td><td class='n'>4–3</td><td class='n'>1.00</td><td class='n'>3–8</td><td class='n'>1.00</td></tr>
+<tr><td>Health care &amp; social assistance</td><td class='n'>25</td><td class='n'>24</td><td class='n'>16</td><td class='n'>8</td><td class='n'>8 / 0</td><td class='n'>0.008</td><td class='n'>0.062</td><td>Suggestive only</td><td class='n'>5–1</td><td class='n'>1.00</td><td class='n'>2–7</td><td class='n'>1.00</td></tr>
+<tr><td>Retail trade</td><td class='n'>20</td><td class='n'>20</td><td class='n'>14</td><td class='n'>4</td><td class='n'>6 / 0</td><td class='n'>0.031</td><td class='n'>0.094</td><td>Suggestive only</td><td class='n'>6–5</td><td class='n'>1.00</td><td class='n'>5–5</td><td class='n'>1.00</td></tr>
+<tr><td>Professional &amp; technical services</td><td class='n'>25</td><td class='n'>22</td><td class='n'>15</td><td class='n'>9</td><td class='n'>8 / 1</td><td class='n'>0.039</td><td class='n'>0.094</td><td>Suggestive only</td><td class='n'>3–3</td><td class='n'>1.00</td><td class='n'>2–5</td><td class='n'>1.00</td></tr>
+<tr><td>Information</td><td class='n'>25</td><td class='n'>23</td><td class='n'>16</td><td class='n'>7</td><td class='n'>7 / 0</td><td class='n'>0.016</td><td class='n'>0.078</td><td>Suggestive only</td><td class='n'>2–4</td><td class='n'>1.00</td><td class='n'>7–3</td><td class='n'>1.00</td></tr>
+<tr><td>Manufacturing</td><td class='n'>25</td><td class='n'>24</td><td class='n'>17</td><td class='n'>7</td><td class='n'>7 / 0</td><td class='n'>0.016</td><td class='n'>0.078</td><td>Suggestive only</td><td class='n'>5–4</td><td class='n'>1.00</td><td class='n'>2–6</td><td class='n'>1.00</td></tr>
+<tr><td>Wholesale trade</td><td class='n'>25</td><td class='n'>25</td><td class='n'>24</td><td class='n'>1</td><td class='n'>1 / 0</td><td class='n'>1.00</td><td class='n'>1.00</td><td>No clear difference</td><td class='n'>3–3</td><td class='n'>1.00</td><td class='n'>1–7</td><td class='n'>0.63</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>How significance was tested</h2>
+  <ul>
+    <li><strong>Matched pairs.</strong> Both models attempted the same tasks, so each test compares them task by task rather than as two separate groups.</li>
+    <li><strong>Handing in a file:</strong> an exact McNemar test. Only tasks where one model delivered and the other did not
+    (“Only GPT / only Claude”) carry information about which is better.</li>
+    <li><strong>Quality:</strong> an exact sign test on tasks with a clear winner, run separately for each judge. Ties and unclear
+    tasks are left out of the test, never counted as wins for either side, and the two judges are never averaged.</li>
+    <li><strong>Correcting for nine sectors.</strong> Testing nine sectors gives nine chances of a fluke, so p-values are
+    Holm-adjusted (“p (adj.)”). A result is called significant when the adjusted p is below 0.05.</li>
+    <li><strong>Does the gap differ between sectors?</strong> A permutation test: tasks are shuffled between sectors 100,000 times to see
+    how often the sector-to-sector differences are as large as the real ones.</li>
+  </ul>
+
+  <div class="callout">
+    <strong>Read with care.</strong> This breakdown was not planned before the runs, so treat it as exploratory. Each sector has only
+    20–25 tasks and one attempt per model. Grades are <a class="term" href="glossary.html#provisional">provisional</a> and automated,
+    and most quality comparisons are unresolved. Sectors also differ in the kinds of files and inputs their tasks involve, so a sector gap does
+    not prove that the industry itself is the cause.
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">Provisional results from a take-home evaluation. <a href="index.html">Back to overview</a>.</div></footer>
+</body>
+</html>
