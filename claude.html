@@ -35,7 +35,14 @@
   </div>
 
   <div class="card claude pitch">
-    <h3>Why this dataset is worth buying</h3>
+    <h3>Why this dataset is worth buying, for evaluation and for training</h3>
+    <p><strong>As an evaluation: it tests finishing real work under real limits.</strong></p>
+    <ul class="tight">
+      <li><strong>It catches a failure that answer-only tests can't.</strong> The 62 cut-off tasks show up only because each task requires a saved file within fixed limits. A test that grades the text of an answer would not reveal them.</li>
+      <li><strong>The headline check is objective and cheap.</strong> Whether a file exists and opens in the requested format needs no AI judge, so it can be rerun on every model version and limit setting.</li>
+      <li><strong>It separates "can't" from "ran out of room".</strong> Rerunning the same tasks with more room is a built-in experiment for measuring how budget-efficient each model version is.</li>
+    </ul>
+    <p><strong>For training: it shows exactly what to teach.</strong></p>
     <ul class="tight">
       <li><strong>Delivery is the biggest, cheapest gap.</strong> 76 of 220 tasks ended without a usable file, versus 9 for GPT. However good the unfinished work was, none of it reached the customer.</li>
       <li><strong>The work was mostly there.</strong> With more room, 53 of the 62 cut-off tasks produced a file, so the skill to learn is budgeting: deliver first, then improve.</li>
@@ -84,6 +91,7 @@
       <tr><th>Gold outputs</th><td>Complete sessions that save a basic but valid file early, then improve it, and end with the file finished inside the budget.</td></tr>
       <tr><th>Expert annotations</th><td>Marks on which steps were essential versus optional, and a requirement checklist for the final file.</td></tr>
       <tr><th>Negative / repair pairs</th><td>Sessions that ran out of budget without a file, paired with a repaired session that delivers. Our 62 cut-off runs are ready-made examples of the failure.</td></tr>
+      <tr><th>Use as an evaluation</th><td>Hold out a set of tasks as a delivery-under-budget test: report the share of tasks with a valid file at fixed limits, then checklist quality on those files, for each model version and limit setting.</td></tr>
       <tr><th>Acceptance tests</th><td>Automatic: the file exists, opens and matches the requested format before the session ends. Expert review: core requirements covered.</td></tr>
       <tr><th>Proposed size</th><td>A pilot of about 300 tasks with varied budgets, scaled only if the held-out test below improves.</td></tr>
       <tr><th>Evidence so far</th><td>76 of 220 tasks with no usable file; 62 cut off by a limit; 53 of 62 produced a file with more room. On quality: 40 of 143 both-delivered tasks with a checklist item both judges failed for Claude and passed for GPT; 12 draft ledger items (4 quantitative, 3 reference grounding). See <a href="failures.html">Failures</a>.</td></tr>

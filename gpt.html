@@ -35,11 +35,18 @@
   </div>
 
   <div class="card gpt pitch">
-    <h3>Why this dataset is worth buying</h3>
+    <h3>Why this dataset is worth buying, for evaluation and for training</h3>
+    <p><strong>As an evaluation: it measures what a delivery rate hides.</strong></p>
     <ul class="tight">
-      <li><strong>The problem is quality, not delivery.</strong> GPT delivered 211 of 220 files, but on 67 of the 143 tasks where both models delivered, both judges failed a GPT checklist item that both judges passed for Claude.</li>
+      <li><strong>It finds gaps that "did it hand in a file?" misses.</strong> GPT delivered on 211 of 220 tasks, yet on 67 of the 143 tasks where both models delivered, both judges agreed a GPT checklist item failed that passed for Claude.</li>
+      <li><strong>Its checklists can be graded automatically where a file can be read.</strong> Our two judges, from rival companies, agreed on 95.7% of pass/fail calls they could both check. That makes "did it cover every requirement?" a repeatable regression test across model versions.</li>
+      <li><strong>It shows what still needs an expert.</strong> 24.3% of checklist items could not be verified automatically: mostly where no file was handed in, plus slides, video and ZIP files the judges could not open. An evaluation buyer gets a clear map of where automated scores can and cannot be trusted.</li>
+    </ul>
+    <p><strong>For training: it shows exactly what to teach.</strong></p>
+    <ul class="tight">
+      <li><strong>The problem is quality, not delivery.</strong> GPT already hands in a file almost every time, so training should target what goes inside it, without trading away that reliability.</li>
       <li><strong>The misses that matter are judgment calls.</strong> In our 12-item GPT draft ledger, 5 are domain-judgment errors and 4 are high severity, such as a wrong legal bottom line or invented figures a board could act on.</li>
-      <li><strong>It is testable.</strong> Expert checklists turn "complete" into pass/fail checks, so improvement can be measured on held-out tasks.</li>
+      <li><strong>The fix is concrete.</strong> Expert gold files, plus polished-but-incomplete drafts paired with their corrections, show the model exactly which requirements it tends to skip.</li>
     </ul>
   </div>
 
@@ -87,6 +94,7 @@
       <tr><th>Gold outputs</th><td>Expert-written files in the requested format that satisfy every stated requirement.</td></tr>
       <tr><th>Expert annotations</th><td>A requirement checklist that links each item to the part of the gold file that satisfies it, with a severity label (high / medium / low).</td></tr>
       <tr><th>Negative / repair pairs</th><td>Plausible but incomplete drafts (polished, yet missing a safety step, deal term or legal conclusion) paired with the expert's corrected version.</td></tr>
+      <tr><th>Use as an evaluation</th><td>Hold out a set of tasks as a completeness test: score each model version on critical omissions per file, alongside its delivery rate, so a gain in one cannot hide a loss in the other.</td></tr>
       <tr><th>Acceptance tests</th><td>Machine-checkable format and content rules where possible, plus expert review of the high-severity items.</td></tr>
       <tr><th>Proposed size</th><td>A pilot of about 300 tasks across the professions where GPT missed items most often, scaled only if the held-out test below improves.</td></tr>
       <tr><th>Evidence so far</th><td>29 of 220 tasks where both judges scored Claude clearly higher; 67 of 143 both-delivered tasks with a checklist item both judges failed for GPT and passed for Claude; 12 draft ledger items (5 domain judgment, 3 completeness, 2 quantitative). See <a href="failures.html">Failures</a>.</td></tr>
