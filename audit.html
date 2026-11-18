@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audit progress · GDPval Paired Evaluation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">GDPval Paired Evaluation<small>Human checks recorded so far</small></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="index.html">Overview</a>
+      <a href="tasks.html">GDPval gold tasks</a>
+      <a href="sectors.html">By sector</a>
+      <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
+      <a class="claude" href="claude.html">For Anthropic (Claude)</a>
+      <a href="failures.html">Failures</a>
+      <a href="audit.html" aria-current="page">Audit progress</a>
+      <a href="example.html">Worked example</a>
+      <a href="methods.html">Methods &amp; limits</a>
+      <a href="data.html">Data &amp; code</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Hand-audit progress</h1>
+  <p class="lede">A running record of the 30-item failure-ledger audit. Each row is one checklist item selected for review, not necessarily a separate task. Counts and notes below come from the audit CSV.</p>
+  <div class="grid">
+    <div class="stat"><div class="num">20 / 30</div><div class="label">items with a recorded human verdict</div></div>
+    <div class="stat gpt"><div class="num">11</div><div class="label">confirmed as drafted</div></div>
+    <div class="stat"><div class="num">7</div><div class="label">reclassified after review</div></div>
+    <div class="stat claude"><div class="num">2</div><div class="label">AI judge fail calls rejected</div></div>
+  </div>
+  <p class="callout"><strong>How to read this:</strong> Confirmed means the flagged issue and draft labels were accepted. Reclassified means the issue or rubric was reconsidered; see the recorded type and severity. Rejected means the reviewer did not accept the judges' fail call. A “Not a model failure” result is a grading/rubric issue, not a model error. 10 of 30 items still have no recorded verdict.</p>
+  <h2>Recorded items (20)</h2>
+  <p class="howto">The audited type and severity reflect the recorded verdict. Reviewer notes are shown as entered; blank notes are marked as such.</p>
+  <div class="table-wrap"><table class="numbers">
+  <thead><tr><th>ID</th><th>Model</th><th>Occupation</th><th>Verdict</th><th>Audited type</th><th>Audited severity</th><th>Reviewer note</th></tr></thead>
+  <tbody><tr><td><strong>G1</strong></td><td>GPT</td><td>Medical and Health Services Managers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Completeness</td><td>Medium</td><td><span class="muted">No note recorded</span></td></tr>
+<tr><td><strong>G2</strong></td><td>GPT</td><td>Administrative Services Managers</td>
+<td><span class="badge weak">Reclassified</span></td>
+<td>Reference grounding</td><td>High</td><td><span class="muted">No note recorded</span></td></tr>
+<tr><td><strong>G3</strong></td><td>GPT</td><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products</td>
+<td><span class="badge weak">Reclassified</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>Fill in blank is for the judge ID--not for the true/false answer. The rubric should be adjusted as this is a false positive.</td></tr>
+<tr><td><strong>G4</strong></td><td>GPT</td><td>Concierges</td>
+<td><span class="badge weak">Reclassified</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>Claude says three places are not stops but they are in the rubric.</td></tr>
+<tr><td><strong>G5</strong></td><td>GPT</td><td>Mechanical Engineers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Domain judgment &amp; risk</td><td>High</td><td>Both deliverables are missing an interpretation.</td></tr>
+<tr><td><strong>G6</strong></td><td>GPT</td><td>Private Detectives and Investigators</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Domain judgment &amp; risk</td><td>Medium</td><td>Nothing in the artifact about confirming a surveillance photo matching the events.</td></tr>
+<tr><td><strong>G7</strong></td><td>GPT</td><td>Lawyers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Domain judgment &amp; risk</td><td>High</td><td>Memo does not confirm that the veto right is enforceable--it doesn&#x27;t use the word &quot;enforceable&quot;</td></tr>
+<tr><td><strong>G8</strong></td><td>GPT</td><td>Real Estate Brokers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Domain judgment &amp; risk</td><td>High</td><td>&quot;nonrefundable&quot; is not used in the document</td></tr>
+<tr><td><strong>G9</strong></td><td>GPT</td><td>Pharmacists</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Domain judgment &amp; risk</td><td>Medium</td><td>Nothing in the quarterly annual compliance doc about a &quot;ratio&quot;</td></tr>
+<tr><td><strong>G10</strong></td><td>GPT</td><td>Medical Secretaries and Administrative Assistants</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Completeness</td><td>Medium</td><td>No 3:00 arrival time</td></tr>
+<tr><td><strong>G11</strong></td><td>GPT</td><td>Financial Managers</td>
+<td><span class="badge weak">Reclassified</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>Both reports do show IRR</td></tr>
+<tr><td><strong>G12</strong></td><td>GPT</td><td>Buyers and Purchasing Agents</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Quantitative reasoning</td><td>Medium</td><td>Verified no &quot;769&quot; figure difference reported.</td></tr>
+<tr><td><strong>C1</strong></td><td>Claude</td><td>Concierges</td>
+<td><span class="badge even">Rejected</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>Case number on p.1 matches the source</td></tr>
+<tr><td><strong>C2</strong></td><td>Claude</td><td>Lawyers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Domain judgment &amp; risk</td><td>High</td><td>Nothing in the doc about &quot;breach&quot; &quot;duty&quot; related to the board.</td></tr>
+<tr><td><strong>C3</strong></td><td>Claude</td><td>Personal Financial Advisors</td>
+<td><span class="badge weak">Reclassified</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>The notebook does use 35% as a tax calculation for every year.</td></tr>
+<tr><td><strong>C4</strong></td><td>Claude</td><td>Counter and Rental Clerks</td>
+<td><span class="badge weak">Reclassified</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>Carpet is before, not after staff. It looks correct to me.</td></tr>
+<tr><td><strong>C5</strong></td><td>Claude</td><td>Customer Service Representatives</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Reference grounding</td><td>High</td><td>Doc does not make it clear that the quotes are from agents.</td></tr>
+<tr><td><strong>C6</strong></td><td>Claude</td><td>Buyers and Purchasing Agents</td>
+<td><span class="badge weak">Reclassified</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>Phase 1 – Assembly	Years 1–2	Local pack assembly from imported child parts; certification; PPAP; ramp-up	Yr 1 ramp to 110K run-rate; Yr 2: 110K local</td></tr>
+<tr><td><strong>C7</strong></td><td>Claude</td><td>First-Line Supervisors of Non-Retail Sales Workers</td>
+<td><span class="badge even">Rejected</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>Possibly a rubric problem, not a model error</td></tr>
+<tr><td><strong>C8</strong></td><td>Claude</td><td>First-Line Supervisors of Non-Retail Sales Workers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Format &amp; constraints</td><td>Low</td><td>Sheet does not have sums of the Stores and E-Commerce cells.</td></tr></tbody>
+  </table></div>
+  <p class="note">Source: the local <code>audit/failure_audit.csv</code> at the time this page was built. This page does not update until the site is regenerated after the CSV changes.</p>
+
+</main>
+
+<footer class="site"><div class="wrap">Provisional results. <a href="methods.html">Methods and limitations</a>.</div></footer>
+</body>
+</html>

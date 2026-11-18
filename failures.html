@@ -17,6 +17,7 @@
       <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
       <a href="failures.html" aria-current="page">Failures</a>
+      <a href="audit.html">Audit progress</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html">Methods &amp; limits</a>
       <a href="data.html">Data &amp; code</a>
@@ -36,9 +37,9 @@
 
   <div class="grid">
     <div class="stat claude"><div class="num">85</div><div class="label">tasks with no usable file (9 GPT, 76 Claude), all classified</div></div>
-    <div class="stat"><div class="num">30</div><div class="label">errors inside delivered files, classified in a draft ledger</div></div>
+    <div class="stat"><div class="num">30</div><div class="label">errors inside delivered files, classified in a draft ledger (20 hand-checked so far)</div></div>
     <div class="stat"><div class="num">8</div><div class="label">of the 30 rated high severity (could mislead a decision)</div></div>
-    <div class="stat"><div class="num">4</div><div class="label">of the 30 are grading problems or noise, not model weaknesses</div></div>
+    <div class="stat"><div class="num">11</div><div class="label">of the 30 are grading problems or noise, not model weaknesses</div></div>
   </div>
 
   <h2>Part A: tasks that produced no usable file (85 of 440 attempts)</h2>
@@ -62,7 +63,7 @@
   <p class="note">Nine of these attempts left partial files (1 GPT, 8 Claude). Limits were identical for both models: 14 turns, 24 tool calls and 50,000 written tokens per task. In a separate follow-up with larger limits, 53 of 62 cut-off Claude tasks produced a file (<a href="claude.html">details</a>).</p>
 
   <h2>Part B: errors inside delivered files (draft ledger of 30)</h2>
-  <div class="callout"><strong>Status: draft.</strong> Each item was classified from both AI judges' cited evidence. A human re-check of each item against the original file is still pending, so treat severities as provisional. <a href="data/failure_ledger_draft.csv">Download the full ledger (CSV)</a> with task, run and checklist-item IDs and both judges' reasoning.</div>
+  <div class="callout"><strong>Status: partly checked.</strong> Each item was classified from both AI judges' cited evidence. 20 of 30 have been hand-checked against the original file (11 confirmed, 7 reclassified, 2 rejected); the rest are still drafts. <a href="data/failure_ledger.csv">Download the full ledger (CSV)</a> with task, run and checklist-item IDs, both judges' reasoning and the hand-check result.</div>
   <h3>How the 30 were chosen</h3>
   <ol class="steps">
     <li><strong>Start from agreement</strong>Only checklist items that <em>both</em> judges failed. One judge alone is not enough.</li>
@@ -77,13 +78,14 @@
     <table class="numbers" style="max-width:620px">
       <thead><tr><th>Error type</th><th class="n">GPT</th><th class="n">Claude</th><th class="n">Both</th></tr></thead>
       <tbody>
-        <tr><td>Reference grounding</td><td class="n">1</td><td class="n">3</td><td class="n">–</td></tr>
-        <tr><td>Quantitative reasoning</td><td class="n">2</td><td class="n">4</td><td class="n">1</td></tr>
+        <tr><td>Reference grounding</td><td class="n">1</td><td class="n">2</td><td class="n">–</td></tr>
+        <tr><td>Research &amp; citations</td><td class="n">–</td><td class="n">–</td><td class="n">–</td></tr>
+        <tr><td>Quantitative reasoning</td><td class="n">1</td><td class="n">2</td><td class="n">1</td></tr>
         <tr><td>Domain judgment &amp; risk</td><td class="n">5</td><td class="n">2</td><td class="n">–</td></tr>
-        <tr><td>Completeness</td><td class="n">3</td><td class="n">1</td><td class="n">1</td></tr>
-        <tr><td>Format &amp; constraints</td><td class="n">1</td><td class="n">2</td><td class="n">–</td></tr>
+        <tr><td>Completeness</td><td class="n">2</td><td class="n">–</td><td class="n">1</td></tr>
+        <tr><td>Format &amp; constraints</td><td class="n">–</td><td class="n">1</td><td class="n">–</td></tr>
         <tr><td>Tool or modality limit</td><td class="n">–</td><td class="n">–</td><td class="n">2</td></tr>
-        <tr><td>Grader / rubric defect</td><td class="n">–</td><td class="n">–</td><td class="n">2</td></tr>
+        <tr><td>Grader / rubric defect</td><td class="n">3</td><td class="n">5</td><td class="n">2</td></tr>
       </tbody>
     </table>
   </div>
@@ -93,41 +95,41 @@
   <div class="table-wrap"><table class="numbers ledger">
       <thead><tr><th>Occupation</th><th>The checklist required</th><th>What went wrong</th><th>Type</th><th>Severity</th></tr></thead>
       <tbody>
-        <tr><td>Medical and Health Services Managers<div class="pnote"><code>61e7b9c6</code></div></td>
+        <tr><td>Medical and Health Services Managers<div class="pnote"><b>G1</b> · <code>61e7b9c6</code> · ✓ hand-checked</div></td>
           <td>A one-month uninsured cost for every medication in a formulary</td><td>Costs missing for almost every medication</td>
           <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Administrative Services Managers<div class="pnote"><code>27e8912c</code></div></td>
+        <tr><td>Administrative Services Managers<div class="pnote"><b>G2</b> · <code>27e8912c</code> · ✓ hand-checked</div></td>
           <td>Carry every column of a source checklist PDF into a Word version</td><td>Items copied, but the per-item details from the PDF were dropped</td>
-          <td>Reference grounding</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products<div class="pnote"><code>fe0d3941</code></div></td>
-          <td>A Yes/No-only survey with no free-text fields</td><td>Added a fill-in blank on both pages<div class="pnote" style="white-space:normal">Cosmetic; easy to fix</div></td>
-          <td>Format &amp; constraints</td><td><span class="sev sev-low">Low</span></td></tr>
-        <tr><td>Concierges<div class="pnote"><code>f5d428fd</code></div></td>
-          <td>A yacht itinerary covering six named islands</td><td>Three of the six destinations are not stops</td>
-          <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Mechanical Engineers<div class="pnote"><code>46fc494e</code></div></td>
-          <td>Interpret a heat map, including whether any hotspot is within 10 °C of a 150 °C limit</td><td>No interpretation of the safety margin<div class="pnote" style="white-space:normal">Safety-relevant engineering conclusion left out</div></td>
+          <td>Reference grounding</td><td><span class="sev sev-high">High</span></td></tr>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products<div class="pnote"><b>G3</b> · <code>fe0d3941</code> · ✓ hand-checked</div></td>
+          <td>A Yes/No-only survey with no free-text fields</td><td>Added a fill-in blank on both pages<div class="pnote" style="white-space:normal">Fill in blank is for the judge ID--not for the true/false answer. The rubric should be adjusted as this is a false positive.</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>Concierges<div class="pnote"><b>G4</b> · <code>f5d428fd</code> · ✓ hand-checked</div></td>
+          <td>A yacht itinerary covering six named islands</td><td>Three of the six destinations are not stops<div class="pnote" style="white-space:normal">Claude says three places are not stops but they are in the rubric.</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>Mechanical Engineers<div class="pnote"><b>G5</b> · <code>46fc494e</code> · ✓ hand-checked</div></td>
+          <td>Interpret a heat map, including whether any hotspot is within 10 °C of a 150 °C limit</td><td>No interpretation of the safety margin<div class="pnote" style="white-space:normal">Both deliverables are missing an interpretation.</div></td>
           <td>Domain judgment &amp; risk</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Private Detectives and Investigators<div class="pnote"><code>57b2cdf2</code></div></td>
-          <td>Confirm that surveillance photos match the logged events</td><td>The report declines to confirm the match<div class="pnote" style="white-space:normal">Debatable: caution can be professionally defensible</div></td>
+        <tr><td>Private Detectives and Investigators<div class="pnote"><b>G6</b> · <code>57b2cdf2</code> · ✓ hand-checked</div></td>
+          <td>Confirm that surveillance photos match the logged events</td><td>The report declines to confirm the match<div class="pnote" style="white-space:normal">Nothing in the artifact about confirming a surveillance photo matching the events.</div></td>
           <td>Domain judgment &amp; risk</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Lawyers<div class="pnote"><code>a97369c7</code></div></td>
-          <td>Conclude that a shareholder veto right is facially enforceable under Delaware law</td><td>Treats the charter clause as an obstacle, the opposite conclusion<div class="pnote" style="white-space:normal">Wrong legal bottom line</div></td>
+        <tr><td>Lawyers<div class="pnote"><b>G7</b> · <code>a97369c7</code> · ✓ hand-checked</div></td>
+          <td>Conclude that a shareholder veto right is facially enforceable under Delaware law</td><td>Treats the charter clause as an obstacle, the opposite conclusion<div class="pnote" style="white-space:normal">Memo does not confirm that the veto right is enforceable--it doesn&#x27;t use the word &quot;enforceable&quot;</div></td>
           <td>Domain judgment &amp; risk</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Real Estate Brokers<div class="pnote"><code>2d06bc0a</code></div></td>
-          <td>Letter of intent states when the extra deposit becomes nonrefundable</td><td>Key deal term deferred instead of stated<div class="pnote" style="white-space:normal">Money-at-risk term missing from a deal document</div></td>
+        <tr><td>Real Estate Brokers<div class="pnote"><b>G8</b> · <code>2d06bc0a</code> · ✓ hand-checked</div></td>
+          <td>Letter of intent states when the extra deposit becomes nonrefundable</td><td>Key deal term deferred instead of stated<div class="pnote" style="white-space:normal">&quot;nonrefundable&quot; is not used in the document</div></td>
           <td>Domain judgment &amp; risk</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Pharmacists<div class="pnote"><code>045aba2e</code></div></td>
-          <td>Monthly check of the pharmacist-to-technician ratio under California rules</td><td>Cites the regulation but never schedules the check</td>
+        <tr><td>Pharmacists<div class="pnote"><b>G9</b> · <code>045aba2e</code> · ✓ hand-checked</div></td>
+          <td>Monthly check of the pharmacist-to-technician ratio under California rules</td><td>Cites the regulation but never schedules the check<div class="pnote" style="white-space:normal">Nothing in the quarterly annual compliance doc about a &quot;ratio&quot;</div></td>
           <td>Domain judgment &amp; risk</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Medical Secretaries and Administrative Assistants<div class="pnote"><code>f1be6436</code></div></td>
-          <td>Travel plan that gets the doctor back to Chicago by 3 pm, with arrival time shown</td><td>No arrival time documented</td>
+        <tr><td>Medical Secretaries and Administrative Assistants<div class="pnote"><b>G10</b> · <code>f1be6436</code> · ✓ hand-checked</div></td>
+          <td>Travel plan that gets the doctor back to Chicago by 3 pm, with arrival time shown</td><td>No arrival time documented<div class="pnote" style="white-space:normal">No 3:00 arrival time</div></td>
           <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Financial Managers<div class="pnote"><code>b78fd844</code></div></td>
-          <td>Say only whether each project&#x27;s return is above or below 9%, without inventing numbers</td><td>Reports precise returns calculated from invented cash flows<div class="pnote" style="white-space:normal">Fabricated precision a board could act on</div></td>
-          <td>Quantitative reasoning</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>05389f78</code></div></td>
-          <td>Report one supplier&#x27;s cost difference versus another (₹769.56 million)</td><td>The required comparison figure is missing</td>
+        <tr><td>Financial Managers<div class="pnote"><b>G11</b> · <code>b78fd844</code> · ✓ hand-checked</div></td>
+          <td>Say only whether each project&#x27;s return is above or below 9%, without inventing numbers</td><td>Reports precise returns calculated from invented cash flows<div class="pnote" style="white-space:normal">Both reports do show IRR</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><b>G12</b> · <code>05389f78</code> · ✓ hand-checked</div></td>
+          <td>Report one supplier&#x27;s cost difference versus another (₹769.56 million)</td><td>The required comparison figure is missing<div class="pnote" style="white-space:normal">Verified no &quot;769&quot; figure difference reported.</div></td>
           <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
       </tbody></table></div>
 
@@ -135,40 +137,40 @@
   <div class="table-wrap"><table class="numbers ledger">
       <thead><tr><th>Occupation</th><th>The checklist required</th><th>What went wrong</th><th>Type</th><th>Severity</th></tr></thead>
       <tbody>
-        <tr><td>Concierges<div class="pnote"><code>f5d428fd</code></div></td>
-          <td>A polished, client-ready luxury itinerary</td><td>Missing images and large empty areas<div class="pnote" style="white-space:normal">Presentation only</div></td>
-          <td>Format &amp; constraints</td><td><span class="sev sev-low">Low</span></td></tr>
-        <tr><td>Lawyers<div class="pnote"><code>a97369c7</code></div></td>
-          <td>Conclude that the board likely breached its duty of loyalty</td><td>Lists risks but never reaches the required conclusion<div class="pnote" style="white-space:normal">Hedged legal advice</div></td>
+        <tr><td>Concierges<div class="pnote"><b>C1</b> · <code>f5d428fd</code> · ✓ hand-checked</div></td>
+          <td>A polished, client-ready luxury itinerary</td><td>On hand check, the file meets this item: the judges were wrong<div class="pnote" style="white-space:normal">Case number on p.1 matches the source</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>Lawyers<div class="pnote"><b>C2</b> · <code>a97369c7</code> · ✓ hand-checked</div></td>
+          <td>Conclude that the board likely breached its duty of loyalty</td><td>Lists risks but never reaches the required conclusion<div class="pnote" style="white-space:normal">Nothing in the doc about &quot;breach&quot; &quot;duty&quot; related to the board.</div></td>
           <td>Domain judgment &amp; risk</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Personal Financial Advisors<div class="pnote"><code>c657103b</code></div></td>
-          <td>Calculate conversion tax at a flat 35% marginal rate</td><td>Used a bracket-filling method instead<div class="pnote" style="white-space:normal">Debatable: the alternative method may be more realistic</div></td>
-          <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Counter and Rental Clerks<div class="pnote"><code>61f546a8</code></div></td>
-          <td>Schedule carpet cleaning before staff work in unit M2</td><td>Scheduled it after staff work<div class="pnote" style="white-space:normal">Ignores an ordering constraint in the inputs</div></td>
-          <td>Reference grounding</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Customer Service Representatives<div class="pnote"><code>d025a41c</code></div></td>
-          <td>Quote real agent statements from the support case file</td><td>Quoted a customer line and claimed an agent message was missing when it exists<div class="pnote" style="white-space:normal">Misstates the record being reviewed</div></td>
+        <tr><td>Personal Financial Advisors<div class="pnote"><b>C3</b> · <code>c657103b</code> · ✓ hand-checked</div></td>
+          <td>Calculate conversion tax at a flat 35% marginal rate</td><td>Used a bracket-filling method instead<div class="pnote" style="white-space:normal">The notebook does use 35% as a tax calculation for every year.</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>Counter and Rental Clerks<div class="pnote"><b>C4</b> · <code>61f546a8</code> · ✓ hand-checked</div></td>
+          <td>Schedule carpet cleaning before staff work in unit M2</td><td>Scheduled it after staff work<div class="pnote" style="white-space:normal">Carpet is before, not after staff. It looks correct to me.</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>Customer Service Representatives<div class="pnote"><b>C5</b> · <code>d025a41c</code> · ✓ hand-checked</div></td>
+          <td>Quote real agent statements from the support case file</td><td>Quoted a customer line and claimed an agent message was missing when it exists<div class="pnote" style="white-space:normal">Doc does not make it clear that the quotes are from agents.</div></td>
           <td>Reference grounding</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>93b336f3</code></div></td>
-          <td>Phase 1 covers local assembly of vehicles, battery packs and motor controllers</td><td>Vehicles and motor controllers left out</td>
-          <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>e996036e</code></div></td>
-          <td>Year-1 shipments total $225,000</td><td>Totals $255,000; Claude flagged the brief as inconsistent<div class="pnote" style="white-space:normal">Possibly a rubric problem, not a model error</div></td>
-          <td>Quantitative reasoning</td><td><span class="sev sev-low">Low</span></td></tr>
-        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><code>3f821c2d</code></div></td>
-          <td>Totals computed with formulas that sum the channel cells</td><td>Numerically correct, but not built the required way<div class="pnote" style="white-space:normal">Noise: same numbers</div></td>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><b>C6</b> · <code>93b336f3</code> · ✓ hand-checked</div></td>
+          <td>Phase 1 covers local assembly of vehicles, battery packs and motor controllers</td><td>Vehicles and motor controllers left out<div class="pnote" style="white-space:normal">Phase 1 – Assembly	Years 1–2	Local pack assembly from imported child parts; certification; PPAP; ramp-up	Yr 1 ramp to 110K run-rate; Yr 2: 110K local</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><b>C7</b> · <code>e996036e</code> · ✓ hand-checked</div></td>
+          <td>Year-1 shipments total $225,000</td><td>On hand check, the file meets this item: the judges were wrong<div class="pnote" style="white-space:normal">Possibly a rubric problem, not a model error</div></td>
+          <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
+        <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><b>C8</b> · <code>3f821c2d</code> · ✓ hand-checked</div></td>
+          <td>Totals computed with formulas that sum the channel cells</td><td>Numerically correct, but not built the required way<div class="pnote" style="white-space:normal">Sheet does not have sums of the Stores and E-Commerce cells.</div></td>
           <td>Format &amp; constraints</td><td><span class="sev sev-low">Low</span></td></tr>
-        <tr><td>Buyers and Purchasing Agents<div class="pnote"><code>05389f78</code></div></td>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><b>C9</b> · <code>05389f78</code></div></td>
           <td>Report one supplier&#x27;s investment difference (₹294.39 million)</td><td>The required figure is never stated</td>
           <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Registered Nurses<div class="pnote"><code>116e791e</code></div></td>
+        <tr><td>Registered Nurses<div class="pnote"><b>C10</b> · <code>116e791e</code></div></td>
           <td>Nursing care plan includes ordering lab tests for infection risk</td><td>That intervention is missing</td>
           <td>Domain judgment &amp; risk</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Child, Family, and School Social Workers<div class="pnote"><code>76d10872</code></div></td>
+        <tr><td>Child, Family, and School Social Workers<div class="pnote"><b>C11</b> · <code>76d10872</code></div></td>
           <td>Court case number PT-2025-1782</td><td>Wrote DV-2025-1782, the wrong case number<div class="pnote" style="white-space:normal">Wrong legal identifier in a case file</div></td>
           <td>Reference grounding</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Pharmacists<div class="pnote"><code>ffed32d8</code></div></td>
+        <tr><td>Pharmacists<div class="pnote"><b>C12</b> · <code>ffed32d8</code></div></td>
           <td>Revenue difference defined as 100-day minus 90-day</td><td>Defined the other way round, so signs are flipped</td>
           <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
       </tbody></table></div>
@@ -177,22 +179,22 @@
   <div class="table-wrap"><table class="numbers ledger">
       <thead><tr><th>Occupation</th><th>The checklist required</th><th>What went wrong</th><th>Type</th><th>Severity</th></tr></thead>
       <tbody>
-        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><code>d7cfae6f</code></div></td>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><b>S1</b> · <code>d7cfae6f</code></div></td>
           <td>Inventory coverage = total supply ÷ expected sales</td><td>Both models subtracted demand from supply<div class="pnote" style="white-space:normal">Same error in both: the prompt may be ambiguous</div></td>
           <td>Quantitative reasoning</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Compliance Officers<div class="pnote"><code>7bbfcfe9</code></div></td>
+        <tr><td>Compliance Officers<div class="pnote"><b>S2</b> · <code>7bbfcfe9</code></div></td>
           <td>Workbook includes an &#x27;Exercise of Rights&#x27; tab</td><td>Neither model created it</td>
           <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Real Estate Brokers<div class="pnote"><code>0818571f</code></div></td>
+        <tr><td>Real Estate Brokers<div class="pnote"><b>S3</b> · <code>0818571f</code></div></td>
           <td>A map for each property listing</td><td>Neither model included maps<div class="pnote" style="white-space:normal">Needs map tools, not just data</div></td>
           <td>Tool or modality limit</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Concierges<div class="pnote"><code>f5d428fd</code></div></td>
+        <tr><td>Concierges<div class="pnote"><b>S4</b> · <code>f5d428fd</code></div></td>
           <td>One photo per itinerary day</td><td>Neither model included photos<div class="pnote" style="white-space:normal">Needs image tools</div></td>
           <td>Tool or modality limit</td><td><span class="sev sev-low">Low</span></td></tr>
-        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><code>a95a5829</code></div></td>
+        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><b>S5</b> · <code>a95a5829</code></div></td>
           <td>Checklist demands a PDF</td><td>The task itself asked for a Word file<div class="pnote" style="white-space:normal">The checklist contradicts the task</div></td>
           <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
-        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><code>4c4dc603</code></div></td>
+        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><b>S6</b> · <code>4c4dc603</code></div></td>
           <td>Checklist demands a specific phone number</td><td>Both used the number the task gave<div class="pnote" style="white-space:normal">The checklist contradicts the task</div></td>
           <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
       </tbody></table></div>

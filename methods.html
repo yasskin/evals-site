@@ -17,6 +17,7 @@
       <a class="gpt" href="gpt.html">For OpenAI (GPT)</a>
       <a class="claude" href="claude.html">For Anthropic (Claude)</a>
       <a href="failures.html">Failures</a>
+      <a href="audit.html">Audit progress</a>
       <a href="example.html">Worked example</a>
       <a href="methods.html" aria-current="page">Methods &amp; limits</a>
       <a href="data.html">Data &amp; code</a>
@@ -127,7 +128,7 @@
         <tr><td class="n">43</td><td>Personal Financial Advisors</td><td class="n">0.0</td><td class="n">1/5</td><td class="n"><span class="wg">0</span> · <span class="wc">0</span></td><td><span class="muted">Too few files</span></td></tr>
         <tr><td class="n">44</td><td>Software Developers</td><td class="n">0.0</td><td class="n">1/5</td><td class="n"><span class="wg">0</span> · <span class="wc">0</span></td><td><span class="muted">Too few files</span></td></tr>
     </tbody></table></div></details>
-  <p class="note">A slice chosen for big gaps exaggerates differences by design; it shows where to look, not how the models compare overall. The full-220 results remain the headline. Hand-checking these 30 tasks against the original files is the next step and is not yet done.</p>
+  <p class="note">A slice chosen for big gaps exaggerates differences by design; it shows where to look, not how the models compare overall. The full-220 results remain the headline. Hand-checking the failure ledger against the original files is the next step and is not yet done.</p>
 
   <h2 id="cost">What it cost</h2>
   <p>We did not set a dollar cap, but every request's token usage was recorded. Multiplying by each provider's published list price gives an <strong>estimated total of about $1,165</strong> for everything shown on this site, including the pilot.</p>
@@ -180,7 +181,7 @@
         <tr><td>PowerPoint</td><td class="n">1,458</td><td class="n">98.3%</td><td><div class="mini"><span class="claude" style="width:98%"></span></div></td></tr>
         <tr><td>ZIP archive</td><td class="n">426</td><td class="n">98.6%</td><td><div class="mini"><span class="claude" style="width:99%"></span></div></td></tr>
     </tbody></table></div>
-  <p class="note">PowerPoint, video and ZIP files were almost entirely unverifiable, so results on tasks that need them say little about quality. A human audit of the judges' pass/fail calls against the original files has not been done; until then, all quality results are provisional.</p>
+  <p class="note">PowerPoint, video and ZIP files were almost entirely unverifiable, so results on tasks that need them say little about quality. <strong>Human spot-check:</strong> on hand-checking 20 checklist items that both judges failed, the judges' fail call held up in 18 (90%) and the judges were wrong in 2. This checks the judges' agreed failures only, not their passes or the items they could not verify.</p>
 
   <h2 id="pilot">Development pilot (kept separate)</h2>
   <p>Before the full run, a 6-task pilot tested the harness and grading end to end. Its fixes, such as better file inspection and recovery from errors, went into the frozen settings above. Pilot results are not counted anywhere on this site except in the cost table.</p>
