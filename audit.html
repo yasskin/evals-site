@@ -30,13 +30,15 @@
   <h1>Hand-audit progress</h1>
   <p class="lede">A running record of the 30-item failure-ledger audit. Each row is one checklist item selected for review, not necessarily a separate task. Counts and notes below come from the audit CSV.</p>
   <div class="grid">
-    <div class="stat"><div class="num">20 / 30</div><div class="label">items with a recorded human verdict</div></div>
-    <div class="stat gpt"><div class="num">11</div><div class="label">confirmed as drafted</div></div>
+    <div class="stat"><div class="num">30 / 30</div><div class="label">items with a recorded human verdict</div></div>
+    <div class="stat gpt"><div class="num">21</div><div class="label">confirmed as drafted</div></div>
     <div class="stat"><div class="num">7</div><div class="label">reclassified after review</div></div>
     <div class="stat claude"><div class="num">2</div><div class="label">AI judge fail calls rejected</div></div>
+    <div class="stat"><div class="num">20</div><div class="label">audited items still classified as model failures</div></div>
+    <div class="stat"><div class="num">10</div><div class="label">not counted as model failures</div></div>
   </div>
-  <p class="callout"><strong>How to read this:</strong> Confirmed means the flagged issue and draft labels were accepted. Reclassified means the issue or rubric was reconsidered; see the recorded type and severity. Rejected means the reviewer did not accept the judges' fail call. A “Not a model failure” result is a grading/rubric issue, not a model error. 10 of 30 items still have no recorded verdict.</p>
-  <h2>Recorded items (20)</h2>
+  <p class="callout"><strong>How to read this:</strong> Confirmed means the flagged issue and draft labels were accepted. Reclassified means the issue or rubric was reconsidered; see the recorded type and severity. Rejected means the reviewer did not accept the judges' fail call. Of the 30 checked items, 20 are classified as model failures, 8 as grading/rubric issues, and 2 fail calls were rejected. 0 of 30 items still have no recorded verdict.</p>
+  <h2>Recorded items (30)</h2>
   <p class="howto">The audited type and severity reflect the recorded verdict. Reviewer notes are shown as entered; blank notes are marked as such.</p>
   <div class="table-wrap"><table class="numbers">
   <thead><tr><th>ID</th><th>Model</th><th>Occupation</th><th>Verdict</th><th>Audited type</th><th>Audited severity</th><th>Reviewer note</th></tr></thead>
@@ -99,7 +101,37 @@
 <td>Grader / rubric defect</td><td>Not a model failure</td><td>Possibly a rubric problem, not a model error</td></tr>
 <tr><td><strong>C8</strong></td><td>Claude</td><td>First-Line Supervisors of Non-Retail Sales Workers</td>
 <td><span class="badge gpt">Confirmed</span></td>
-<td>Format &amp; constraints</td><td>Low</td><td>Sheet does not have sums of the Stores and E-Commerce cells.</td></tr></tbody>
+<td>Format &amp; constraints</td><td>Low</td><td>Sheet does not have sums of the Stores and E-Commerce cells.</td></tr>
+<tr><td><strong>C9</strong></td><td>Claude</td><td>Buyers and Purchasing Agents</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Quantitative reasoning</td><td>Medium</td><td>294 not found in the document</td></tr>
+<tr><td><strong>C10</strong></td><td>Claude</td><td>Registered Nurses</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Domain judgment &amp; risk</td><td>Medium</td><td>No lab tests for infection are in the plan</td></tr>
+<tr><td><strong>C11</strong></td><td>Claude</td><td>Child, Family, and School Social Workers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Reference grounding</td><td>High</td><td>The report gives DV-2025-1782, not PT-2025-1782.</td></tr>
+<tr><td><strong>C12</strong></td><td>Claude</td><td>Pharmacists</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Quantitative reasoning</td><td>Medium</td><td>The difference is defined as 90-day − 100-day, which is the reverse of the required 100-day − 90-day.</td></tr>
+<tr><td><strong>S1</strong></td><td>Both</td><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Quantitative reasoning</td><td>High</td><td>Formula looks wrong.</td></tr>
+<tr><td><strong>S2</strong></td><td>Both</td><td>Compliance Officers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Completeness</td><td>Medium</td><td>Exercise of Rights tab not in the Excel sheet.</td></tr>
+<tr><td><strong>S3</strong></td><td>Both</td><td>Real Estate Brokers</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Tool or modality limit</td><td>Medium</td><td>Both deliverables are missing a map.</td></tr>
+<tr><td><strong>S4</strong></td><td>Both</td><td>Concierges</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Tool or modality limit</td><td>Low</td><td>GPT has no images; Claude has links to images.</td></tr>
+<tr><td><strong>S5</strong></td><td>Both</td><td>First-Line Supervisors of Police and Detectives</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>Deliverable is a docx</td></tr>
+<tr><td><strong>S6</strong></td><td>Both</td><td>Securities, Commodities, and Financial Services Sales Agents</td>
+<td><span class="badge gpt">Confirmed</span></td>
+<td>Grader / rubric defect</td><td>Not a model failure</td><td>The checklist contradicts the task</td></tr></tbody>
   </table></div>
   <p class="note">Source: the local <code>audit/failure_audit.csv</code> at the time this page was built. This page does not update until the site is regenerated after the CSV changes.</p>
 

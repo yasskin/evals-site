@@ -9,8 +9,8 @@ Static GitHub Pages site summarizing the paired GPT-6 Astra vs. Claude Opus 5.5 
 | `sectors.html` | Industry overview: GPT vs. Claude by sector, with paired significance tests and two SVG charts |
 | `gpt.html` | OpenAI model trainers: pitch and dataset spec |
 | `claude.html` | Anthropic model trainers: pitch and dataset spec |
-| `failures.html` | Delivery-failure taxonomy (85) and draft 30-item quality ledger |
-| `audit.html` | Human audit progress: recorded verdict totals and item-by-item evidence |
+| `failures.html` | Delivery-failure taxonomy (85) and human-checked 30-item quality ledger |
+| `audit.html` | Human audit totals, verdicts and reviewer notes for each recorded item |
 | `example.html` | Worked example: one task's prompt, both artifacts and all rubric verdicts |
 | `methods.html` | Protocol, slice selection, cost estimate, judge reliability, pilot, score bounds, limitations |
 | `data.html` | Reproducibility: frozen settings, hashes, tests, code (linked to [yasskin/gdpval-paired-eval](https://github.com/yasskin/gdpval-paired-eval)), 220-task status matrix |

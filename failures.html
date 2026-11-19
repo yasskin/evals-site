@@ -37,7 +37,7 @@
 
   <div class="grid">
     <div class="stat claude"><div class="num">85</div><div class="label">tasks with no usable file (9 GPT, 76 Claude), all classified</div></div>
-    <div class="stat"><div class="num">30</div><div class="label">errors inside delivered files, classified in a draft ledger (20 hand-checked so far)</div></div>
+    <div class="stat"><div class="num">30</div><div class="label">errors inside delivered files, each hand-checked against the original file</div></div>
     <div class="stat"><div class="num">8</div><div class="label">of the 30 rated high severity (could mislead a decision)</div></div>
     <div class="stat"><div class="num">11</div><div class="label">of the 30 are grading problems or noise, not model weaknesses</div></div>
   </div>
@@ -62,8 +62,8 @@
   </div>
   <p class="note">Nine of these attempts left partial files (1 GPT, 8 Claude). Limits were identical for both models: 14 turns, 24 tool calls and 50,000 written tokens per task. In a separate follow-up with larger limits, 53 of 62 cut-off Claude tasks produced a file (<a href="claude.html">details</a>).</p>
 
-  <h2>Part B: errors inside delivered files (draft ledger of 30)</h2>
-  <div class="callout"><strong>Status: partly checked.</strong> Each item was classified from both AI judges' cited evidence. 20 of 30 have been hand-checked against the original file (11 confirmed, 7 reclassified, 2 rejected); the rest are still drafts. <a href="data/failure_ledger.csv">Download the full ledger (CSV)</a> with task, run and checklist-item IDs, both judges' reasoning and the hand-check result.</div>
+  <h2>Part B: errors inside delivered files (hand-checked ledger of 30)</h2>
+  <div class="callout"><strong>Hand-checked.</strong> Each item was first classified from both AI judges' cited evidence, then checked by hand against the original file: 21 confirmed as drafted, 7 reclassified and 2 rejected because the judges were wrong. One reviewer, so severities remain a judgment call. <a href="data/failure_ledger.csv">Download the full ledger (CSV)</a> with task, run and checklist-item IDs, both judges' reasoning and the hand-check result.</div>
   <h3>How the 30 were chosen</h3>
   <ol class="steps">
     <li><strong>Start from agreement</strong>Only checklist items that <em>both</em> judges failed. One judge alone is not enough.</li>
@@ -161,17 +161,17 @@
         <tr><td>First-Line Supervisors of Non-Retail Sales Workers<div class="pnote"><b>C8</b> · <code>3f821c2d</code> · ✓ hand-checked</div></td>
           <td>Totals computed with formulas that sum the channel cells</td><td>Numerically correct, but not built the required way<div class="pnote" style="white-space:normal">Sheet does not have sums of the Stores and E-Commerce cells.</div></td>
           <td>Format &amp; constraints</td><td><span class="sev sev-low">Low</span></td></tr>
-        <tr><td>Buyers and Purchasing Agents<div class="pnote"><b>C9</b> · <code>05389f78</code></div></td>
-          <td>Report one supplier&#x27;s investment difference (₹294.39 million)</td><td>The required figure is never stated</td>
+        <tr><td>Buyers and Purchasing Agents<div class="pnote"><b>C9</b> · <code>05389f78</code> · ✓ hand-checked</div></td>
+          <td>Report one supplier&#x27;s investment difference (₹294.39 million)</td><td>The required figure is never stated<div class="pnote" style="white-space:normal">294 not found in the document</div></td>
           <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Registered Nurses<div class="pnote"><b>C10</b> · <code>116e791e</code></div></td>
-          <td>Nursing care plan includes ordering lab tests for infection risk</td><td>That intervention is missing</td>
+        <tr><td>Registered Nurses<div class="pnote"><b>C10</b> · <code>116e791e</code> · ✓ hand-checked</div></td>
+          <td>Nursing care plan includes ordering lab tests for infection risk</td><td>That intervention is missing<div class="pnote" style="white-space:normal">No lab tests for infection are in the plan</div></td>
           <td>Domain judgment &amp; risk</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Child, Family, and School Social Workers<div class="pnote"><b>C11</b> · <code>76d10872</code></div></td>
-          <td>Court case number PT-2025-1782</td><td>Wrote DV-2025-1782, the wrong case number<div class="pnote" style="white-space:normal">Wrong legal identifier in a case file</div></td>
+        <tr><td>Child, Family, and School Social Workers<div class="pnote"><b>C11</b> · <code>76d10872</code> · ✓ hand-checked</div></td>
+          <td>Court case number PT-2025-1782</td><td>Wrote DV-2025-1782, the wrong case number<div class="pnote" style="white-space:normal">The report gives DV-2025-1782, not PT-2025-1782.</div></td>
           <td>Reference grounding</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Pharmacists<div class="pnote"><b>C12</b> · <code>ffed32d8</code></div></td>
-          <td>Revenue difference defined as 100-day minus 90-day</td><td>Defined the other way round, so signs are flipped</td>
+        <tr><td>Pharmacists<div class="pnote"><b>C12</b> · <code>ffed32d8</code> · ✓ hand-checked</div></td>
+          <td>Revenue difference defined as 100-day minus 90-day</td><td>Defined the other way round, so signs are flipped<div class="pnote" style="white-space:normal">The difference is defined as 90-day − 100-day, which is the reverse of the required 100-day − 90-day.</div></td>
           <td>Quantitative reasoning</td><td><span class="sev sev-med">Medium</span></td></tr>
       </tbody></table></div>
 
@@ -179,22 +179,22 @@
   <div class="table-wrap"><table class="numbers ledger">
       <thead><tr><th>Occupation</th><th>The checklist required</th><th>What went wrong</th><th>Type</th><th>Severity</th></tr></thead>
       <tbody>
-        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><b>S1</b> · <code>d7cfae6f</code></div></td>
-          <td>Inventory coverage = total supply ÷ expected sales</td><td>Both models subtracted demand from supply<div class="pnote" style="white-space:normal">Same error in both: the prompt may be ambiguous</div></td>
+        <tr><td>Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products<div class="pnote"><b>S1</b> · <code>d7cfae6f</code> · ✓ hand-checked</div></td>
+          <td>Inventory coverage = total supply ÷ expected sales</td><td>Both models subtracted demand from supply<div class="pnote" style="white-space:normal">Formula looks wrong.</div></td>
           <td>Quantitative reasoning</td><td><span class="sev sev-high">High</span></td></tr>
-        <tr><td>Compliance Officers<div class="pnote"><b>S2</b> · <code>7bbfcfe9</code></div></td>
-          <td>Workbook includes an &#x27;Exercise of Rights&#x27; tab</td><td>Neither model created it</td>
+        <tr><td>Compliance Officers<div class="pnote"><b>S2</b> · <code>7bbfcfe9</code> · ✓ hand-checked</div></td>
+          <td>Workbook includes an &#x27;Exercise of Rights&#x27; tab</td><td>Neither model created it<div class="pnote" style="white-space:normal">Exercise of Rights tab not in the Excel sheet.</div></td>
           <td>Completeness</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Real Estate Brokers<div class="pnote"><b>S3</b> · <code>0818571f</code></div></td>
-          <td>A map for each property listing</td><td>Neither model included maps<div class="pnote" style="white-space:normal">Needs map tools, not just data</div></td>
+        <tr><td>Real Estate Brokers<div class="pnote"><b>S3</b> · <code>0818571f</code> · ✓ hand-checked</div></td>
+          <td>A map for each property listing</td><td>Neither model included maps<div class="pnote" style="white-space:normal">Both deliverables are missing a map.</div></td>
           <td>Tool or modality limit</td><td><span class="sev sev-med">Medium</span></td></tr>
-        <tr><td>Concierges<div class="pnote"><b>S4</b> · <code>f5d428fd</code></div></td>
-          <td>One photo per itinerary day</td><td>Neither model included photos<div class="pnote" style="white-space:normal">Needs image tools</div></td>
+        <tr><td>Concierges<div class="pnote"><b>S4</b> · <code>f5d428fd</code> · ✓ hand-checked</div></td>
+          <td>One photo per itinerary day</td><td>Neither model included photos<div class="pnote" style="white-space:normal">GPT has no images; Claude has links to images.</div></td>
           <td>Tool or modality limit</td><td><span class="sev sev-low">Low</span></td></tr>
-        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><b>S5</b> · <code>a95a5829</code></div></td>
-          <td>Checklist demands a PDF</td><td>The task itself asked for a Word file<div class="pnote" style="white-space:normal">The checklist contradicts the task</div></td>
+        <tr><td>First-Line Supervisors of Police and Detectives<div class="pnote"><b>S5</b> · <code>a95a5829</code> · ✓ hand-checked</div></td>
+          <td>Checklist demands a PDF</td><td>The task itself asked for a Word file<div class="pnote" style="white-space:normal">Deliverable is a docx</div></td>
           <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
-        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><b>S6</b> · <code>4c4dc603</code></div></td>
+        <tr><td>Securities, Commodities, and Financial Services Sales Agents<div class="pnote"><b>S6</b> · <code>4c4dc603</code> · ✓ hand-checked</div></td>
           <td>Checklist demands a specific phone number</td><td>Both used the number the task gave<div class="pnote" style="white-space:normal">The checklist contradicts the task</div></td>
           <td>Grader / rubric defect</td><td><span class="sev sev-na">Not a model failure</span></td></tr>
       </tbody></table></div>
